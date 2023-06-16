@@ -4,16 +4,18 @@
   box-sizing: border-box;
 }
 
+.container {
+  display: flex;
+  justify-content: center;
+}
+
 #btndiv {
   background-color: #141919;
   display: flex;
-  justify-content: center;
-  padding: 20px 0;
-  vertical-align: baseline;
-}
-
-.container {
-  display: flex;
+  justify-content: space-between;
+  width: 900px;
+  height: 300px;
+  /* vertical-align: baseline; */
 }
 
 .homebtn {
