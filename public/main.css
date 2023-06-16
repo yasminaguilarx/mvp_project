@@ -6,16 +6,26 @@
 
 #btndiv {
   background-color: #141919;
+  display: flex;
+  vertical-align: baseline;
+}
+
+#homebtn {
+  display: flex;
+  border: 1px solid red;
 }
 
 #mainDisplay {
   color: #fff;
   background-color: #5995da;
   padding: 20px 0;
+  display: flex;
 }
 
 #sidePanel {
   background-color: pink;
+  display: flex;
+  vertical-align: baseline;
 }
 
 /* .menu {
