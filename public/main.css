@@ -12,6 +12,10 @@
   vertical-align: baseline;
 }
 
+.container {
+  display: flex;
+}
+
 #homebtn {
   display: flex;
   border: 1px solid red;
