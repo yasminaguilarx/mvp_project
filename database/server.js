@@ -12,6 +12,7 @@ const pool = new Pool({
 });
 
 app.use(express.json());
+app.use(express.static("public"));
 
 app.get("/music_search", async (req, res) => {
   try {
