@@ -3,9 +3,10 @@ const app = express();
 const dotenv = require("dotenv");
 dotenv.config();
 const { Pool } = require("pg");
-const port = 3400;
 
 const dbstring = process.env.DATABASE_URL;
+const port = process.env.PORT;
+
 const pool = new Pool({
   connectionString: dbstring,
 });
