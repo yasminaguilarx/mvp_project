@@ -1,0 +1,23 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#btndiv {
+  background-color: #141919;
+}
+
+#mainDisplay {
+  color: #fff;
+  background-color: #5995da;
+  padding: 20px 0;
+}
+
+#sidePanel {
+  background-color: pink;
+}
+
+/* .menu {
+  border: 1px solid #fff; 
+  width: 900px */
