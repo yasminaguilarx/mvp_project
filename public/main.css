@@ -7,12 +7,23 @@
 #btndiv {
   background-color: #141919;
   display: flex;
+  justify-content: center;
+  padding: 20px 0;
   vertical-align: baseline;
 }
 
 #homebtn {
   display: flex;
   border: 1px solid red;
+  justify-content: space-around;
+  width: 900px;
+}
+
+#searchbtn {
+  display: flex;
+  border: 1px solid blue;
+  justify-content: space-around;
+  width: 900px;
 }
 
 #mainDisplay {
