@@ -36,7 +36,7 @@
   background-color: #a0c263;
 }
 
-.content {
+.main {
   grid-column: 2 / 4;
   grid-row: 2 / 4;
   min-height: 500px;
