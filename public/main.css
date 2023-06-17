@@ -12,16 +12,15 @@
 .container {
   display: grid;
   grid-template-columns: 0.4fr 0.3fr 0.3fr;
-  /*   grid-template-rows: auto 25px auto 25px auto 25px auto 25px auto 25px auto; */
-  grid-column-gap: 10px;
-  grid-row-gap: 15px;
+  grid-column-gap: 0.5px;
+  grid-row-gap: 0.5px;
 }
-.grid {
+/* .grid {
   background-color: #444;
   color: #fff;
   padding: 25px;
   font-size: 3rem;
-}
+} */
 
 .header {
   grid-column: 1 / 4;
@@ -32,14 +31,14 @@
 .sidebar {
   grid-column: 1 / 2;
   grid-row: 2 / 5;
-  min-height: 500px;
+  min-height: 100vh;
   background-color: #a0c263;
 }
 
 .main {
   grid-column: 2 / 4;
   grid-row: 2 / 4;
-  min-height: 500px;
+  min-height: 100vh;
   background-color: #f5c531;
 }
 
