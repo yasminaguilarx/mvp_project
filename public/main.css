@@ -36,7 +36,7 @@
 }
 
 .main {
-  grid-column: 2 / 4;
+  grid-column: 1 / 4;
   grid-row: 2 / 4;
   min-height: 100vh;
   min-width: 100%;
