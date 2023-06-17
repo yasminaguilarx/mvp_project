@@ -31,8 +31,8 @@
 
 .sidebar {
   grid-column: 1 / 2;
-  grid-row: 3 / 5;
-  min-height: 400px;
+  grid-row: 2 / 5;
+  min-height: 500px;
   background-color: #a0c263;
 }
 
