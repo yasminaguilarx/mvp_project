@@ -39,6 +39,7 @@
   grid-column: 2 / 4;
   grid-row: 2 / 4;
   min-height: 100vh;
+  min-width: 100%;
   background-color: #f5c531;
 }
 
