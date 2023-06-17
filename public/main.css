@@ -23,7 +23,7 @@
 } */
 
 .header {
-  grid-column: 1 / 4;
+  grid-column: 1 / 2;
   grid-row: 1 / 2;
   background-color: #55d4eb;
 }
@@ -43,9 +43,18 @@
   background-color: #f5c531;
 }
 
+.homebtn {
+  justify-self: start;
+}
+
+.searchbtn {
+  justify-self: auto;
+}
+
 /* header button {
   justify-self: end;
 }
+
 
 header nav {
   justify-self: start;
