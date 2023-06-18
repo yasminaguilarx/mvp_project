@@ -27,14 +27,18 @@ const generateRandomString = function (length) {
 
 app.use(express.json());
 app.use(express.static("public"));
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 app.use(cookieParser());
 
 // Set up authorization flow
 const stateKey = "spotify_auth_state";
-const client_id = "cd7f7c4194ae475dbfaceb0b5962ccdf";
+const client_id = process.env.CLIENT_ID;
 const redirect_uri = "https://playlist-web-server.onrender.com/callback";
-const client_secret = "93dda00e1e4a44d8bed6d0c4a8edebc3";
+const client_secret = process.env.CLIENT_SECRET;
 
 app.get("/login", async (req, res) => {
   const state = generateRandomString(16);
