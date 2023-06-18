@@ -94,46 +94,46 @@ app.get("/callback", async (req, res) => {
 });
 
 // Function to handle the access token retrieval from the URL hash
-function getAccessTokenFromHash() {
-  const hashParams = {};
-  const hash = window.location.hash.substring(1);
-  const params = hash.split("&");
-  for (let i = 0; i < params.length; i++) {
-    const param = params[i].split("=");
-    hashParams[param[0]] = decodeURIComponent(param[1]);
-  }
-  return hashParams.access_token;
-}
+// function getAccessTokenFromHash() {
+//   const hashParams = {};
+//   const hash = window.location.hash.substring(1);
+//   const params = hash.split("&");
+//   for (let i = 0; i < params.length; i++) {
+//     const param = params[i].split("=");
+//     hashParams[param[0]] = decodeURIComponent(param[1]);
+//   }
+//   return hashParams.access_token;
+// }
 
 // Example API request to get user's profile
-function getUserProfile(accessToken) {
-  const apiUrl = "https://api.spotify.com/v1/me";
+// function getUserProfile(accessToken) {
+//   const apiUrl = "https://api.spotify.com/v1/me";
 
-  fetch(apiUrl, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      // Handle the API response
-      console.log("User Profile:", data);
-    })
-    .catch((error) => {
-      // Handle error
-      console.error("Error:", error);
-    });
-}
+//   fetch(apiUrl, {
+//     headers: {
+//       Authorization: `Bearer ${accessToken}`,
+//     },
+//   })
+//     .then((response) => response.json())
+//     .then((data) => {
+//       // Handle the API response
+//       console.log("User Profile:", data);
+//     })
+//     .catch((error) => {
+//       // Handle error
+//       console.error("Error:", error);
+//     });
+// }
 
-// Authorize the user and retrieve access token
-authorizeSpotify();
+// // Authorize the user and retrieve access token
+// authorizeSpotify();
 
-// Once the user is redirected back to your application with the access token in the URL hash
-// Retrieve the access token from the hash
-const accessToken = getAccessTokenFromHash();
+// // Once the user is redirected back to your application with the access token in the URL hash
+// // Retrieve the access token from the hash
+// const accessToken = getAccessTokenFromHash();
 
-// Use the access token to make API requests
-getUserProfile(accessToken);
+// // Use the access token to make API requests
+// getUserProfile(accessToken);
 
 app.listen(port, () => {
   console.log(`Listening on port: ${port}`);
