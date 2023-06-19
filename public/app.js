@@ -1,69 +1,90 @@
-// console.log("this is workin");
+// `https://api.spotify.com/${endpoint}`
 
-// var client_id = "cd7f7c4194ae475dbfaceb0b5962ccdf";
-// var redirect_uri = "https://playlist-web-server.onrender.com/";
+console.log("this is workin");
 
-// const express = require("express");
-// var app = express();
+//getting access to the token from the cookie
+function getTokenFromCookie() {
+  const accessCookie = document.cookie
+    .split("; ")
+    .find((cookie) => cookie.startsWith("access_token="));
 
-// app.get("/login", function (req, res) {
-//   //   var state = generateRandomString(16);
-//   //   var scope = 'user-read-private user-read-email';
+  if (accessCookie) {
+    return accessCookie.split("=")[1];
+  }
+  return null;
+}
 
-//   res.redirect(
-//     "https://accounts.spotify.com/authorize?" +
-//       querystring.stringify({
-//         response_type: "code",
-//         client_id: client_id,
-//         scope: scope,
-//         redirect_uri: redirect_uri,
-//         state: state,
-//       })
-//   );
-// });
+//search button
+const searchBtn = document.querySelector("#submit");
+searchBtn.addEventListener("click", async () => {
+  const searchTarget = document.querySelector("input").value;
+  const accessToken = getTokenFromCookie();
 
-// window.onSpotifyWebPlaybackSDKReady = () => {
-//     const token = '[My access token]';
-//     const player = new Spotify.Player({
-//         name: 'Web Playback SDK Quick Start Player',
-//         getOAuthToken: cb => { cb(token); },
-//         volume: 0.5
-//     });
+  if (!accessToken) {
+    console.error("Access Token Not Found");
+    return;
+  }
 
-//     // Ready
-//     player.addListener('ready', ({ device_id }) => {
-//         console.log('Ready with Device ID', device_id);
-//     });
+  try {
+    const res = await fetch(
+      `https://api.spotify.com/v1/search?q=${searchTarget}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
 
-//     // Not Ready
-//     player.addListener('not_ready', ({ device_id }) => {
-//         console.log('Device ID has gone offline', device_id);
-//     });
+    if (!res.ok) {
+      throw new Error("Search Request Failed");
+    }
 
-//     player.addListener('initialization_error', ({ message }) => {
-//         console.error(message);
-//     });
+    const data = await res.json();
+    console.log(data);
+  } catch (err) {
+    console.error("Search Error", err);
+  }
+});
 
-//     player.addListener('authentication_error', ({ message }) => {
-//         console.error(message);
-//     });
+//authorize user make request to server to autheticate user
+// async function authorizeUser() {
+//   try {
+//     const response = await fetch("/callback");
+//     const data = await response.json();
 
-//     player.addListener('account_error', ({ message }) => {
-//         console.error(message);
-//     });
+//     //get access token from response
+//     const accessToken = data.access_token;
 
-//     document.getElementById('togglePlay').onclick = function() {
-//       player.togglePlay();
-//     };
-
-//     player.connect();
+//     console.log("Access Token:", accessToken);
+//   } catch (err) {
+//     console.error("Authorization error", err);
+//     res.status(500).send("Internal Server Error");
+//   }
 // }
 
-// start by gaining access to spotify?
-// async function fetchWebApi() {
-//   const res = await fetch(`https://api.spotify.com/authorize`);
+//use access token to continue to using paths and such
+// async function utilizeToken() {
+//   const response = await authorizeUser();
+//   const { accessToken } = await response.json();
+//   return accessToken;
+// }
+
+// async function searchRoute() {
+//   const token = await utilizeToken();
+//   const res = await fetch(`https://api.spotify.com/v1/search`);
 //   const data = await res.json();
 //   console.log(data);
 // }
 
-// `https://api.spotify.com/${endpoint}`
+//get playlist
+//update playlist
+//create playlist
+//delete playlist
+
+//get genres
+
+//get user profile
+//get user playlists (follow playlist)
+//get user likes (get users top items?)
+
+//get music search (in search section)

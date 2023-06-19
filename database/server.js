@@ -6,6 +6,7 @@ const { Pool } = require("pg");
 const cors = require("cors");
 const querystring = require("querystring");
 const cookieParser = require("cookie-parser");
+const axios = require("axios");
 
 const dbstring = process.env.DATABASE_URL;
 const port = process.env.PORT;
@@ -26,7 +27,7 @@ const generateRandomString = function (length) {
 };
 
 app.use(express.json());
-app.use(express.static("public"));
+app.use(express.static("/public"));
 app.use(
   cors({
     origin: "*",
@@ -40,7 +41,7 @@ const client_id = process.env.CLIENT_ID;
 const redirect_uri = "https://playlist-web-server.onrender.com/callback";
 const client_secret = process.env.CLIENT_SECRET;
 
-app.get("/login", async (req, res) => {
+app.get("/authorize", async (req, res) => {
   const state = generateRandomString(16);
   res.cookie(stateKey, state);
 
@@ -56,6 +57,7 @@ app.get("/login", async (req, res) => {
   window.location.href = authUrl;
 });
 
+//token exchange request
 app.get("/callback", async (req, res) => {
   const code = req.query.code || null;
   const state = req.query.state || null;
@@ -67,73 +69,40 @@ app.get("/callback", async (req, res) => {
     res.clearCookie(stateKey);
     const authOptions = {
       url: "https://accounts.spotify.com/api/token",
-      form: {
+      method: "post",
+      data: querystring.stringify({
         code: code,
         redirect_uri: redirect_uri,
         grant_type: "authorization_code",
-      },
+      }),
       headers: {
-        Authorization:
-          "Basic" +
-          new Buffer.from(client_id + ":" + client_secret).toString("base64"),
+        Authorization: `Basic ${Buffer.from(
+          `${client_id}: ${client_secret}`
+        ).toString("base64")}`,
+        "Content-Type": "application/x-www-form-urlencoded",
       },
-      json: true,
     };
 
-    req.post(authOptions, (err, res, body) => {
-      if (!err && res.statusCode === 200) {
-        const access_token = body.access_token;
-        const refresh_token = body.refresh_token;
+    try {
+      const response = await axios(authOptions); //this is the token exchange request
+
+      if (response.status === 200) {
+        const access_token = response.data.access_token;
+        const refresh_token = response.data.refresh_token;
+
+        res.cookie("access_token", access_token, { httpOnly: true });
+        res.cookie("refresh_token", refresh_token, { httpOnly: true });
 
         res.status(200).json({ access_token, refresh_token });
       } else {
         res.status(400).json("Invalid Token");
       }
-    });
+    } catch (err) {
+      console.error("Token Exchange Error:", err);
+      res.status(500).json("Internal Server Error");
+    }
   }
 });
-
-// Function to handle the access token retrieval from the URL hash
-// function getAccessTokenFromHash() {
-//   const hashParams = {};
-//   const hash = window.location.hash.substring(1);
-//   const params = hash.split("&");
-//   for (let i = 0; i < params.length; i++) {
-//     const param = params[i].split("=");
-//     hashParams[param[0]] = decodeURIComponent(param[1]);
-//   }
-//   return hashParams.access_token;
-// }
-
-// Example API request to get user's profile
-// function getUserProfile(accessToken) {
-//   const apiUrl = "https://api.spotify.com/v1/me";
-
-//   fetch(apiUrl, {
-//     headers: {
-//       Authorization: `Bearer ${accessToken}`,
-//     },
-//   })
-//     .then((response) => response.json())
-//     .then((data) => {
-//       // Handle the API response
-//       console.log("User Profile:", data);
-//     })
-//     .catch((error) => {
-//       // Handle error
-//       console.error("Error:", error);
-//     });
-// }
-
-// // Authorize the user and retrieve access token
-// authorizeSpotify();
-
-// // Once the user is redirected back to your application with the access token in the URL hash
-// // Retrieve the access token from the hash
-// const accessToken = getAccessTokenFromHash();
-
-// // Use the access token to make API requests
-// getUserProfile(accessToken);
 
 app.listen(port, () => {
   console.log(`Listening on port: ${port}`);

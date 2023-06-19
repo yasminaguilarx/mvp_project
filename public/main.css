@@ -51,6 +51,11 @@
   justify-self: auto;
 }
 
+#searchBar {
+  border: 1px solid red;
+  min-height: 300px;
+  min-width: 300px;
+}
 /* header button {
   justify-self: end;
 }
