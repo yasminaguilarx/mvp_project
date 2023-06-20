@@ -49,7 +49,7 @@ searchBtn.addEventListener("click", async (token) => {
     const data = await res.json();
     console.log(data);
   } catch (err) {
-    console.error("Search Error", err);
+    console.error(err);
   }
 });
 
