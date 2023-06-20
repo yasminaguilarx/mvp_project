@@ -3,7 +3,7 @@
 console.log("this is workin");
 
 //client credentials flow
-const apiControler = () => {
+const apiController = () => {
   const client_id = process.env.CLIENT_ID;
   const client_secret = process.env.CLIENT_SECRET;
 
@@ -19,39 +19,50 @@ const apiControler = () => {
     const data = await result.json();
     return data.access_token;
   };
+  accessToken();
 };
 
 //search button
 const searchBtn = document.querySelector("#submit");
-searchBtn.addEventListener("click", async (token) => {
-  const searchTarget = document.querySelector("input").value;
-  //   const accessToken = apiControler;
-
-  //   if (!accessToken) {
-  //     console.error("Access Token Not Found");
-  //     return;
-  //   }
-
-  try {
-    const res = await fetch(
-      `https://api.spotify.com/v1/search?q=${searchTarget}`,
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      }
-    );
-
-    if (!res.ok) {
-      throw new Error("Search Request Failed");
-    }
-
-    const data = await res.json();
-    console.log(data);
-  } catch (err) {
-    console.error(err);
-  }
+searchBtn.addEventListener("click", async () => {
+  const searchBar = document.querySelector("input[id=searchBar]").value;
+  musicSearch(searchBar);
 });
+
+async function musicSearch(input, token) {
+  const response = await apiController();
+  // const access_token = await response.json();
+  const result = await fetch(
+    `https://api.spotify.com/v1/search?q=${searchBar}`,
+    {
+      method: "GET",
+      headers: { Authorization: "Bearer " + token },
+    }
+  );
+  const data = await result.json();
+
+  console.log(data);
+}
+//   try {
+//     const res = await fetch(
+//       ,
+//       {
+//         headers: {
+//           Authorization: "Bearer " + token,
+//         },
+//       }
+//     );
+
+//     if (!res.ok) {
+//       throw new Error("Search Request Failed");
+//     }
+
+//     const data = await res.json();
+//     console.log(data);
+//   } catch (err) {
+//     console.error(err);
+//   }
+// });
 
 //use access token to continue to using paths and such
 // async function utilizeToken() {
