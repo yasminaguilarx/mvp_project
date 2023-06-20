@@ -173,12 +173,12 @@ app.get("/playlist_info", async (req, res) => {
 
 //user info
 app.get("/user_info", async (req, res) => {
-  const { user_playlist, user_profile, user_likes } = req.body;
+  const { user_playlist, user_profile } = req.body;
 
   try {
     let query = `SELECT * FROM user_info`;
 
-    if (user_playlist || user_profile || user_likes) {
+    if (user_playlist || user_profile) {
       query += ` WHERE`;
     }
 
@@ -201,11 +201,84 @@ app.get("/user_info", async (req, res) => {
   }
 });
 
+//playlist songs
+app.get("/playlist_songs", async (req, res) => {
+  const { playlist_id, song_id } = req.body;
+
+  try {
+    let query = `SELECT * FROM playlist_songs`;
+
+    if (playlist_id || song_id) {
+      query += ` WHERE`;
+    }
+
+    if (playlist_id) {
+      query += ` playlist_id = '${playlist_id}'`;
+    }
+
+    if (playlist_id && song_id) {
+      query += ` AND`;
+    }
+
+    if (song_id) {
+      query += ` song_artist = '${song_id}'`;
+    }
+    const result = await pool.query(query);
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+//user playlists
+app.get("/user_playlists", async (req, res) => {
+  const { user_id, playlist_id } = req.body;
+
+  try {
+    let query = `SELECT * FROM user_playlists`;
+
+    if (user_id || playlist_id) {
+      query += ` WHERE`;
+    }
+
+    if (user_id) {
+      query += ` song_genre = '${user_id}'`;
+    }
+
+    if (user_id && playlist_id) {
+      query += ` AND`;
+    }
+
+    if (playlist_id) {
+      query += ` song_artist = '${playlist_id}'`;
+    }
+    const result = await pool.query(query);
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+//get one
+app.get("/music_search/:id", async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    const result = await pool.query(
+      `SELECT * FROM music_search WHERE song_id = $1`[id]
+    );
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 //what im thinking i should do tomorrow: create restful routes for all of MY seeded data, then on the client side i will somehow query the tables and set it equal to for example 'music artist' and such so that the spotify api and my api are both utilized
 //create routes on the server side using client credentials to access the data from spotify
 //add more to my css base that i've made and hope for the best
-
-//get one
 
 //create one
 
