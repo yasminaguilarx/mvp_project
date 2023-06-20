@@ -17,8 +17,8 @@ const cookieParser = require("cookie-parser");
 const axios = require("axios");
 
 const dbstring = process.env.DATABASE_URL;
-// const port = process.env.PORT;
-const port = 3400;
+const port = process.env.PORT;
+// const port = 3400;
 
 const pool = new Pool({
   connectionString: dbstring,
@@ -38,9 +38,9 @@ app.get("/api/token", async (req, res) => {
           "Content-Type": "application/x-www-form-urlencoded",
           Authorization: "Basic " + btoa(client_id + ":" + client_secret),
         },
+        body: res.json({ access_token: response.data.access_token }),
       }
     );
-    res.json({ access_token: response.data.access_token });
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");
@@ -329,10 +329,13 @@ app.post("/music_search", async (req, res) => {
 
 //delete one
 
-// app.listen(port, () => {
-//   console.log(`Listening on port: ${port}`);
-// });
-
 app.listen(port, () => {
   console.log(`Listening on port: ${port}`);
 });
+
+//spotify search route
+// app.get("/search", async (req, res) => {});
+
+// app.listen(port, () => {
+//   console.log(`Listening on port: ${port}`);
+// });

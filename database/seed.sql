@@ -35,6 +35,7 @@ CREATE TABLE user_playlists (
     FOREIGN KEY (playlist_id) REFERENCES playlist_info(playlist_id)
 );
 
+--join table to bring in spotify api? 
 
 INSERT INTO music_search
     (song_id, song_genre, song_artist)

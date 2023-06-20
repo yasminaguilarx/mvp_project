@@ -2,81 +2,62 @@
 
 console.log("this is workin");
 
-//client credentials flow
-const apiController = () => {
-  const client_id = process.env.CLIENT_ID;
-  const client_secret = process.env.CLIENT_SECRET;
-
-  const accessToken = async () => {
-    const result = await fetch("https://accounts.spotify.com/api/token", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        Authorization: "Basic" + btoa(client_id + ":" + client_secret),
-      },
-      body: "grant_type=client_credentials",
-    });
-    const data = await result.json();
-    return data.access_token;
-  };
-  accessToken();
-};
-
 //search button
 const searchBtn = document.querySelector("#submit");
 searchBtn.addEventListener("click", async () => {
   const searchBar = document.querySelector("input[id=searchBar]").value;
-  musicSearch(searchBar);
+  try {
+    const token = await accessToken();
+    await musicSearch(searchBar, token);
+  } catch (err) {
+    console.error(err);
+  }
 });
 
+//pulling access token from server side to client side
+async function accessToken() {
+  try {
+    const response = await fetch("/api/token");
+    if (response.ok) {
+      const data = await response.json();
+      return data.access_token;
+    } else {
+      throw new Error("Failed To Fetch Access Token");
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 async function musicSearch(input, token) {
-  const response = await apiController();
-  // const access_token = await response.json();
-  const result = await fetch(
-    `https://api.spotify.com/v1/search?q=${searchBar}`,
-    {
+  try {
+    const result = await fetch(`https://api.spotify.com/v1/search?q=${input}`, {
       method: "GET",
       headers: { Authorization: "Bearer " + token },
+    });
+    if (result.ok) {
+      const data = await result.json();
+      console.log(data);
+    } else {
+      throw new Error("Failed To Fetch Search Results");
     }
-  );
-  const data = await result.json();
-
-  console.log(data);
+  } catch (err) {
+    console.error(err);
+  }
 }
-//   try {
-//     const res = await fetch(
-//       ,
-//       {
-//         headers: {
-//           Authorization: "Bearer " + token,
-//         },
-//       }
-//     );
 
-//     if (!res.ok) {
-//       throw new Error("Search Request Failed");
-//     }
-
-//     const data = await res.json();
-//     console.log(data);
-//   } catch (err) {
-//     console.error(err);
-//   }
-// });
-
-//use access token to continue to using paths and such
-// async function utilizeToken() {
-//   const response = await authorizeUser();
-//   const { accessToken } = await response.json();
-//   return accessToken;
-// }
-
-// async function searchRoute() {
-//   const token = await utilizeToken();
-//   const res = await fetch(`https://api.spotify.com/v1/search`);
-//   const data = await res.json();
-//   console.log(data);
-// }
+//local storage for access token?
+async function saveLocalStorage() {
+  try {
+    const token = await fetchAccessToken();
+    const data = {
+      token: token,
+    };
+    window.localStorage.setItem("saveData", JSON.stringify(data));
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 //get playlist
 //update playlist
