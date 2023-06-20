@@ -2,6 +2,25 @@
 
 console.log("this is workin");
 
+//client credentials flow
+const apiControler = () => {
+  const client_id = process.env.CLIENT_ID;
+  const client_secret = process.env.CLIENT_SECRET;
+
+  const accessToken = async () => {
+    const result = await fetch("https://accounts.spotify.com/api/token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: "Basic" + btoa(client_id + ":" + client_secret),
+      },
+      body: "grant_type=client_credentials",
+    });
+    const data = await result.json();
+    return data.access_token;
+  };
+};
+
 //getting access to the token from the cookie
 function getTokenFromCookie() {
   const accessCookie = document.cookie
