@@ -13,14 +13,12 @@ CREATE TABLE music_search (
 CREATE TABLE playlist_info (
     playlist_id SERIAL PRIMARY KEY UNIQUE,
     playlist_type varchar(50),
-    playlist_downloads INT NOT NULL
 );
 
 CREATE TABLE user_info (
     user_id SERIAL PRIMARY KEY UNIQUE,
     user_playlist TEXT,
     user_profile varchar(50) UNIQUE,
-    user_likes INT
 );
 
 CREATE TABLE playlist_songs (
@@ -53,32 +51,32 @@ VALUES
     (10, 'R&B', 'JaRule');
 
 INSERT INTO playlist_info 
-    (playlist_id, playlist_type, playlist_downloads)
+    (playlist_id, playlist_type)
 VALUES
-    (1, 'PUMP IT', '2509'),
-    (2, 'FEELIN BLUE', '130'),
-    (3, 'RED HOT', '13078'),
-    (4, 'PANIC!', '780'),
-    (5, 'GREEN WITH ENVY', '330'),
-    (6, 'EUPHORIA EXPRESS', '89780'),
-    (7, 'SOOTHIN SOULS', '15759'),
-    (8, 'LIFE IS A TRIP', '1100'),
-    (9, 'ADRENALINE JUNKIES', '14509'),
-    (10, 'JUST A PHASE', '1000');
+    (1, 'PUMP IT'),
+    (2, 'FEELIN BLUE'),
+    (3, 'RED HOT'),
+    (4, 'PANIC!'),
+    (5, 'GREEN WITH ENVY'),
+    (6, 'EUPHORIA EXPRESS'),
+    (7, 'SOOTHIN SOULS'),
+    (8, 'LIFE IS A TRIP'),
+    (9, 'ADRENALINE JUNKIES'),
+    (10, 'JUST A PHASE');
 
 INSERT INTO user_info
-    (user_id, user_playlist, user_profile, user_likes)
+    (user_id, user_playlist, user_profile)
 VALUES 
-    (1, 'RED HOT', 'User Profile 1', 500),
-    (2, 'FEELIN BLUE', 'User Profile 2', 250),
-    (3, 'GREEN WITH ENVY', 'User Profile 3', 400),
-    (4, 'PUMP IT', 'User Profile 4', 800),
-    (5, 'PANIC!', 'User Profile 5', 300),
-    (6, 'Euphoria express', 'User Profile 6', 600),
-    (7, 'Soothing souls', 'User Profile 7', 450),
-    (8, 'Life is a trip', 'User Profile 8', 700),
-    (9, 'Adrenaline junkies', 'User Profile 9', 550),
-    (10, 'Just a phase', 'User Profile 10', 350);
+    (1, 'RED HOT', 'User Profile 1'),
+    (2, 'FEELIN BLUE', 'User Profile 2'),
+    (3, 'GREEN WITH ENVY', 'User Profile 3'),
+    (4, 'PUMP IT', 'User Profile 4'),
+    (5, 'PANIC!', 'User Profile 5'),
+    (6, 'Euphoria express', 'User Profile 6'),
+    (7, 'Soothing souls', 'User Profile 7'),
+    (8, 'Life is a trip', 'User Profile 8'),
+    (9, 'Adrenaline junkies', 'User Profile 9'),
+    (10, 'Just a phase', 'User Profile 10');
 
 INSERT INTO playlist_songs (playlist_id, song_id)
 SELECT pl.playlist_id, ms.song_id

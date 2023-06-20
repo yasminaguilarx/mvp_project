@@ -170,7 +170,40 @@ app.get("/playlist_info", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
 //user info
+app.get("/user_info", async (req, res) => {
+  const { user_playlist, user_profile, user_likes } = req.body;
+
+  try {
+    let query = `SELECT * FROM user_info`;
+
+    if (user_playlist || user_profile || user_likes) {
+      query += ` WHERE`;
+    }
+
+    if (user_playlist) {
+      query += ` song_genre = '${user_playlist}'`;
+    }
+
+    if (user_playlist && user_profile) {
+      query += ` AND`;
+    }
+
+    if (user_profile) {
+      query += ` song_artist = '${user_profile}'`;
+    }
+    const result = await pool.query(query);
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+//what im thinking i should do tomorrow: create restful routes for all of MY seeded data, then on the client side i will somehow query the tables and set it equal to for example 'music artist' and such so that the spotify api and my api are both utilized
+//create routes on the server side using client credentials to access the data from spotify
+//add more to my css base that i've made and hope for the best
 
 //get one
 
