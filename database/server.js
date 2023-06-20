@@ -33,7 +33,7 @@ const pool = new Pool({
 // };
 
 app.use(express.json());
-app.use(express.static("database/public"));
+app.use(express.static("public"));
 app.use(
   cors({
     origin: "*",
