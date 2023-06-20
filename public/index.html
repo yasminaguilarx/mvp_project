@@ -9,40 +9,43 @@
   </head>
   <body>
     <div class="container">
-      <input
-        type="text"
-        name="search"
-        id="searchBar"
-        placeholder="What do you want to listen to?"
-      />
-      <header class="header">
-        <nav>
+      <div id="btnDiv">
+        <ul id="btnContainer">
+          <li class="listHome">
+            <a class="linkHome">
+              <button id="homebtn">Home</button>
+            </a>
+          </li>
+          <li class="listSearch">
+            <a class="linkSearch">
+              <button id="submit">Search</button>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebarDiv">
+        <div>
           <ul>
             <li></li>
             <li></li>
-            <li></li>
           </ul>
-        </nav>
-        <button id="homebtn">Home</button>
-        <button id="submit">Search</button>
-      </header>
+        </div>
+      </div>
 
-      <aside class="sidebar">
-        <h3></h3>
-        <ul>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-        </ul>
-      </aside>
-      <section class="main">
+      <div id="mainDiv">
         <h2></h2>
+        <input
+          type="text"
+          name="search"
+          id="searchBar"
+          placeholder="What do you want to listen to?"
+        />
         <p></p>
         <p></p>
-      </section>
+      </div>
     </div>
+    <div class="musicBar"></div>
     <script src="https://sdk.scdn.co/spotify-player.js"></script>
   </body>
 </html>
