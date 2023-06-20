@@ -111,6 +111,7 @@ app.use(cookieParser());
 // });
 
 // get all
+//music search
 app.get("/music_search", async (req, res) => {
   const { song_genre, song_artist } = req.body;
 
@@ -139,6 +140,37 @@ app.get("/music_search", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
+//playlist info
+app.get("/playlist_info", async (req, res) => {
+  const { playlist_type, playlist_downloads } = req.body;
+
+  try {
+    let query = `SELECT * FROM playlist_info`;
+
+    if (playlist_type || playlist_downloads) {
+      query += ` WHERE`;
+    }
+
+    if (playlist_type) {
+      query += ` playlist_type = '${playlist_type}'`;
+    }
+
+    if (playlist_type && playlist_downloads) {
+      query += ` AND`;
+    }
+
+    if (playlist_downloads) {
+      query += ` song_artist = '${playlist_downloads}'`;
+    }
+    const result = await pool.query(query);
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+//user info
 
 //get one
 
