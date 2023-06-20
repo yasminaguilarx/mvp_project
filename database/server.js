@@ -9,8 +9,8 @@ const { Pool } = require("pg");
 const cors = require("cors");
 
 const dbstring = process.env.DATABASE_URL;
-// const port = process.env.PORT;
-const port = 3400;
+const port = process.env.PORT;
+// const port = 3400;
 
 const pool = new Pool({
   connectionString: dbstring,
@@ -280,16 +280,15 @@ app.get("/user_playlists/:id", async (req, res) => {
 //create one
 //music search
 app.post("/music_search", async (req, res) => {
-  const { song_genre, song_artist } = req.query;
+  const { song_genre, song_artist } = req.body;
 
   if (!song_genre || !song_artist) {
     return res.status(400).json({ error: "Missing Required Fields" });
   }
   try {
-    let values = [song_genre || song_artist];
     const result = await pool.query(
       `INSERT INTO music_search (song_genre, song_artist) VALUES ($1, $2) RETURNING *`,
-      values
+      [song_genre, song_artist]
     );
     res.status(200).json(result.rows[0]);
   } catch (err) {
