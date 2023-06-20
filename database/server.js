@@ -4,47 +4,16 @@ const app = express();
 const dotenv = require("dotenv");
 dotenv.config();
 
-const btoa = require("btoa");
-
 const { Pool } = require("pg");
 
 const cors = require("cors");
 
-const querystring = require("querystring");
-
-const cookieParser = require("cookie-parser");
-
-const axios = require("axios");
-
 const dbstring = process.env.DATABASE_URL;
-const port = process.env.PORT;
-// const port = 3400;
+// const port = process.env.PORT;
+const port = 3400;
 
 const pool = new Pool({
   connectionString: dbstring,
-});
-
-//client credentials flow
-const client_id = process.env.CLIENT_ID;
-const client_secret = process.env.CLIENT_SECRET;
-
-app.get("/api/token", async (req, res) => {
-  try {
-    const response = await axios.post(
-      "https://accounts.spotify.com/api/token",
-      "grant_type=client_credentials",
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          Authorization: "Basic " + btoa(client_id + ":" + client_secret),
-        },
-        body: res.json({ access_token: response.data.access_token }),
-      }
-    );
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Internal Server Error");
-  }
 });
 
 app.use(express.json());
@@ -54,12 +23,12 @@ app.use(
     origin: "*",
   })
 );
-app.use(cookieParser());
+// app.use(cookieParser());
 
 // get all
 //music search
 app.get("/music_search", async (req, res) => {
-  const { song_genre, song_artist } = req.body;
+  const { song_genre, song_artist } = req.query;
 
   try {
     let query = `SELECT * FROM music_search`;
@@ -210,11 +179,12 @@ app.get("/user_playlists", async (req, res) => {
 //get one
 //music search
 app.get("/music_search/:id", async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
 
   try {
     const result = await pool.query(
-      `SELECT * FROM music_search WHERE song_id = $1`[id]
+      `SELECT * FROM music_search WHERE song_id = $1`,
+      [id]
     );
     if (result.rowCount === 0) {
       res.status(404).send("Song Not Found");
@@ -229,11 +199,12 @@ app.get("/music_search/:id", async (req, res) => {
 
 //playlist info
 app.get("/playlist_info/:id", async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
 
   try {
     const result = await pool.query(
-      `SELECT * FROM playlist_info WHERE playlist_id = $1`[id]
+      `SELECT * FROM playlist_info WHERE playlist_id = $1`,
+      [id]
     );
     if (result.rowCount === 0) {
       res.status(404).send("Playlist Not Found");
@@ -248,11 +219,12 @@ app.get("/playlist_info/:id", async (req, res) => {
 
 //user info
 app.get("/user_info/:id", async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
 
   try {
     const result = await pool.query(
-      `SELECT * FROM user_info WHERE user_id = $1`[id]
+      `SELECT * FROM user_info WHERE user_id = $1`,
+      [id]
     );
     if (result.rowCount === 0) {
       res.status(404).send("User Not Found");
@@ -266,60 +238,66 @@ app.get("/user_info/:id", async (req, res) => {
 });
 
 //playlist songs
-// app.get("/playlist_songs/:id", async (req, res) => {
-//   const { id } = req.body;
-
-//   try {
-//     const result = await pool.query(
-//       `SELECT * FROM playlist_songs WHERE playlist_id = $1`[id]
-//     );
-//     if (result.rowCount === 0) {
-//       res.status(404).send("Playlist Not Found");
-//     } else {
-//       res.status(201).json(result.rows[0]);
-//     }
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send("Internal Server Error");
-//   }
-// });
-
-//user playlists
-// app.get("/music_search/:id", async (req, res) => {
-//   const { id } = req.body;
-
-//   try {
-//     const result = await pool.query(
-//       `SELECT * FROM music_search WHERE song_id = $1`[id]
-//     );
-//     if (result.rowCount === 0) {
-//       res.status(404).send("Song Not Found");
-//     } else {
-//       res.status(201).json(result.rows[0]);
-//     }
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send("Internal Server Error");
-//   }
-// });
-
-//create one
-//music search
-app.post("/music_search", async (req, res) => {
-  const { song_genre, song_artist } = req.body;
+app.get("/playlist_songs/:id", async (req, res) => {
+  const { id } = req.params;
 
   try {
-    let values = [song_genre, song_artist];
     const result = await pool.query(
-      `INSERT INTO music_search (song_genre, song_artist) VALUES ($1, $2) RETURNING *`,
-      [values]
+      `SELECT * FROM playlist_songs WHERE playlist_id = $1`,
+      [id]
     );
-    res.status(200).json(result.rows);
+    if (result.rowCount === 0) {
+      res.status(404).send("Playlist Not Found");
+    } else {
+      res.status(201).json(result.rows[0]);
+    }
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");
   }
 });
+
+//user playlists
+app.get("/user_playlists/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await pool.query(
+      `SELECT * FROM user_playlists WHERE user_id = $1`,
+      [id]
+    );
+    if (result.rowCount === 0) {
+      res.status(404).send("Song Not Found");
+    } else {
+      res.status(201).json(result.rows[0]);
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+//create one
+//music search
+app.post("/music_search", async (req, res) => {
+  const { song_genre, song_artist } = req.query;
+
+  if (!song_genre || !song_artist) {
+    return res.status(400).json({ error: "Missing Required Fields" });
+  }
+  try {
+    let values = [song_genre || song_artist];
+    const result = await pool.query(
+      `INSERT INTO music_search (song_genre, song_artist) VALUES ($1, $2) RETURNING *`,
+      values
+    );
+    res.status(200).json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+// }
 
 //what im thinking i should do tomorrow: create restful routes for all of MY seeded data, then on the client side i will somehow query the tables and set it equal to for example 'music artist' and such so that the spotify api and my api are both utilized
 //create routes on the server side using client credentials to access the data from spotify
@@ -333,9 +311,31 @@ app.listen(port, () => {
   console.log(`Listening on port: ${port}`);
 });
 
-//spotify search route
-// app.get("/search", async (req, res) => {});
-
-// app.listen(port, () => {
-//   console.log(`Listening on port: ${port}`);
+//DONT DELETE ANYTHING BELOW, WILL USE AT LATER TIME, THIS CODE WORKS ON THE SERVER SIDE, ABLE TO GET ACCESS KEY USING THUNDER CLIENT
+//YOU WERE TRYING TO LINK THEIR DATABASE TO YOURS TO PUSH DATA INTO YOUR TABLES, DID NOT HAVE TIME TO FIGURE THAT OUT!
+// const axios = require("axios");
+//const btoa = require("btoa");
+// const querystring = require("querystring");
+// const cookieParser = require("cookie-parser");
+// app.get("/api/token", async (req, res) => {
+//   try {
+//     const response = await axios.post(
+//       "https://accounts.spotify.com/api/token",
+//       "grant_type=client_credentials",
+//       {
+//         headers: {
+//           "Content-Type": "application/x-www-form-urlencoded",
+//           Authorization: "Basic " + btoa(client_id + ":" + client_secret),
+//         },
+//       }
+//     );
+//     res.json({ access_token: response.data.access_token });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send("Internal Server Error");
+//   }
 // });
+
+//client credentials flow
+// const client_id = process.env.CLIENT_ID;
+// const client_secret = process.env.CLIENT_SECRET;

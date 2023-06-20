@@ -46,19 +46,6 @@ async function musicSearch(input, token) {
   }
 }
 
-//local storage for access token?
-async function saveLocalStorage() {
-  try {
-    const token = await fetchAccessToken();
-    const data = {
-      token: token,
-    };
-    window.localStorage.setItem("saveData", JSON.stringify(data));
-  } catch (error) {
-    console.error(error);
-  }
-}
-
 //get playlist
 //update playlist
 //create playlist
