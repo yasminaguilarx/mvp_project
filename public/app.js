@@ -3,11 +3,11 @@ console.log("this is workin");
 window.addEventListener("DOMContentLoaded", displayDefaultCards);
 
 function displayDefaultCards() {
-  const resultsContainer = document.querySelector("#resultsContainer");
-  resultsContainer.remove();
+  const defaultCard = document.querySelector("#defaultCardContainer");
+  defaultCard.remove();
 
-  const newResultsContainer = document.createElement("div");
-  newResultsContainer.id = "resultsContainer";
+  const newCardContainer = document.createElement("div");
+  newCardContainer.id = "defaultCardContainer";
 
   const defaultData = [
     {
@@ -44,11 +44,11 @@ function displayDefaultCards() {
 
   defaultData.forEach((item) => {
     const card = createCard(item, "card", "card-image", "card-title");
-    newResultsContainer.appendChild(card);
+    newCardContainer.appendChild(card);
   });
 
-  const mainDiv = document.querySelector("#mainDiv");
-  mainDiv.appendChild(newResultsContainer);
+  const cardDiv = document.querySelector("#cardsContainer");
+  cardDiv.appendChild(newCardContainer);
 }
 
 //search button
@@ -70,12 +70,13 @@ function createCard(item) {
   const cardImage = document.createElement("img");
   cardImage.src = item.image;
   cardImage.alt = item.name;
+  cardImage.classList.add("card-image");
   cardContent.appendChild(cardImage);
 
   // Create the card title
   const cardTitle = document.createElement("h2");
   cardTitle.textContent = item.name;
-  cardTitle.classList.add(titleClass);
+  cardTitle.classList.add("card-title");
   cardContent.appendChild(cardTitle);
 
   // Append the card content to the card element
@@ -144,7 +145,7 @@ async function getPlaylistGenre(genre) {
       }
     );
     const data = await response.json();
-    // Handle the response data
+    //handle the data????
   } catch (error) {
     console.error("Error:", error);
   }
