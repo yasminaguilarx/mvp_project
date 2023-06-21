@@ -1,18 +1,20 @@
 console.log("this is workin");
 
-window.addEventListener("DOMContentLoaded", () => {
-  showDefaultCards();
-});
+// window.addEventListener("DOMContentLoaded", () => {
+//   showDefaultCards();
+// });
 
 document.addEventListener("DOMContentLoaded", function () {
   // Add code to show default cards when the page loads
-  showDefaultCards();
+  document.getElementById("search").addEventListener("input", handleSearch);
 
   // Add event listener for search or playlist creation
   document.getElementById("search").addEventListener("input", handleSearch);
   document
     .getElementById("createPlaylist")
     .addEventListener("click", handlePlaylistCreation);
+
+  showDefaultCards();
 });
 
 function showDefaultCards() {
@@ -109,8 +111,8 @@ function searchResults(data) {
   ul.classList.add("results-list");
 
   data.forEach((item) => {
-    const card = createCard({ name: item.song_artist });
-    resultsContainer.appendChild(card);
+    const card = createCard(item);
+    ul.appendChild(card);
     const li = document.createElement("li");
     let displayText = "";
 
