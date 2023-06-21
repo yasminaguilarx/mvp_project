@@ -20,46 +20,34 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use(cors());
 
-// get all
-//music search WORKS
-app.get("/music_search", async (req, res) => {
+//get all data
+app.get("/all_data", async (req, res) => {
   try {
-    const result = await pool.query(`SELECT * FROM music_search`);
-    const data = result.rows.map((item) => ({
-      ...item,
-      type: "artist" || "song",
-    }));
-    res.status(200).json(data);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Internal Server Error");
-  }
-});
+    const playlistInfoResult = await pool.query(`SELECT * FROM playlist_info`);
+    const playlistSongsResult = await pool.query(
+      `SELECT * FROM playlist_songs`
+    );
+    const musicSearchResult = await pool.query(`SELECT * FROM music_search`);
 
-//playlist info WORKS
-app.get("/playlist_info", async (req, res) => {
-  try {
-    const result = await pool.query(`SELECT * FROM playlist_info`);
-    const data = result.rows.map((item) => ({
+    const playlistInfo = playlistInfoResult.rows.map((item) => ({
       ...item,
       type: "genre",
     }));
-    res.status(200).json(data);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Internal Server Error");
-  }
-});
 
-//playlist songs WORKS
-app.get("/playlist_songs", async (req, res) => {
-  try {
-    const result = await pool.query(`SELECT * FROM playlist_songs`);
-    const data = result.rows.map((item) => ({
+    const playlistSongs = playlistSongsResult.rows.map((item) => ({
       ...item,
       type: "playlist",
     }));
-    res.status(200).json(data);
+
+    const musicSearch = musicSearchResult.rows;
+
+    const allData = {
+      playlistInfo,
+      playlistSongs,
+      musicSearch,
+    };
+
+    res.status(200).json(allData);
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");

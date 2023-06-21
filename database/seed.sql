@@ -93,7 +93,7 @@ VALUES
 --     (2, 3);
 
 INSERT INTO playlist_songs
-    (playlist_id, song_id)
+    (playlist_id, song_id, songs_added)
 VALUES 
     (1, 3),
     (1, 7),
