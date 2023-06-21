@@ -76,9 +76,6 @@ function createCard(item) {
   cardTitle.classList.add("card-title");
   createdCard.append(cardTitle);
 
-  // Append the card content to the card element
-  createdCard.append(resultsContainer);
-
   return createdCard;
 }
 
