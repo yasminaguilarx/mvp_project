@@ -80,8 +80,8 @@ function createCard(item) {
   cardContent.appendChild(cardTitle);
 
   // Append the card content to the card element
-  cardDiv.appendChild(cardContent);
 
+  cardContent.appendTo(cardDiv);
   return cardDiv;
 }
 
@@ -89,7 +89,7 @@ function createCard(item) {
 async function search(input) {
   try {
     const response = await fetch(
-      `http://localhost:3400/music_search?q=${input}`,
+      `https://playlist-web-server.onrender.com/music_search?q=${input}`,
       {
         method: "GET",
       }
@@ -97,7 +97,7 @@ async function search(input) {
     const data = await response.json();
 
     const filter = data.filter((elem) => {
-      return elem.song_artist.toLowerCase().includes(input.toLowerCase());
+      return elem.toLowerCase().includes(input.toLowerCase());
     });
     searchResults(filter);
   } catch {
@@ -139,7 +139,7 @@ function searchResults(data) {
 async function getPlaylistGenre(genre) {
   try {
     const response = await fetch(
-      `http://localhost:3400/playlist_info/${genre}`,
+      `https://playlist-web-server.onrender.com/playlist_info/${genre}`,
       {
         method: "GET",
       }
@@ -156,7 +156,7 @@ async function createPlaylist(playlistType, songIds) {
   try {
     // Create playlist_info entry
     const playlistInfoResponse = await fetch(
-      "http://localhost:3400/playlist_info",
+      "https://playlist-web-server.onrender.com/playlist_info",
       {
         method: "POST",
         headers: {
@@ -171,7 +171,7 @@ async function createPlaylist(playlistType, songIds) {
 
     // Add songs to playlist_songs table
     for (const songId of songIds) {
-      await fetch("http://localhost:3400/playlist_songs", {
+      await fetch("https://playlist-web-server.onrender.com/playlist_songs", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -189,13 +189,16 @@ async function createPlaylist(playlistType, songIds) {
 //update playlist
 async function updatePlaylist(playlistId, playlistType) {
   try {
-    await fetch(`http://localhost:3400/playlist_info/${playlistId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ playlist_type: playlistType }),
-    });
+    await fetch(
+      `https://playlist-web-server.onrender.com/playlist_info/${playlistId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ playlist_type: playlistType }),
+      }
+    );
 
     console.log("Playlist updated successfully!");
   } catch (error) {
@@ -207,14 +210,20 @@ async function updatePlaylist(playlistId, playlistType) {
 async function deletePlaylist(playlistId) {
   try {
     // Delete playlist_songs entries
-    await fetch(`http://localhost:3400/playlist_songs/${playlistId}`, {
-      method: "DELETE",
-    });
+    await fetch(
+      `https://playlist-web-server.onrender.com/playlist_songs/${playlistId}`,
+      {
+        method: "DELETE",
+      }
+    );
 
     // Delete playlist_info entry
-    await fetch(`http://localhost:3400/playlist_info/${playlistId}`, {
-      method: "DELETE",
-    });
+    await fetch(
+      `https://playlist-web-server.onrender.com/playlist_info/${playlistId}`,
+      {
+        method: "DELETE",
+      }
+    );
 
     console.log("Playlist deleted successfully!");
   } catch (error) {
@@ -226,7 +235,7 @@ async function deletePlaylist(playlistId) {
 async function removeSongFromPlaylist(playlistId, songId) {
   try {
     await fetch(
-      `http://localhost:3400/playlist_songs/${playlistId}/${songId}`,
+      `https://playlist-web-server.onrender.com/playlist_songs/${playlistId}/${songId}`,
       {
         method: "DELETE",
       }
