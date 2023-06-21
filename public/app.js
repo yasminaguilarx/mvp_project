@@ -60,23 +60,69 @@ searchBtn.addEventListener("click", async () => {
 
 //create cards
 function createCard(item) {
-  const resultsContainer = document.querySelector("#resultsContainer");
-  const createdCard = document.querySelector(".card");
+  const card = document.createElement("div");
+  card.classList.add("card");
 
   // Create the card image
   const cardImage = document.createElement("img");
   cardImage.src = item.image;
   cardImage.alt = item.name;
   cardImage.classList.add("card-image");
-  createdCard.appendChild(cardImage);
+  card.appendChild(cardImage);
 
   // Create the card title
   const cardTitle = document.createElement("h3");
   cardTitle.textContent = item.name;
   cardTitle.classList.add("card-title");
-  createdCard.appendChild(cardTitle);
+  card.appendChild(cardTitle);
 
-  return createdCard;
+  //create save button
+  const cardButton = document.createElement("button");
+  cardButton.textContent = "Save to Playlist";
+  cardButton.classList.add("card-button");
+  cardButton.addEventListener("click", () => {
+    saveToPlaylist(item);
+  });
+  card.appendChild(cardButton);
+
+  const resultsContainer = document.querySelector("#resultsContainer");
+  resultsContainer.appendChild(card);
+
+  return card;
+}
+
+function saveToPlaylist(item) {
+  const playlistName = prompt("Enter playlist name:");
+
+  if (!playlistName) {
+    console.log("Playlist name is required.");
+    return;
+  }
+
+  const playlist = {
+    name: playlistName,
+    songs: [result],
+  };
+
+  fetch(`https://playlist-web-server.onrender.com/playlist_info/${item}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(playlist),
+  })
+    .then((response) => {
+      if (response.ok) {
+        console.log(
+          `Saved '${result.name}' to playlist '${playlistName}' successfully!`
+        );
+      } else {
+        console.error("Failed to save the playlist.");
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 }
 
 //search functionality 'get'
