@@ -68,13 +68,13 @@ function createCard(item) {
   cardImage.src = item.image;
   cardImage.alt = item.name;
   cardImage.classList.add("card-image");
-  createdCard.append(cardImage);
+  createdCard.appendChild(cardImage);
 
   // Create the card title
   const cardTitle = document.createElement("h3");
   cardTitle.textContent = item.name;
   cardTitle.classList.add("card-title");
-  createdCard.append(cardTitle);
+  createdCard.appendChild(cardTitle);
 
   return createdCard;
 }
