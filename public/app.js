@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function showDefaultCards() {
   let defaultCardContainer = document.getElementById("defaultCardContainer");
   const defaultCard = document.getElementById(".default-card");
-  defaultCard.textContent = displayDefaultCards();
+  defaultCard.innerText = displayDefaultCards();
   defaultCardContainer.appendChild(defaultCard);
 }
 
