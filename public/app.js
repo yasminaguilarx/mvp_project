@@ -51,17 +51,17 @@ function displayDefaultCards() {
 
   const defaultData = [
     {
-      type: `${input}`,
+      type: `hip hop`,
       name: "Artist 1",
       image: "images/1871847_band_music_social media_songs_radio_icon.png",
     },
     {
-      type: `${input}`,
+      type: `rock`,
       name: "Song 1",
       image: "images/1871847_band_music_social media_songs_radio_icon.png",
     },
     {
-      type: `${input}`,
+      type: `pop`,
       name: "Playlist 1",
       image: "images/1871847_band_music_social media_songs_radio_icon.png",
     },
