@@ -19,61 +19,6 @@ function showDefaultCards() {
   defaultCardContainer.appendChild(defaultCard);
 }
 
-function handleSearch(event) {
-  var searchTerm = event.target.value;
-
-  if (searchTerm !== "") {
-    removeDefaultCards();
-    // Perform the search and display the results
-    performSearch(searchTerm);
-  } else {
-    // If the search term is empty, show the default cards again
-    showDefaultCards();
-  }
-}
-
-function handlePlaylistCreation(event) {
-  removeDefaultCards();
-
-  createPlaylist();
-}
-
-function removeDefaultCards() {
-  var defaultCardContainer = document.getElementById("defaultCardContainer");
-  while (defaultCardContainer.firstChild) {
-    defaultCardContainer.removeChild(defaultCardContainer.firstChild);
-  }
-}
-
-function displayDefaultCards() {
-  const resultsContainer = document.querySelector("#resultsContainer");
-  resultsContainer.innerHTML = "";
-
-  const defaultData = [
-    {
-      type: `hip hop`,
-      name: "Artist 1",
-      image: "images/1871847_band_music_social media_songs_radio_icon.png",
-    },
-    {
-      type: `rock`,
-      name: "Song 1",
-      image: "images/1871847_band_music_social media_songs_radio_icon.png",
-    },
-    {
-      type: `pop`,
-      name: "Playlist 1",
-      image: "images/1871847_band_music_social media_songs_radio_icon.png",
-    },
-    // Add more default data as needed
-  ];
-
-  defaultData.forEach((item) => {
-    const card = createCard(item);
-    resultsContainer.appendChild(card);
-  });
-}
-
 //search button
 const searchBtn = document.querySelector("#submit");
 searchBtn.addEventListener("click", async () => {
@@ -131,6 +76,61 @@ function searchResults(data) {
     ul.appendChild(li);
   });
   resultsContainer.appendChild(ul);
+}
+
+function handleSearch(event) {
+  var searchTerm = event.target.value;
+
+  if (searchTerm !== "") {
+    removeDefaultCards();
+    // Perform the search and display the results
+    performSearch(searchTerm);
+  } else {
+    // If the search term is empty, show the default cards again
+    showDefaultCards();
+  }
+}
+
+function handlePlaylistCreation(event) {
+  removeDefaultCards();
+
+  createPlaylist();
+}
+
+function removeDefaultCards() {
+  var defaultCardContainer = document.getElementById("defaultCardContainer");
+  while (defaultCardContainer.firstChild) {
+    defaultCardContainer.removeChild(defaultCardContainer.firstChild);
+  }
+}
+
+function displayDefaultCards() {
+  const resultsContainer = document.querySelector("#resultsContainer");
+  resultsContainer.innerHTML = "";
+
+  const defaultData = [
+    {
+      type: `hip hop`,
+      name: "Artist 1",
+      image: "images/1871847_band_music_social media_songs_radio_icon.png",
+    },
+    {
+      type: `rock`,
+      name: "Song 1",
+      image: "images/1871847_band_music_social media_songs_radio_icon.png",
+    },
+    {
+      type: `pop`,
+      name: "Playlist 1",
+      image: "images/1871847_band_music_social media_songs_radio_icon.png",
+    },
+    // Add more default data as needed
+  ];
+
+  defaultData.forEach((item) => {
+    const card = createCard(item);
+    resultsContainer.appendChild(card);
+  });
 }
 
 //create card
