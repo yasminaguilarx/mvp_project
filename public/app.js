@@ -16,6 +16,9 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function showDefaultCards() {
+  const artistCard = document.getElementById("artistCard");
+  artistCard.style.display = "none";
+
   var defaultCardContainer = document.getElementById("defaultCardContainer");
   var defaultCard = document.createElement("div");
   defaultCard.classList.add("card");
@@ -102,25 +105,25 @@ function searchResults(data) {
     return;
   }
 
-  //   const ul = document.createElement("ul");
-  //   ul.classList.add("results-list");
+  const ul = document.createElement("ul");
+  ul.classList.add("results-list");
 
   data.forEach((item) => {
     const card = createCard(item);
     resultsContainer.appendChild(card);
-    // const li = document.createElement("li");
-    // let displayText = "";
+    const li = document.createElement("li");
+    let displayText = "";
 
-    // if (item.type === "genre") {
-    //   displayText = item.playlist_type;
-    // } else if (item.type === "artist" || "song") {
-    //   displayText = item.song_artist;
-    // } else if (item.type === "playlist") {
-    //   displayText = item.playlist_songs;
-    // }
+    if (item.type === "genre") {
+      displayText = item.playlist_type;
+    } else if (item.type === "artist" || "song") {
+      displayText = item.song_artist;
+    } else if (item.type === "playlist") {
+      displayText = item.playlist_songs;
+    }
 
-    // li.textContent = displayText;
-    // ul.appendChild(li);
+    li.textContent = displayText;
+    ul.appendChild(li);
   });
   resultsContainer.appendChild(ul);
 }
