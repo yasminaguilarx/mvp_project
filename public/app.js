@@ -87,10 +87,10 @@ async function search(input) {
     );
     const data = await response.json();
 
-    const filter = data.filter((elem) => {
-      return elem.toLowerCase().includes(input.toLowerCase());
-    });
-    searchResults(filter);
+    // const filter = data.filter((elem) => {
+    //   return elem.toLowerCase().includes(input.toLowerCase());
+    // });
+    searchResults(data);
   } catch (err) {
     console.error("No result found", err);
   }
