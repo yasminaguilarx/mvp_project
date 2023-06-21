@@ -9,8 +9,8 @@ const { Pool } = require("pg");
 const cors = require("cors");
 
 const dbstring = process.env.DATABASE_URL;
-const port = process.env.PORT;
-//const port = 3400;
+// const port = process.env.PORT;
+const port = 3400;
 
 const pool = new Pool({
   connectionString: dbstring,
@@ -18,11 +18,7 @@ const pool = new Pool({
 
 app.use(express.json());
 app.use(express.static("public"));
-app.use(
-  cors({
-    origin: "*",
-  })
-);
+app.use(cors());
 // app.use(cookieParser());
 
 // get all
@@ -30,7 +26,11 @@ app.use(
 app.get("/music_search", async (req, res) => {
   try {
     const result = await pool.query(`SELECT * FROM music_search`);
-    res.status(200).json(result.rows);
+    const data = result.rows.map((item) => ({
+      ...item,
+      type: "artist" || "song",
+    }));
+    res.status(200).json(data);
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");
@@ -41,7 +41,11 @@ app.get("/music_search", async (req, res) => {
 app.get("/playlist_info", async (req, res) => {
   try {
     const result = await pool.query(`SELECT * FROM playlist_info`);
-    res.status(200).json(result.rows);
+    const data = result.rows.map((item) => ({
+      ...item,
+      type: "genre",
+    }));
+    res.status(200).json(data);
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");
@@ -52,7 +56,11 @@ app.get("/playlist_info", async (req, res) => {
 app.get("/playlist_songs", async (req, res) => {
   try {
     const result = await pool.query(`SELECT * FROM playlist_songs`);
-    res.status(200).json(result.rows);
+    const data = result.rows.map((item) => ({
+      ...item,
+      type: "playlist",
+    }));
+    res.status(200).json(data);
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");
@@ -160,7 +168,7 @@ app.post("/playlist_info", async (req, res) => {
 });
 
 //playlist songs WORKS
-app.post("/playlist_songs", async (req, res) => {
+app.post("/playlist_songs/songs_added", async (req, res) => {
   const { playlist_id, song_id } = req.body;
   if (!playlist_id || !song_id) {
     return res.status(400).json({ error: "Missing Required Field" });

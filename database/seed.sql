@@ -27,7 +27,8 @@ CREATE TABLE playlist_songs (
     playlist_id INT NOT NULL,
     FOREIGN KEY (playlist_id) REFERENCES playlist_info(playlist_id),
     song_id INT NOT NULL,
-    FOREIGN KEY (song_id) REFERENCES music_search(song_id)
+    FOREIGN KEY (song_id) REFERENCES music_search(song_id),
+    songs_added TEXT
 );
 
 
