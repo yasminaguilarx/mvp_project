@@ -1,40 +1,62 @@
 console.log("this is workin");
 
-// window.addEventListener("DOMContentLoaded", () => {
-//   showDefaultCards();
-// });
+window.addEventListener("DOMContentLoaded", displayDefaultCards);
 
-document.addEventListener("DOMContentLoaded", function () {
-  showDefaultCards();
-});
+function displayDefaultCards() {
+  const resultsContainer = document.querySelector("#resultsContainer");
+  resultsContainer.remove();
 
-function showDefaultCards() {
-  let defaultCardContainer = document.getElementById("defaultCardContainer");
-  const defaultCard = document.getElementById(".default-card");
-  defaultCard.innerText = displayDefaultCards();
-  defaultCardContainer.appendChild(defaultCard);
+  const newResultsContainer = document.createElement("div");
+  newResultsContainer.id = "resultsContainer";
+
+  defaultData.forEach((item) => {
+    const card = createCard(item, "card", "card-image", "card-title");
+    newResultsContainer.appendChild(card);
+  });
+
+  const parentContainer = document.querySelector("#parentContainer");
+  parentContainer.appendChild(newResultsContainer);
 }
 
 //search button
 const searchBtn = document.querySelector("#submit");
 searchBtn.addEventListener("click", async () => {
   const searchBar = document.querySelector("input[id=searchBar]").value;
-
-  if (searchBar === "") {
-    removeDefaultCards();
-    // Perform the search and display the results
-    await search(searchBar);
-  } else {
-    // If the search term is empty, show the default cards again
-    showDefaultCards();
-  }
+  await search(searchBar);
 });
+
+//create cards
+function createCard(item) {
+  const cardDiv = document.getElementsByClassName("card");
+
+  // Create the card content
+  const cardContent = document.createElement("div");
+  cardContent.classList.add("card-content");
+
+  // Create the card image
+  const cardImage = document.createElement("img");
+  cardImage.src = item.image;
+  cardImage.alt = item.name;
+  cardImage.classList.add(imageClass);
+  cardContent.appendChild(cardImage);
+
+  // Create the card title
+  const cardTitle = document.createElement("h2");
+  cardTitle.textContent = item.name;
+  cardTitle.classList.add(titleClass);
+  cardContent.appendChild(cardTitle);
+
+  // Append the card content to the card element
+  cardDiv.appendChild(cardContent);
+
+  return cardDiv;
+}
 
 //search functionality 'get'
 async function search(input) {
   try {
     const response = await fetch(
-      `https://playlist-web-server.onrender.com/music_search?q=${input}`,
+      `http://localhost:3400/music_search?q=${input}`,
       {
         method: "GET",
       }
@@ -63,8 +85,6 @@ function searchResults(data) {
   ul.classList.add("results-list");
 
   data.forEach((item) => {
-    const card = createCard(item);
-    ul.appendChild(card);
     const li = document.createElement("li");
     let displayText = "";
 
@@ -82,128 +102,11 @@ function searchResults(data) {
   resultsContainer.appendChild(ul);
 }
 
-function handlePlaylistCreation(event) {
-  removeDefaultCards();
-
-  createPlaylist();
-}
-
-function removeDefaultCards() {
-  let defaultCardContainer = document.getElementById("defaultCardContainer");
-  while (defaultCardContainer.firstChild) {
-    defaultCardContainer.removeChild(defaultCardContainer.firstChild);
-  }
-}
-
-function displayDefaultCards() {
-  const resultsContainer = document.querySelector("#resultsContainer");
-  resultsContainer.innerHTML = "";
-
-  const defaultData = [
-    {
-      type: `hip hop`,
-      name: "Artist 1",
-      image: "images/1871847_band_music_social media_songs_radio_icon.png",
-    },
-    {
-      type: `rock`,
-      name: "Song 1",
-      image: "images/1871847_band_music_social media_songs_radio_icon.png",
-    },
-    {
-      type: `pop`,
-      name: "Playlist 1",
-      image: "images/1871847_band_music_social media_songs_radio_icon.png",
-    },
-    // Add more default data as needed
-  ];
-
-  defaultData.forEach((item) => {
-    const card = createCard(item);
-    resultsContainer.appendChild(card);
-  });
-}
-
-//create card
-function createCard(item) {
-  const card = document.createElement("div");
-  card.classList.add("card");
-
-  const cardImage = document.createElement("img");
-  cardImage.classList.add("card-image");
-  cardImage.src = item.image;
-
-  const cardTitle = document.createElement("h3");
-  cardTitle.classList.add("card-title");
-  cardTitle.textContent = item.name;
-
-  const cardType = document.createElement("p");
-  cardType.classList.add("card-type");
-  cardType.textContent = item.type;
-
-  const cardButton = document.createElement("button");
-  cardButton.classList.add("card-button");
-  cardButton.textContent = "Save to Playlist";
-  cardButton.addEventListener("click", () => {
-    saveToPlaylist(item);
-  });
-
-  card.appendChild(cardImage);
-  card.appendChild(cardTitle);
-  card.appendChild(cardType);
-  card.appendChild(cardButton);
-
-  const resultsContainer = document.querySelector("#resultsContainer");
-  resultsContainer.appendChild(card);
-
-  displayDefaultCards();
-  return card;
-}
-
-// Save the search result to the playlist
-function saveToPlaylist(result) {
-  // Prompt the user for the playlist name
-  const playlistName = prompt("Enter playlist name:");
-
-  // Check if the playlist name is provided
-  if (!playlistName) {
-    console.log("Playlist name is required.");
-    return;
-  }
-
-  // Create a playlist object
-  const playlist = {
-    name: playlistName,
-    songs: [result],
-  };
-
-  // Send the playlist object to the server
-  fetch("https://playlist-web-server.onrender.com/playlist_songs/songs_added", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(playlist),
-  })
-    .then((response) => {
-      if (response.ok) {
-        console.log(
-          `Saved '${result.name}' to playlist '${playlistName}' successfully!`
-        );
-      } else {
-        console.error("Failed to save the playlist.");
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-}
-
 //genre check this one and see if works
 async function getPlaylistGenre(genre) {
   try {
     const response = await fetch(
-      `https://playlist-web-server.onrender.com/playlist_info/${genre}`,
+      `http://localhost:3400/playlist_info/${genre}`,
       {
         method: "GET",
       }
@@ -220,7 +123,7 @@ async function createPlaylist(playlistType, songIds) {
   try {
     // Create playlist_info entry
     const playlistInfoResponse = await fetch(
-      "https://playlist-web-server.onrender.com/playlist_info",
+      "http://localhost:3400/playlist_info",
       {
         method: "POST",
         headers: {
@@ -235,7 +138,7 @@ async function createPlaylist(playlistType, songIds) {
 
     // Add songs to playlist_songs table
     for (const songId of songIds) {
-      await fetch("https://playlist-web-server.onrender.com/playlist_songs", {
+      await fetch("http://localhost:3400/playlist_songs", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -253,16 +156,13 @@ async function createPlaylist(playlistType, songIds) {
 //update playlist
 async function updatePlaylist(playlistId, playlistType) {
   try {
-    await fetch(
-      `https://playlist-web-server.onrender.com/playlist_info/${playlistId}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ playlist_type: playlistType }),
-      }
-    );
+    await fetch(`http://localhost:3400/playlist_info/${playlistId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ playlist_type: playlistType }),
+    });
 
     console.log("Playlist updated successfully!");
   } catch (error) {
@@ -274,20 +174,14 @@ async function updatePlaylist(playlistId, playlistType) {
 async function deletePlaylist(playlistId) {
   try {
     // Delete playlist_songs entries
-    await fetch(
-      `https://playlist-web-server.onrender.com/playlist_songs/${playlistId}`,
-      {
-        method: "DELETE",
-      }
-    );
+    await fetch(`http://localhost:3400/playlist_songs/${playlistId}`, {
+      method: "DELETE",
+    });
 
     // Delete playlist_info entry
-    await fetch(
-      `https://playlist-web-server.onrender.com/playlist_info/${playlistId}`,
-      {
-        method: "DELETE",
-      }
-    );
+    await fetch(`http://localhost:3400/playlist_info/${playlistId}`, {
+      method: "DELETE",
+    });
 
     console.log("Playlist deleted successfully!");
   } catch (error) {
@@ -299,7 +193,7 @@ async function deletePlaylist(playlistId) {
 async function removeSongFromPlaylist(playlistId, songId) {
   try {
     await fetch(
-      `https://playlist-web-server.onrender.com/playlist_songs/${playlistId}/${songId}`,
+      `http://localhost:3400/playlist_songs/${playlistId}/${songId}`,
       {
         method: "DELETE",
       }
