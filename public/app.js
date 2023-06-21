@@ -15,7 +15,7 @@ function showDefaultCards() {
   var defaultCardContainer = document.getElementById("defaultCardContainer");
   var defaultCard = document.createElement("div");
   defaultCard.classList.add("card");
-  defaultCard.textContent = "Default Card Content";
+  defaultCard.textContent = displayDefaultCards();
   defaultCardContainer.appendChild(defaultCard);
 }
 
