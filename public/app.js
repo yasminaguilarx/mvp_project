@@ -9,13 +9,46 @@ function displayDefaultCards() {
   const newResultsContainer = document.createElement("div");
   newResultsContainer.id = "resultsContainer";
 
+  const defaultData = [
+    {
+      type: "playlist",
+      name: "Playlist 1",
+      image: "images/1871847_band_music_social media_songs_radio_icon.png",
+    },
+    {
+      type: "playlist",
+      name: "Playlist 1",
+      image: "images/1871847_band_music_social media_songs_radio_icon.png",
+    },
+    {
+      type: "playlist",
+      name: "Playlist 1",
+      image: "images/1871847_band_music_social media_songs_radio_icon.png",
+    },
+    {
+      type: "playlist",
+      name: "Playlist 1",
+      image: "images/1871847_band_music_social media_songs_radio_icon.png",
+    },
+    {
+      type: "playlist",
+      name: "Playlist 1",
+      image: "images/1871847_band_music_social media_songs_radio_icon.png",
+    },
+    {
+      type: "playlist",
+      name: "Playlist 1",
+      image: "images/1871847_band_music_social media_songs_radio_icon.png",
+    },
+  ];
+
   defaultData.forEach((item) => {
     const card = createCard(item, "card", "card-image", "card-title");
     newResultsContainer.appendChild(card);
   });
 
-  const parentContainer = document.querySelector("#parentContainer");
-  parentContainer.appendChild(newResultsContainer);
+  const mainDiv = document.querySelector("#mainDiv");
+  mainDiv.appendChild(newResultsContainer);
 }
 
 //search button
