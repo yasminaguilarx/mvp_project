@@ -5,15 +5,6 @@ console.log("this is workin");
 // });
 
 document.addEventListener("DOMContentLoaded", function () {
-  // Add code to show default cards when the page loads
-  document.getElementById("search").addEventListener("input", handleSearch);
-
-  // Add event listener for search or playlist creation
-  document.getElementById("search").addEventListener("input", handleSearch);
-  document
-    .getElementById("createPlaylist")
-    .addEventListener("click", handlePlaylistCreation);
-
   showDefaultCards();
 });
 
@@ -59,9 +50,21 @@ function displayDefaultCards() {
   resultsContainer.innerHTML = "";
 
   const defaultData = [
-    { type: "artist", name: "Artist 1", image: "image1.jpg" },
-    { type: "song", name: "Song 1", image: "image2.jpg" },
-    { type: "playlist", name: "Playlist 1", image: "image3.jpg" },
+    {
+      type: `${input}`,
+      name: "Artist 1",
+      image: "images/1871847_band_music_social media_songs_radio_icon.png",
+    },
+    {
+      type: `${input}`,
+      name: "Song 1",
+      image: "images/1871847_band_music_social media_songs_radio_icon.png",
+    },
+    {
+      type: `${input}`,
+      name: "Playlist 1",
+      image: "images/1871847_band_music_social media_songs_radio_icon.png",
+    },
     // Add more default data as needed
   ];
 
@@ -128,19 +131,6 @@ function searchResults(data) {
     ul.appendChild(li);
   });
   resultsContainer.appendChild(ul);
-}
-
-function handleSearch(event) {
-  var searchTerm = event.target.value;
-
-  if (searchTerm !== "") {
-    removeDefaultCards();
-    // Perform the search and display the results
-    performSearch(searchTerm);
-  } else {
-    // If the search term is empty, show the default cards again
-    showDefaultCards();
-  }
 }
 
 //create card
