@@ -1,11 +1,14 @@
-console.log("this is workin");
-
 //search button
-const searchBtn = document.querySelector("#submit");
-searchBtn.addEventListener("click", async () => {
-  const searchBar = document.querySelector("input[id=searchBar]").value;
-  //   console.log(searchBar); //logging the search
-  await search(searchBar);
+
+window.addEventListener("DOMContentLoaded", () => {
+  const searchBar = document.getElementById("searchBar");
+
+  searchBar.addEventListener("keypress", async (e) => {
+    if (e.key === "Enter") {
+      const inputSearch = searchBar.value;
+      await search(inputSearch);
+    }
+  });
 });
 
 // create cards
@@ -16,7 +19,7 @@ function createCard(item) {
   // Create the card image
   const cardImage = document.createElement("img");
   cardImage.src =
-    "public/images/1871847_band_music_social media_songs_radio_icon.png";
+    "./public/images/1871847_band_music_social media_songs_radio_icon.png";
   cardImage.alt = item.name;
   cardImage.classList.add("card-image");
   card.appendChild(cardImage);
@@ -107,6 +110,8 @@ function searchResults(data) {
 
   const ul = document.createElement("ul");
   ul.classList.add("results-list");
+
+  console.log(data);
 
   data.forEach((item) => {
     const li = document.createElement("li");
