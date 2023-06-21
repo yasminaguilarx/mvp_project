@@ -1,6 +1,6 @@
 console.log("this is workin");
 
-window.addEventListener("DOMContentLoaded", displayDefaultCards);
+// window.addEventListener("DOMContentLoaded", displayDefaultCards);
 
 // function displayDefaultCards() {
 //   const defaultCard = document.querySelector("#defaultCardContainer");
