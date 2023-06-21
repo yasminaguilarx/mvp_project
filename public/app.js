@@ -9,12 +9,8 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function showDefaultCards() {
-  const artistCard = document.getElementById("artistCard");
-  artistCard.style.display = "none";
-
-  var defaultCardContainer = document.getElementById("defaultCardContainer");
-  var defaultCard = document.createElement("div");
-  defaultCard.classList.add("card");
+  let defaultCardContainer = document.getElementById("defaultCardContainer");
+  const defaultCard = document.getElementById(".default-card");
   defaultCard.textContent = displayDefaultCards();
   defaultCardContainer.appendChild(defaultCard);
 }
@@ -93,7 +89,7 @@ function handlePlaylistCreation(event) {
 }
 
 function removeDefaultCards() {
-  var defaultCardContainer = document.getElementById("defaultCardContainer");
+  let defaultCardContainer = document.getElementById("defaultCardContainer");
   while (defaultCardContainer.firstChild) {
     defaultCardContainer.removeChild(defaultCardContainer.firstChild);
   }
