@@ -129,7 +129,7 @@ searchBtn.addEventListener("click", async () => {
 async function search(input) {
   try {
     const response = await fetch(
-      `https://playlist-web-server.onrender.com/music_search?q=${input}`,
+      `https://playlist-web-server.onrender.com/${input}`,
       {
         method: "GET",
       }
@@ -145,35 +145,35 @@ async function search(input) {
   }
 }
 
-function searchResults(data) {
-  const resultsContainer = document.querySelector("#resultsContainer");
-  resultsContainer.innerHTML = "";
+// function searchResults(data) {
+//   const resultsContainer = document.querySelector("#resultsContainer");
+//   resultsContainer.innerHTML = "";
 
-  if (data.length === 0) {
-    resultsContainer.textContent = "No result found";
-    return;
-  }
+//   if (data.length === 0) {
+//     resultsContainer.textContent = "No result found";
+//     return;
+//   }
 
-  const ul = document.createElement("ul");
-  ul.classList.add("results-list");
+//   const ul = document.createElement("ul");
+//   ul.classList.add("results-list");
 
-  data.forEach((item) => {
-    const li = document.createElement("li");
-    let displayText = "";
+//   data.forEach((item) => {
+//     const li = document.createElement("li");
+//     let displayText = "";
 
-    if (item.type === "genre") {
-      displayText = item.playlist_type;
-    } else if (item.type === "artist" || "song") {
-      displayText = item.song_artist;
-    } else if (item.type === "playlist") {
-      displayText = item.playlist_songs;
-    }
+//     if (item.type === "genre") {
+//       displayText = item.playlist_type;
+//     } else if (item.type === "artist" || "song") {
+//       displayText = item.song_artist;
+//     } else if (item.type === "playlist") {
+//       displayText = item.playlist_songs;
+//     }
 
-    li.textContent = displayText;
-    ul.appendChild(li);
-  });
-  resultsContainer.appendChild(ul);
-}
+//     li.textContent = displayText;
+//     ul.appendChild(li);
+//   });
+//   resultsContainer.appendChild(ul);
+// }
 
 //genre check this one and see if works
 // async function getPlaylistGenre(genre) {
