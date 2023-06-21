@@ -9,8 +9,8 @@ const { Pool } = require("pg");
 const cors = require("cors");
 
 const dbstring = process.env.DATABASE_URL;
-// const port = process.env.PORT;
-const port = 3400;
+const port = process.env.PORT;
+// const port = 3400;
 
 const pool = new Pool({
   connectionString: dbstring,
