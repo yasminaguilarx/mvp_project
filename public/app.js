@@ -91,7 +91,7 @@ function createCard(item) {
   return card;
 }
 
-function saveToPlaylist(item) {
+function saveToPlaylist() {
   const playlistName = prompt("Enter playlist name:");
 
   if (!playlistName) {
