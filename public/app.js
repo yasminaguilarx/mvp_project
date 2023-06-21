@@ -77,7 +77,7 @@ function createCard(item) {
   createdCard.append(cardTitle);
 
   // Append the card content to the card element
-  createdCard.append(cardDiv);
+  createdCard.append(resultsContainer);
 
   return createdCard;
 }
