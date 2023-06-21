@@ -1,54 +1,51 @@
-// `https://api.spotify.com/${endpoint}`
-
 console.log("this is workin");
 
 //search button
 const searchBtn = document.querySelector("#submit");
 searchBtn.addEventListener("click", async () => {
   const searchBar = document.querySelector("input[id=searchBar]").value;
-  try {
-    const token = await accessToken();
-    await musicSearch(searchBar, token);
-  } catch (err) {
-    console.error(err);
-  }
+  await search(searchBar);
 });
 
-//pulling access token from server side to client side
-async function accessToken() {
-  try {
-    const response = await fetch("/api/token");
-    if (response.ok) {
-      const data = await response.json();
-      return data.access_token;
-    } else {
-      throw new Error("Failed To Fetch Access Token");
-    }
-  } catch (err) {
-    console.error(err);
-  }
-}
-
-async function musicSearch(input, token) {
-  try {
-    const result = await fetch(`https://api.spotify.com/v1/search?q=${input}`, {
-      method: "GET",
-      headers: { Authorization: "Bearer " + token },
-    });
-    if (result.ok) {
-      const data = await result.json();
-      console.log(data);
-    } else {
-      throw new Error("Failed To Fetch Search Results");
-    }
-  } catch (err) {
-    console.error(err);
-  }
-}
-
 //get playlist
-//update playlist
+async function search(input) {
+  try {
+    const response = await fetch("/database/music_search");
+    const data = await response.json();
+
+    const filter = data.filter((elem) => {
+      return elem.song_artist.toLowerCase().includes(input.toLowerCase());
+    });
+    searchResults(filter);
+  } catch {
+    console.error("No result found");
+  }
+}
+
+function searchResults(data) {
+  const resultsContainer = document.querySelector("#resultsContainer");
+  resultsContainer.innerHTML = "";
+
+  if (data.length === 0) {
+    resultsContainer.textContent = "No result found";
+    return;
+  }
+
+  const ul = document.createElement("ul");
+  ul.classList.add("results-list");
+
+  data.forEach((item) => {
+    const li = document.createElement("li");
+    li.textContent = `${item.song_artist}`;
+    ul.appendChild(li);
+  });
+  resultsContainer.appendChild(ul);
+}
+
+//get one playlist
+
 //create playlist
+//update playlist
 //delete playlist
 
 //get genres

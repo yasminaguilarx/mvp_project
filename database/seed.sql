@@ -12,14 +12,16 @@ CREATE TABLE music_search (
 
 CREATE TABLE playlist_info (
     playlist_id SERIAL PRIMARY KEY,
-    playlist_type varchar(50)
+    playlist_type varchar(50) --genre
 );
 
-CREATE TABLE user_info (
-    user_id SERIAL PRIMARY KEY,
-    user_playlist TEXT,
-    user_profile varchar(50) UNIQUE
-);
+
+--deleted from render database woohoo
+-- CREATE TABLE user_info (
+--     user_id SERIAL PRIMARY KEY,
+--     user_playlist TEXT,
+--     user_profile varchar(50) UNIQUE
+-- );
 
 CREATE TABLE playlist_songs (
     playlist_id INT NOT NULL,
@@ -28,26 +30,28 @@ CREATE TABLE playlist_songs (
     FOREIGN KEY (song_id) REFERENCES music_search(song_id)
 );
 
-CREATE TABLE user_playlists (
-    user_id INT NOT NULL, 
-    FOREIGN KEY (user_id) REFERENCES user_info(user_id),
-    playlist_id INT NOT NULL,
-    FOREIGN KEY (playlist_id) REFERENCES playlist_info(playlist_id)
-);
+
+--deleted from database woohoo
+-- CREATE TABLE user_playlists (
+--     user_id INT NOT NULL, 
+--     FOREIGN KEY (user_id) REFERENCES user_info(user_id),
+--     playlist_id INT NOT NULL,
+--     FOREIGN KEY (playlist_id) REFERENCES playlist_info(playlist_id)
+-- );
 
 INSERT INTO music_search
-(song_genre, song_artist)
+(song_artist)
 VALUES 
-    ('Country', 'Lainey Wilson'),
-    ('R&B', 'Kelly Rowland'),
-    ('Hip Hop', 'Jay-Z'),
-    ('Classical', 'Ludwig van Beethoven'),
-    ('Reggaeton', 'Wisin Y Yandel'),
-    ('Ska', 'Sublime'),
-    ('Rap', 'Ying Yang Twinz'),
-    ('Dembow', 'El Alfa'),
-    ('Pop', 'Pink'),
-    ('R&B', 'JaRule');
+    ('Lainey Wilson'),
+    ('Kelly Rowland'),
+    ('Jay-Z'),
+    ('Ludwig van Beethoven'),
+    ('Wisin Y Yandel'),
+    ('Sublime'),
+    ('Ying Yang Twinz'),
+    ('El Alfa'),
+    ('Pink'),
+    ('JaRule');
 
 INSERT INTO playlist_info
 (playlist_type)
@@ -63,29 +67,29 @@ VALUES
     ('ADRENALINE JUNKIES'),
     ('JUST A PHASE');
 
-INSERT INTO user_info
-(user_playlist, user_profile)
-VALUES
-    ('RED HOT', 'User Profile 1'),
-    ('FEELIN BLUE', 'User Profile 2'),
-    ('GREEN WITH ENVY', 'User Profile 3'),
-    ('PUMP IT', 'User Profile 4'),
-    ('PANIC!', 'User Profile 5'),
-    ('Euphoria express', 'User Profile 6'),
-    ('Soothing souls', 'User Profile 7'),
-    ('Life is a trip', 'User Profile 8'),
-    ('Adrenaline junkies', 'User Profile 9'),
-    ('Just a phase', 'User Profile 10');
+-- INSERT INTO user_info
+-- (user_playlist, user_profile)
+-- VALUES
+--     ('RED HOT', 'User Profile 1'),
+--     ('FEELIN BLUE', 'User Profile 2'),
+--     ('GREEN WITH ENVY', 'User Profile 3'),
+--     ('PUMP IT', 'User Profile 4'),
+--     ('PANIC!', 'User Profile 5'),
+--     ('Euphoria express', 'User Profile 6'),
+--     ('Soothing souls', 'User Profile 7'),
+--     ('Life is a trip', 'User Profile 8'),
+--     ('Adrenaline junkies', 'User Profile 9'),
+--     ('Just a phase', 'User Profile 10');
 
 
-INSERT INTO user_playlists
-    (user_id, playlist_id)
-VALUES
-    (1, 6),
-    (5, 10),
-    (7, 8),
-    (4, 9),
-    (2, 3);
+-- INSERT INTO user_playlists
+--     (user_id, playlist_id)
+-- VALUES
+--     (1, 6),
+--     (5, 10),
+--     (7, 8),
+--     (4, 9),
+--     (2, 3);
 
 INSERT INTO playlist_songs
     (playlist_id, song_id)
