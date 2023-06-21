@@ -70,7 +70,6 @@ function createCard(item) {
   const cardImage = document.createElement("img");
   cardImage.src = item.image;
   cardImage.alt = item.name;
-  cardImage.classList.add(imageClass);
   cardContent.appendChild(cardImage);
 
   // Create the card title
