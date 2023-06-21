@@ -295,15 +295,15 @@
 }
 
 #defaultCardsContainer {
-  /* position: absolute;
+  position: absolute;
   top: 80px;
   left: 0;
-  width: 100%; */
-  /* display: grid;
+  width: 100%;
+  display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
-  margin-top: 20px; */
-  flex: 0 0 auto;
+  margin-top: 20px;
+  /* flex: 0 0 auto;
   width: calc(33.33% - 20px);
-  margin-bottom: 20px;
+  margin-bottom: 20px; */
 }

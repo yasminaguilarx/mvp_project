@@ -2,55 +2,6 @@ console.log("this is workin");
 
 // window.addEventListener("DOMContentLoaded", displayDefaultCards);
 
-// function displayDefaultCards() {
-//   const defaultCard = document.querySelector("#defaultCardContainer");
-//   defaultCard.remove();
-
-//   const newCardContainer = document.createElement("div");
-//   newCardContainer.id = "defaultCardContainer";
-
-//   const defaultData = [
-//     {
-//       type: "playlist",
-//       name: "Playlist 1",
-//       image: "images/1871847_band_music_social media_songs_radio_icon.png",
-//     },
-//     {
-//       type: "playlist",
-//       name: "Playlist 1",
-//       image: "images/1871847_band_music_social media_songs_radio_icon.png",
-//     },
-//     {
-//       type: "playlist",
-//       name: "Playlist 1",
-//       image: "images/1871847_band_music_social media_songs_radio_icon.png",
-//     },
-//     {
-//       type: "playlist",
-//       name: "Playlist 1",
-//       image: "images/1871847_band_music_social media_songs_radio_icon.png",
-//     },
-//     {
-//       type: "playlist",
-//       name: "Playlist 1",
-//       image: "images/1871847_band_music_social media_songs_radio_icon.png",
-//     },
-//     {
-//       type: "playlist",
-//       name: "Playlist 1",
-//       image: "images/1871847_band_music_social media_songs_radio_icon.png",
-//     },
-//   ];
-
-//   defaultData.forEach((item) => {
-//     const card = createCard(item, "card", "card-image", "card-title");
-//     newCardContainer.appendChild(card);
-//   });
-
-//   const cardDiv = document.querySelector("#cardsContainer");
-//   cardDiv.appendChild(newCardContainer);
-// }
-
 //search button
 const searchBtn = document.querySelector("#submit");
 searchBtn.addEventListener("click", async () => {
