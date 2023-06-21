@@ -4,8 +4,8 @@ console.log("this is workin");
 const searchBtn = document.querySelector("#submit");
 searchBtn.addEventListener("click", async () => {
   const searchBar = document.querySelector("input[id=searchBar]").value;
-  console.log(searchBar);
-  //   await search(searchBar);
+  //   console.log(searchBar); //logging the search
+  await search(searchBar);
 });
 
 // create cards
