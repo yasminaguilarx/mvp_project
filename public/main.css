@@ -4,11 +4,6 @@
   box-sizing: border-box;
 }
 
-/* .container {
-  display: grid;
-  justify-content: center;
-} */
-
 .container {
   display: grid;
   grid-template-columns: 0.65fr auto;
@@ -30,7 +25,7 @@
   border-radius: 8px;
   /* grid-column: 1; */
   display: flex;
-  max-height: 150px;
+  /* max-height: 150px; */
 }
 
 #btnContainer {
@@ -67,7 +62,7 @@
   background-color: #121212;
   border-radius: 8px;
   grid-row: 2;
-  max-height: 675px;
+  /* max-height: 675px; */
 }
 
 #mainDiv {
@@ -179,8 +174,8 @@
   align-items: center;
   padding: 16px;
   margin-bottom: 16px;
-  width: 200px; /* Adjust the width as needed */
-  height: 200px; /* Adjust the height as needed */
+  /* width: 200px; 
+  height: 200px;  */
 }
 
 .card-image {
@@ -214,8 +209,8 @@
 }
 
 .default-card {
-  width: 200px;
-  height: 200px;
+  /* width: 200px;
+  height: 200px; */
   background-color: #f2f2f2;
   border-radius: 8px;
   margin-bottom: 20px;
@@ -236,10 +231,10 @@
   margin-bottom: 10px;
 }
 
-/* CSS for search result cards */
-.search-result-card {
-  width: 200px;
-  height: 200px;
+/* search card css */
+.card {
+  /* width: 200px;
+  height: 200px; */
   background-color: #f2f2f2;
   border-radius: 8px;
   margin: 10px;
@@ -295,9 +290,9 @@
 }
 
 #defaultCardsContainer {
-  position: absolute;
+  /* position: absolute;
   top: 80px;
-  left: 0;
+  left: 0; */
   width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
