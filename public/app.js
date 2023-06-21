@@ -60,29 +60,26 @@ searchBtn.addEventListener("click", async () => {
 
 //create cards
 function createCard(item) {
-  const cardDiv = document.getElementsByClassName("card");
-
-  // Create the card content
-  const cardContent = document.createElement("div");
-  cardContent.classList.add("card-content");
+  const resultsContainer = document.querySelector("#resultsContainer");
+  const createdCard = document.querySelector(".card");
 
   // Create the card image
   const cardImage = document.createElement("img");
   cardImage.src = item.image;
   cardImage.alt = item.name;
   cardImage.classList.add("card-image");
-  cardContent.appendChild(cardImage);
+  createdCard.append(cardImage);
 
   // Create the card title
-  const cardTitle = document.createElement("h2");
+  const cardTitle = document.createElement("h3");
   cardTitle.textContent = item.name;
   cardTitle.classList.add("card-title");
-  cardContent.appendChild(cardTitle);
+  createdCard.append(cardTitle);
 
   // Append the card content to the card element
+  createdCard.append(cardDiv);
 
-  cardContent.appendTo(cardDiv);
-  return cardDiv;
+  return createdCard;
 }
 
 //search functionality 'get'
