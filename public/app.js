@@ -126,24 +126,24 @@ searchBtn.addEventListener("click", async () => {
 // }
 
 // //search functionality 'get'
-// async function search(input) {
-//   try {
-//     const response = await fetch(
-//       `https://playlist-web-server.onrender.com/music_search?q=${input}`,
-//       {
-//         method: "GET",
-//       }
-//     );
-//     const data = await response.json();
+async function search(input) {
+  try {
+    const response = await fetch(
+      `https://playlist-web-server.onrender.com/music_search?q=${input}`,
+      {
+        method: "GET",
+      }
+    );
+    const data = await response.json();
 
-//     const filter = data.filter((elem) => {
-//       return elem.toLowerCase().includes(input.toLowerCase());
-//     });
-//     searchResults(filter);
-//   } catch {
-//     console.error("No result found");
-//   }
-// }
+    const filter = data.filter((elem) => {
+      return elem.toLowerCase().includes(input.toLowerCase());
+    });
+    searchResults(filter);
+  } catch {
+    console.error("No result found");
+  }
+}
 
 function searchResults(data) {
   const resultsContainer = document.querySelector("#resultsContainer");
