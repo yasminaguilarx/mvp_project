@@ -166,6 +166,7 @@ function createCard(item) {
   resultsContainer.appendChild(card);
 
   displayDefaultCards();
+  return card;
 }
 
 // Save the search result to the playlist
