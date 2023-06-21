@@ -80,7 +80,7 @@ function saveToPlaylist() {
 async function search(input) {
   try {
     const response = await fetch(
-      `https://playlist-web-server.onrender.com/all_data/${input}`,
+      `https://playlist-web-server.onrender.com/all_data?q=${input}`,
       {
         method: "GET",
       }
