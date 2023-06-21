@@ -19,7 +19,6 @@ const pool = new Pool({
 app.use(express.json());
 app.use(express.static("public"));
 app.use(cors());
-// app.use(cookieParser());
 
 // get all
 //music search WORKS
