@@ -23,7 +23,7 @@
 #btnDiv {
   background-color: #121212;
   border-radius: 8px;
-  grid-column: 1;
+  /* grid-column: 1; */
   display: flex;
   max-height: 150px;
 }
@@ -134,9 +134,9 @@
   color: #d3d8d4;
 }
 
-#searchDiv {
+/* #searchDiv {
   margin-bottom: 20px;
-}
+} */
 
 #searchBar {
   border: 1px;
@@ -148,9 +148,9 @@
   color: white;
 }
 
-#resultsContainer {
+/* #resultsContainer {
   margin-top: 20px;
-}
+} */
 
 .musicBar {
   position: fixed;
@@ -174,8 +174,8 @@
   align-items: center;
   padding: 16px;
   margin-bottom: 16px;
-  /* width: 200px; 
-  height: 200px;  */
+  width: 200px;
+  height: 200px;
 }
 
 .card-image {
@@ -209,8 +209,8 @@
 } */
 
 .default-card {
-  /* width: 200px;
-  height: 200px; */
+  width: 200px;
+  height: 200px;
   background-color: #f2f2f2;
   border-radius: 8px;
   margin-bottom: 20px;
@@ -221,20 +221,20 @@
   font-family: Arial, sans-serif;
   font-size: 16px;
   color: #333;
-  padding: 20px;
-  text-align: center;
+  /* padding: 20px;
+  text-align: center; */
 }
 
-/* .default-card img {
+.default-card img {
   max-width: 100px;
   max-height: 100px;
   margin-bottom: 10px;
-} */
+}
 
 /* search card css */
 .card {
-  /* width: 200px;
-  height: 200px; */
+  width: 200px;
+  height: 200px;
   background-color: #f2f2f2;
   border-radius: 8px;
   margin: 10px;
@@ -265,13 +265,13 @@
   text-align: center;
 } */
 
-.default-card img {
+/* .default-card img {
   width: 150px;
   height: 150px;
   object-fit: cover;
   border-radius: 50%;
   margin-bottom: 10px;
-}
+} */
 
 .default-card h3 {
   font-size: 18px;
