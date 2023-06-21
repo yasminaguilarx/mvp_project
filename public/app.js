@@ -23,7 +23,7 @@ function showDefaultCards() {
   var defaultCard = document.createElement("div");
   defaultCard.classList.add("card");
   defaultCard.textContent = "Default Card Content";
-  defaultCardContainer.append(defaultCard);
+  defaultCardContainer.appendChild(defaultCard);
 }
 
 function handleSearch(event) {
@@ -109,7 +109,7 @@ function searchResults(data) {
   ul.classList.add("results-list");
 
   data.forEach((item) => {
-    const card = createCard(item);
+    const card = createCard({ name: item.song_artist });
     resultsContainer.appendChild(card);
     const li = document.createElement("li");
     let displayText = "";
@@ -126,6 +126,19 @@ function searchResults(data) {
     ul.appendChild(li);
   });
   resultsContainer.appendChild(ul);
+}
+
+function handleSearch(event) {
+  var searchTerm = event.target.value;
+
+  if (searchTerm !== "") {
+    removeDefaultCards();
+    // Perform the search and display the results
+    performSearch(searchTerm);
+  } else {
+    // If the search term is empty, show the default cards again
+    showDefaultCards();
+  }
 }
 
 //create card
