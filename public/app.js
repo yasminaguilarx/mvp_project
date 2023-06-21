@@ -23,7 +23,15 @@ function showDefaultCards() {
 const searchBtn = document.querySelector("#submit");
 searchBtn.addEventListener("click", async () => {
   const searchBar = document.querySelector("input[id=searchBar]").value;
-  await search(searchBar);
+
+  if (searchBar === "") {
+    removeDefaultCards();
+    // Perform the search and display the results
+    await search(searchBar);
+  } else {
+    // If the search term is empty, show the default cards again
+    showDefaultCards();
+  }
 });
 
 //search functionality 'get'
@@ -76,19 +84,6 @@ function searchResults(data) {
     ul.appendChild(li);
   });
   resultsContainer.appendChild(ul);
-}
-
-function handleSearch(event) {
-  var searchTerm = event.target.value;
-
-  if (searchTerm !== "") {
-    removeDefaultCards();
-    // Perform the search and display the results
-    performSearch(searchTerm);
-  } else {
-    // If the search term is empty, show the default cards again
-    showDefaultCards();
-  }
 }
 
 function handlePlaylistCreation(event) {
