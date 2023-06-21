@@ -196,17 +196,17 @@
   margin-bottom: 8px;
 }
 
-.card-description {
+/* .card-description {
   font-size: 14px;
   color: #888888;
   margin-bottom: 8px;
-}
+} */
 
-.card-link {
+/* .card-link {
   font-size: 14px;
   color: #1db954;
   text-decoration: none;
-}
+} */
 
 .default-card {
   /* width: 200px;
@@ -225,11 +225,11 @@
   text-align: center;
 }
 
-.default-card img {
+/* .default-card img {
   max-width: 100px;
   max-height: 100px;
   margin-bottom: 10px;
-}
+} */
 
 /* search card css */
 .card {
@@ -247,13 +247,13 @@
   color: #333;
 }
 
-.search-result-card img {
+.card img {
   max-width: 100px;
   max-height: 100px;
   margin-bottom: 10px;
 }
 
-.default-card {
+/* .default-card {
   width: 200px;
   height: 250px;
   border: 1px solid #ccc;
@@ -263,7 +263,7 @@
   margin: 10px;
   display: inline-block;
   text-align: center;
-}
+} */
 
 .default-card img {
   width: 150px;
