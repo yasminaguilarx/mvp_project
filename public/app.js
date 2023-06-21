@@ -23,7 +23,7 @@ function showDefaultCards() {
   var defaultCard = document.createElement("div");
   defaultCard.classList.add("card");
   defaultCard.textContent = "Default Card Content";
-  defaultCardContainer.appendChild(defaultCard);
+  defaultCardContainer.append(defaultCard);
 }
 
 function handleSearch(event) {
