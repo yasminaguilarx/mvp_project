@@ -79,9 +79,12 @@ function saveToPlaylist() {
 // //search functionality 'get'
 async function search(input) {
   try {
-    const response = await fetch(`/music_search${input}`, {
-      method: "GET",
-    });
+    const response = await fetch(
+      `https://playlist-web-server.onrender.com/all_data/${input}`,
+      {
+        method: "GET",
+      }
+    );
     const data = await response.json();
 
     const filter = data.filter((elem) => {
