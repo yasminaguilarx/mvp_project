@@ -23,9 +23,9 @@
 #btnDiv {
   background-color: #121212;
   border-radius: 8px;
-  /* grid-column: 1; */
+  grid-column: 1;
   display: flex;
-  /* max-height: 150px; */
+  max-height: 150px;
 }
 
 #btnContainer {
@@ -62,7 +62,7 @@
   background-color: #121212;
   border-radius: 8px;
   grid-row: 2;
-  /* max-height: 675px; */
+  max-height: 675px;
 }
 
 #mainDiv {
