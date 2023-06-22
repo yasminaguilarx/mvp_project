@@ -13,10 +13,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
 // //search functionality 'get'
 async function search(input) {
-  while (resultsContainer.firstChild) {
-    resultsContainer.removeChild(resultsContainer.firstChild);
-  }
-
   try {
     const response = await fetch(
       `https://playlist-web-server.onrender.com/all_data?q=${input}`,
@@ -37,7 +33,9 @@ async function search(input) {
 
 function searchResults(data) {
   const resultsContainer = document.querySelector("#resultsContainer");
-  resultsContainer.innerHTML = "";
+  while (resultsContainer.firstChild) {
+    resultsContainer.removeChild(resultsContainer.firstChild);
+  }
 
   if (data.length === 0) {
     resultsContainer.textContent = "No result found";
@@ -53,8 +51,6 @@ function searchResults(data) {
 
     if (item.type === "genre") {
       displayText = item.playlist_type;
-    } else if (item.type === "artist" || "song") {
-      displayText = item.song_artist;
     } else if (item.type === "playlist") {
       displayText = item.playlist_songs;
     }
@@ -106,7 +102,7 @@ function saveToPlaylist() {
   const playlistName = prompt("Enter playlist name:");
 
   if (!playlistName) {
-    console.log("Playlist name is required.");
+    alert("Playlist name is required.");
     return;
   }
 
@@ -115,7 +111,7 @@ function saveToPlaylist() {
     songs: [result],
   };
 
-  fetch(`https://playlist-web-server.onrender.com/playlist_info/${item}`, {
+  fetch(`/playlist_info/${item}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -124,7 +120,7 @@ function saveToPlaylist() {
   })
     .then((response) => {
       if (response.ok) {
-        console.log(
+        alert(
           `Saved '${result.name}' to playlist '${playlistName}' successfully!`
         );
       } else {
@@ -132,7 +128,7 @@ function saveToPlaylist() {
       }
     })
     .catch((error) => {
-      console.error("Error:", error);
+      console.error(error);
     });
 }
 
@@ -150,7 +146,7 @@ async function getPlaylistGenre(genre) {
 }
 
 //create playlist
-async function createPlaylist(playlistType, songIds) {
+async function createPlaylist(playlistType, songsAdded) {
   try {
     // Create playlist_info entry
     const playlistInfoResponse = await fetch("/playlist_info", {
@@ -166,18 +162,21 @@ async function createPlaylist(playlistType, songIds) {
 
     // Add songs to playlist_songs table
     for (const songId of songIds) {
-      await fetch("/playlist_songs", {
+      await fetch("/playlist_songs/songs_added", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ playlist_id: playlistId, song_id: songId }),
+        body: JSON.stringify({
+          playlist_id: playlistId,
+          songs_added: songsAdded,
+        }),
       });
     }
 
     console.log("Playlist created successfully!");
   } catch (error) {
-    console.error("Error:", error);
+    console.error(error);
   }
 }
 
