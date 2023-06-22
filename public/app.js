@@ -21,10 +21,6 @@ async function search(input) {
       }
     );
     const data = await response.json();
-
-    // const filter = data.filter((elem) => {
-    //   return elem.toLowerCase().includes(input.toLowerCase());
-    // });
     searchResults(data);
   } catch (err) {
     console.error("No result found", err);
@@ -32,38 +28,33 @@ async function search(input) {
 }
 
 function searchResults(data) {
-  const resultsContainer = document.querySelector("#resultsContainer");
-  while (resultsContainer.firstChild) {
-    resultsContainer.removeChild(resultsContainer.firstChild);
+  const defaultCardContainer = document.querySelector("#defaultCardContainer");
+  while (defaultCardContainer.firstChild) {
+    defaultCardContainer.removeChild(defaultCardContainer.firstChild);
   }
 
   if (data.length === 0) {
-    resultsContainer.textContent = "No result found";
+    defaultCardContainer.textContent = "No result found";
     return;
   }
 
-  const ul = document.createElement("ul");
-  ul.classList.add("results-list");
+  data.results.forEach((elem) => {
+    createCard(elem);
 
-  data.forEach((item) => {
-    const li = document.createElement("li");
     let displayText = "";
 
-    if (item.type === "genre") {
-      displayText = item.playlist_type;
-    } else if (item.type === "playlist") {
-      displayText = item.playlist_songs;
+    if (elem.type === "genre") {
+      displayText = elem.playlist_type;
+    } else if (elem.type === "playlist") {
+      displayText = elem.playlist_songs;
     }
-
-    li.textContent = displayText;
-    ul.appendChild(li);
+    defaultCardContainer.innerHTML = displayText;
   });
-  resultsContainer.appendChild(ul);
 }
 
 // create cards
-function createCard(item) {
-  const cardCtn = document.getElementById("#cardsContainer");
+function createCard(elem) {
+  const cardCtn = document.getElementById("#defaultCardContainer");
   cardCtn.innerHTML = "";
 
   const card = document.createElement("div");
@@ -73,13 +64,13 @@ function createCard(item) {
   const cardImage = document.createElement("img");
   cardImage.src =
     "./public/images/1871847_band_music_social media_songs_radio_icon.png";
-  cardImage.alt = item.name;
+  cardImage.alt = elem.name;
   cardImage.classList.add("card-image");
   card.appendChild(cardImage);
 
   // Create the card title
   const cardTitle = document.createElement("h3");
-  cardTitle.textContent = item.name;
+  cardTitle.textContent = elem.name;
   cardTitle.classList.add("card-title");
   card.appendChild(cardTitle);
 
@@ -88,17 +79,17 @@ function createCard(item) {
   cardButton.textContent = "Save to Playlist";
   cardButton.classList.add("card-button");
   cardButton.addEventListener("click", () => {
-    saveToPlaylist(item);
+    saveToPlaylist(elem);
   });
   card.appendChild(cardButton);
 
-  const resultsContainer = document.querySelector("#resultsContainer");
-  resultsContainer.appendChild(card);
+  const cardsContainer = document.querySelector("#cardsContainer");
+  cardsContainer.appendChild(card);
 
   return card;
 }
 
-function saveToPlaylist() {
+function saveToPlaylist(elem) {
   const playlistName = prompt("Enter playlist name:");
 
   if (!playlistName) {
@@ -108,10 +99,10 @@ function saveToPlaylist() {
 
   const playlist = {
     name: playlistName,
-    songs: [result],
+    songs: [elem],
   };
 
-  fetch(`/playlist_info/${item}`, {
+  fetch(`/playlist_info/songs_added/${elem}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -121,7 +112,7 @@ function saveToPlaylist() {
     .then((response) => {
       if (response.ok) {
         alert(
-          `Saved '${result.name}' to playlist '${playlistName}' successfully!`
+          `Saved '${elem.name}' to playlist '${playlistName}' successfully!`
         );
       } else {
         console.error("Failed to save the playlist.");
