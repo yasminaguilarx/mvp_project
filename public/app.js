@@ -7,12 +7,16 @@ window.addEventListener("DOMContentLoaded", () => {
     if (e.key === "Enter") {
       const inputSearch = searchBar.value;
       await search(inputSearch);
+      createCard();
     }
   });
 });
 
 // create cards
 function createCard(item) {
+  const cardCtn = document.getElementById("#cardsContainer");
+  cardCtn.innerHTML = "";
+
   const card = document.createElement("div");
   card.classList.add("card");
 
