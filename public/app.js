@@ -126,7 +126,7 @@ function saveToPlaylist(elem) {
 //genre check this one and see if works
 async function getPlaylistGenre(genre) {
   try {
-    const response = await fetch(`/playlist_info/${genre}`, {
+    const response = await fetch(`/playlist_info/playlist_type/${genre}`, {
       method: "GET",
     });
     const data = await response.json();
