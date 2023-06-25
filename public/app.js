@@ -37,7 +37,7 @@ function searchResults(data) {
 
   data.results.forEach((elem) => {
     createCard(elem);
-
+    console.log(data.results);
     let displayText = "";
 
     if (elem.type === "genre") {
@@ -205,9 +205,9 @@ async function deletePlaylist(playlistId) {
 }
 
 //delete songs from playlist
-async function removeSongFromPlaylist(playlistId, songId) {
+async function removeSongFromPlaylist(input) {
   try {
-    await fetch(`/playlist_songs/${playlistId}/${songId}`, {
+    await fetch(`/playlist_songs/${input}`, {
       method: "DELETE",
     });
 
