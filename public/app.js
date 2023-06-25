@@ -35,15 +35,15 @@ function searchResults(data) {
     return;
   }
 
-  data.results.forEach((elem) => {
+  data.results.map((elem) => {
     createCard(elem);
 
     let displayText = "";
 
     if (elem.type === "genre") {
-      displayText = elem.playlist_type;
+      displayText += elem.playlist_type;
     } else if (elem.type === "playlist") {
-      displayText = elem.playlist_songs;
+      displayText += elem.playlist_songs;
     }
     defaultCardContainer.innerHTML = displayText;
   });
