@@ -14,12 +14,9 @@ window.addEventListener("DOMContentLoaded", () => {
 // //search functionality 'get'
 async function search(input) {
   try {
-    const response = await fetch(
-      `https://playlist-web-server.onrender.com/all_data?q=${input}`,
-      {
-        method: "GET",
-      }
-    );
+    const response = await fetch(`/all_data?q=${input}`, {
+      method: "GET",
+    });
     const data = await response.json();
     searchResults(data);
   } catch (err) {
