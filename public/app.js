@@ -30,14 +30,14 @@ function searchResults(data) {
     defaultCardContainer.removeChild(defaultCardContainer.firstChild);
   }
 
-  if (data.length === 0) {
+  if (!data || data.length === 0) {
     defaultCardContainer.textContent = "No result found";
     return;
   }
 
   data.results.forEach((elem) => {
     createCard(elem);
-    console.log(data.results);
+
     let displayText = "";
 
     if (elem.type === "genre") {
