@@ -284,6 +284,7 @@
   grid-template-columns: 0.4fr 0.4fr 0.4fr;
   gap: 15px;
   margin-top: 20px;
+  color: white;
   /* flex: 0 0 auto;
   width: calc(33.33% - 20px);
   margin-bottom: 20px; */
