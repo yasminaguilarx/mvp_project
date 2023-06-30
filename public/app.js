@@ -44,7 +44,7 @@ function searchResults(data) {
         const newCard = document.querySelector("#defaultCardContainer");
 
         if (elem.type === "genre") {
-          const genre = elem.playlist_type;
+          const genre = elem.playlist_genre;
           newCard.innerHTML = genre;
         } else if (elem.type === "playlist") {
           const playlist = elem.playlist_songs;
@@ -99,6 +99,13 @@ function createCard(elem) {
   cardsContainer.appendChild(card);
 
   return card;
+}
+
+async function fetchedData(obj) {
+  //const response
+  //const data
+  //return data
+  //then you'll call and await this function in your search results
 }
 
 // function saveToPlaylist(elem) {
