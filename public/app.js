@@ -38,7 +38,7 @@ function searchResults(data) {
     .then((response) => response.json())
     .then((data) => {
       for (let i = 0; i < data.length; i++) {
-        const elem = data[i];
+        const elem = data[i].rows;
 
         const container = document.querySelector("#cardsContainer");
         const newCard = document.querySelector("#defaultCardContainer");
@@ -57,6 +57,7 @@ function searchResults(data) {
         return newCard;
       }
       searchResults(elem);
+      console.log(elem, data);
     })
     .catch((error) => {
       console.error("Error:", error);
