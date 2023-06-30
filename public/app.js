@@ -52,8 +52,8 @@ function searchResults(data) {
           const artist = elem.music_search;
           newCard.innerHTML = artist;
         }
+        return newCard;
       }
-      return newCard;
     })
     .catch((error) => {
       console.error("Error:", error);
