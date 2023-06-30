@@ -37,19 +37,21 @@ function searchResults(data) {
   fetch("/all_data")
     .then((response) => response.json())
     .then((data) => {
-      data.forEach((elem) => {
+      for (let i = 0; i < data.length; i++) {
+        const elem = data[i];
         const musicDiv = createCard(elem);
         defaultCardContainer.appendChild(musicDiv);
-      });
-      if (elem.type === "genre") {
-        const genre = elem.playlist_type;
-        defaultCardContainer.innerHTML = genre;
-      } else if (elem.type === "playlist") {
-        const playlist = elem.playlist_songs;
-        defaultCardContainer.innerHTML = playlist;
-      } else if (elem.type === "artist") {
-        const artist = elem.music_search;
-        defaultCardContainer.innerHTML = artist;
+
+        if (elem.type === "genre") {
+          const genre = elem.playlist_type;
+          defaultCardContainer.innerHTML = genre;
+        } else if (elem.type === "playlist") {
+          const playlist = elem.playlist_songs;
+          defaultCardContainer.innerHTML = playlist;
+        } else if (elem.type === "artist") {
+          const artist = elem.music_search;
+          defaultCardContainer.innerHTML = artist;
+        }
       }
     })
     .catch((error) => {
