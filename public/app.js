@@ -64,7 +64,7 @@ function searchResults(data) {
 
 // create cards
 function createCard(elem) {
-  const cardCtn = document.getElementById("#defaultCardContainer");
+  const cardCtn = document.querySelector("#defaultCardContainer");
   cardCtn.innerHTML = "";
 
   const card = document.createElement("div");
@@ -95,7 +95,7 @@ function createCard(elem) {
 
   const cardsContainer = document.querySelector("#cardsContainer");
   cardsContainer.appendChild(card);
-  searchResults();
+
   return card;
 }
 
