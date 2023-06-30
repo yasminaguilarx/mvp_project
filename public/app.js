@@ -33,7 +33,6 @@ function searchResults(data) {
   fetch("/all_data")
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       for (let i = 0; i < data.length; i++) {
         const elem = data[i].rows;
 
