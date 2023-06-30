@@ -23,7 +23,7 @@ app.use(cors());
 //get all data
 app.get("/all_data", async (req, res) => {
   try {
-    const playlistInfoResult = await pool.query(`SELECT * FROM playlist_info`);
+    const playlistInfoResult = await pool.query(`SELECT * FROM playlist_genre`);
     const playlistSongsResult = await pool.query(
       `SELECT * FROM playlist_songs`
     );
@@ -47,7 +47,9 @@ app.get("/all_data", async (req, res) => {
       musicSearch,
     };
 
-    res.status(200).json(allData);
+    if (playlistInfo || playlistSongs || musicSearch) {
+      res.status(200).json(allData);
+    }
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");
@@ -56,16 +58,16 @@ app.get("/all_data", async (req, res) => {
 
 //get one
 //music search WORKS
-app.get("/music_search/:id", async (req, res) => {
+app.get("/all_data/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
     const result = await pool.query(
-      `SELECT * FROM music_search WHERE song_id = $1`,
+      `SELECT * FROM all_data WHERE data_id = $1`,
       [id]
     );
     if (result.rowCount === 0) {
-      res.status(404).send("Song Not Found");
+      res.status(404).send("Not Found");
     } else {
       res.status(201).json(result.rows[0]);
     }
@@ -76,59 +78,59 @@ app.get("/music_search/:id", async (req, res) => {
 });
 
 //playlist info WORKS
-app.get("/playlist_info/:id", async (req, res) => {
-  const { id } = req.params;
+// app.get("/playlist_info/:id", async (req, res) => {
+//   const { id } = req.params;
 
-  try {
-    const result = await pool.query(
-      `SELECT * FROM playlist_info WHERE playlist_id = $1`,
-      [id]
-    );
-    if (result.rowCount === 0) {
-      res.status(404).send("Playlist Not Found");
-    } else {
-      res.status(201).json(result.rows[0]);
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Internal Server Error");
-  }
-});
+//   try {
+//     const result = await pool.query(
+//       `SELECT * FROM playlist_info WHERE playlist_id = $1`,
+//       [id]
+//     );
+//     if (result.rowCount === 0) {
+//       res.status(404).send("Playlist Not Found");
+//     } else {
+//       res.status(201).json(result.rows[0]);
+//     }
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
 
 //playlist songs WORKS
-app.get("/playlist_songs/:id", async (req, res) => {
-  const { id } = req.params;
+// app.get("/playlist_songs/:id", async (req, res) => {
+//   const { id } = req.params;
 
-  try {
-    const result = await pool.query(
-      `SELECT * FROM playlist_songs WHERE playlist_id = $1`,
-      [id]
-    );
-    if (result.rowCount === 0) {
-      res.status(404).send("Playlist Not Found");
-    } else {
-      res.status(201).json(result.rows[0]);
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Internal Server Error");
-  }
-});
+//   try {
+//     const result = await pool.query(
+//       `SELECT * FROM playlist_songs WHERE playlist_id = $1`,
+//       [id]
+//     );
+//     if (result.rowCount === 0) {
+//       res.status(404).send("Playlist Not Found");
+//     } else {
+//       res.status(201).json(result.rows[0]);
+//     }
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
 
 //create one
 //music search WORKS
-app.post("/music_search", async (req, res) => {
-  const { song_artist } = req.body;
-  if (!song_artist) {
+app.post("/all_data", async (req, res) => {
+  const { playlist_genre, playlist_songs, music_search } = req.body;
+  if (!playlist_genre || !playlist_songs || !music_search) {
     return res.status(400).json({ error: "Missing Required Field" });
   }
 
   try {
     const result = await pool.query(
-      `INSERT INTO music_search (song_artist) VALUES ($1) RETURNING *`,
-      [song_artist]
+      `INSERT INTO all_data ('${playlist_genre}') || ('${playlist_songs}') || ('${music_search}') RETURNING *`,
+      [playlist_genre, playlist_songs, music_search]
     );
-    res.status(200).json(result.rows);
+    res.status(200).json(result.rows[0]);
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");
@@ -136,42 +138,42 @@ app.post("/music_search", async (req, res) => {
 });
 
 //playlist info WORKS
-app.post("/playlist_info", async (req, res) => {
-  const { playlist_type } = req.body;
-  if (!playlist_type) {
-    return res.status(400).json({ error: "Missing Required Field" });
-  }
+// app.post("/playlist_info", async (req, res) => {
+//   const { playlist_type } = req.body;
+//   if (!playlist_type) {
+//     return res.status(400).json({ error: "Missing Required Field" });
+//   }
 
-  try {
-    const result = await pool.query(
-      `INSERT INTO playlist_info (playlist_type) VALUES ($1) RETURNING *`,
-      [playlist_type]
-    );
-    res.status(200).json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Internal Server Error");
-  }
-});
+//   try {
+//     const result = await pool.query(
+//       `INSERT INTO playlist_info (playlist_type) VALUES ($1) RETURNING *`,
+//       [playlist_type]
+//     );
+//     res.status(200).json(result.rows);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
 
 //playlist songs WORKS
-app.post("/playlist_songs/songs_added", async (req, res) => {
-  const { playlist_id, song_id } = req.body;
-  if (!playlist_id || !song_id) {
-    return res.status(400).json({ error: "Missing Required Field" });
-  }
+// app.post("/playlist_songs/songs_added", async (req, res) => {
+//   const { playlist_id, song_id } = req.body;
+//   if (!playlist_id || !song_id) {
+//     return res.status(400).json({ error: "Missing Required Field" });
+//   }
 
-  try {
-    const result = await pool.query(
-      `INSERT INTO playlist_songs (playlist_id, song_id) VALUES ($1, $2) RETURNING *`,
-      [playlist_id, song_id]
-    );
-    res.status(200).json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Internal Server Error");
-  }
-});
+//   try {
+//     const result = await pool.query(
+//       `INSERT INTO playlist_songs (playlist_id, song_id) VALUES ($1, $2) RETURNING *`,
+//       [playlist_id, song_id]
+//     );
+//     res.status(200).json(result.rows);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
 
 //update one
 //music search
