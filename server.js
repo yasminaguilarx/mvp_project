@@ -31,7 +31,7 @@ app.use(cors());
 app.get("/all_data/", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM all_data");
-    res.status(200).send("It finally works");
+    res.status(200).send(result.rows);
   } catch (err) {
     console.err(err);
     res.status(500).send("Internal Server Error");
