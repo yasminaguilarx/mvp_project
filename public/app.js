@@ -29,10 +29,6 @@ function searchResults(data) {
   while (defaultCardContainer.firstChild) {
     defaultCardContainer.removeChild(defaultCardContainer.firstChild);
   }
-  if (!data || data.length === 0) {
-    defaultCardContainer.textContent = "No result found";
-    return;
-  }
 
   fetch("/all_data")
     .then((response) => response.json())
@@ -101,12 +97,17 @@ function createCard(elem) {
   return card;
 }
 
-async function fetchedData(obj) {
-  //const response
-  //const data
-  //return data
-  //then you'll call and await this function in your search results
-}
+//async function fetchedData(obj) {
+//const response
+//const data
+//return data
+//then you'll call and await this function in your search results
+//}
+
+// if (!data || data.length === 0) {
+//   defaultCardContainer.textContent = "No result found";
+//   return;
+// }
 
 // function saveToPlaylist(elem) {
 //   const playlistName = prompt("Enter playlist name:");
