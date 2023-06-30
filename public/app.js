@@ -33,22 +33,23 @@ function searchResults(data) {
   fetch("/all_data")
     .then((response) => response.json())
     .then((data) => {
-      for (let i = 0; i < data.length; i++) {
-        const elem = data[i].rows;
+      console.log(data);
+      // for (let i = 0; i < data.length; i++) {
+      //   const elem = data[i].rows;
 
-        const container = document.querySelector("#cardsContainer");
-        const newCard = document.querySelector("#defaultCardContainer");
+      //   const container = document.querySelector("#cardsContainer");
+      //   const newCard = document.querySelector("#defaultCardContainer");
 
-        if (elem.type === "genre") {
-          newCard.innerHTML = elem.playlist_genre;
-        } else if (elem.type === "playlist") {
-          newCard.innerHTML = elem.playlist_songs;
-        } else if (elem.type === "artist") {
-          newCard.innerHTML = elem.music_search;
-        }
-        container.appendChild(newCard);
-        return newCard;
-      }
+      //   if (elem.type === "genre") {
+      //     newCard.innerHTML = elem.playlist_genre;
+      //   } else if (elem.type === "playlist") {
+      //     newCard.innerHTML = elem.playlist_songs;
+      //   } else if (elem.type === "artist") {
+      //     newCard.innerHTML = elem.music_search;
+      //   }
+      //   container.appendChild(newCard);
+      //   return newCard;
+      // }
     })
     .catch((error) => {
       console.error("Error:", error);
