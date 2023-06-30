@@ -16,10 +16,13 @@ async function search(input) {
   try {
     const response = await fetch(`/all_data?q=${input}`, {
       method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(characterData),
     });
     const data = await response.json();
-    // searchResults(data);
-    console.log(data);
+    searchResults(data);
   } catch (err) {
     console.error("No result found", err);
   }
