@@ -37,7 +37,8 @@ function searchResults(data) {
   fetch("/all_data")
     .then((response) => response.json())
     .then((data) => {
-      data.forEach((elem) => {
+      const parsed = JSON.parse(data);
+      parsed.forEach((elem) => {
         const musicDiv = createCard(elem);
         defaultCardContainer.appendChild(musicDiv);
       });
