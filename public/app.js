@@ -55,7 +55,7 @@ function searchResults(data) {
       console.error("Error:", error);
     });
 }
-
+searchResults(console.log(data));
 // create cards
 function createCard(elem) {
   const cardCtn = document.querySelector("#defaultCardContainer");
