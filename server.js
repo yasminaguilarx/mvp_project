@@ -6,6 +6,8 @@ dotenv.config();
 
 const { Pool } = require("pg");
 
+const bodyParser = require("body-parser");
+
 const cors = require("cors");
 
 const dbstring = process.env.DATABASE_URL;
@@ -17,6 +19,7 @@ const pool = new Pool({
 });
 
 app.use(express.json());
+app.use(bodyParser.json());
 app.use(express.static("public"));
 app.use(cors());
 
