@@ -3,43 +3,21 @@ DROP TABLE IF EXISTS all_data CASCADE;
 
 CREATE TABLE all_data (
     data_id SERIAL PRIMARY KEY,
-    playlist_genre varchar(50),
-    music_search varchar(50),
+    playlist_genre TEXT,
+    music_search TEXT,
     playlist_songs TEXT
 );
+         
 
-
-
-
-     playlist_songs      |     music_search     |   playlist_genre   | data_id
--------------------------+----------------------+--------------------+---------
-                         |                      | PUMP IT            |       1
-                         |                      | FEELIN BLUE        |       2
-                         |                      | RED HOT            |       3
-                         |                      | PANIC!             |       4
-                         |                      | GREEN WITH ENVY    |       5
-                         |                      | EUPHORIA EXPRESS   |       6
-                         |                      | SOOTHIN SOULS      |       7
-                         |                      | LIFE IS A TRIP     |       8
-                         |                      | ADRENALINE JUNKIES |       9
-                         |                      | JUST A PHASE       |      10
- Bohemian Rhapsody       |                      |                    |      11
- Hey Jude                |                      |                    |      12
- Hotel California        |                      |                    |      13
- Imagine                 |                      |                    |      14
- Thriller                |                      |                    |      15
- Smells Like Teen Spirit |                      |                    |      16
- Sweet Child o' Mine     |                      |                    |      17
- Like a Rolling Stone    |                      |                    |      18
- Billie Jean             |                      |                    |      19
- Stairway to Heaven      |                      |                    |      20
-                         | Lainey Wilson        |                    |      21
-                         | Kelly Rowland        |                    |      22
-                         | Jay-Z                |                    |      23
-                         | Ludwig van Beethoven |                    |      24
-                         | Wisin Y Yandel       |                    |      25
-                         | Sublime              |                    |      26
-                         | Ying Yang Twinz      |                    |      27
-                         | El Alfa              |                    |      28
-                         | Pink                 |                    |      29
-                         | JaRule               |                    |      30
+INSERT INTO all_data (data_id, playlist_genre, playlist_songs, music_search)
+VALUES
+  (1, 'PUMP IT', 'Bohemian Rhapsody', 'Lainey Wilson'),
+  (2, 'FEELIN BLUE', 'Hey Jude', 'Kelly Rowland'),
+  (3, 'RED HOT', 'Hotel California', 'Jay-Z'),
+  (4, 'PANIC!', 'Imagine', 'Ludwig van Beethoven'),
+  (5, 'GREEN WITH ENVY', 'Thriller', 'Wisin Y Yandel'),
+  (6, 'EUPHORIA EXPRESS', 'Smells Like Teen Spirit', 'Sublime'),
+  (7, 'SOOTHIN SOULS', 'My Girl', 'Ying Yang Twinz'),
+  (8, 'ADRENALINE JUNKIES', 'Like a Rolling Stone', 'El Alfa'),
+  (9, 'LIFE IS A TRIP', 'Billie Jean', 'Pink'),
+  (10, 'JUST A PHASE', 'Stairway to Heaven', 'JaRule');
