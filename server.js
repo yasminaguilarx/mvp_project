@@ -20,8 +20,17 @@ const pool = new Pool({
 
 app.use(express.json());
 app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 app.use(express.static("public"));
 app.use(cors());
+
+app.get("/", (req, res) => {
+  res.send("Welcome");
+});
 
 //get all data
 app.get("/all_data", async (req, res) => {
@@ -42,7 +51,10 @@ app.get("/all_data", async (req, res) => {
       type: "playlist",
     }));
 
-    const musicSearch = musicSearchResult.rows;
+    const musicSearch = musicSearchResult.rows.map((item) => ({
+      ...item,
+      type: "artist",
+    }));
 
     const allData = {
       playlistInfo,
@@ -51,7 +63,7 @@ app.get("/all_data", async (req, res) => {
     };
 
     if (playlistInfo || playlistSongs || musicSearch) {
-      res.status(200).json(allData);
+      res.status(200).json(playlistInfo || playlistSongs || musicSearch);
     }
   } catch (err) {
     console.error(err);

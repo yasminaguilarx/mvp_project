@@ -14,11 +14,12 @@ window.addEventListener("DOMContentLoaded", () => {
 // //search functionality 'get'
 async function search(input) {
   try {
-    const response = await fetch(`../all_data?q=${input}`, {
+    const response = await fetch(`/all_data?q=${input}`, {
       method: "GET",
     });
     const data = await response.json();
-    searchResults(data);
+    // searchResults(data);
+    console.log(data);
   } catch (err) {
     console.error("No result found", err);
   }
@@ -83,133 +84,133 @@ function createCard(elem) {
   return card;
 }
 
-function saveToPlaylist(elem) {
-  const playlistName = prompt("Enter playlist name:");
+// function saveToPlaylist(elem) {
+//   const playlistName = prompt("Enter playlist name:");
 
-  if (!playlistName) {
-    alert("Playlist name is required.");
-    return;
-  }
+//   if (!playlistName) {
+//     alert("Playlist name is required.");
+//     return;
+//   }
 
-  const playlist = {
-    name: playlistName,
-    songs: [elem],
-  };
+//   const playlist = {
+//     name: playlistName,
+//     songs: [elem],
+//   };
 
-  fetch(`/playlist_info/songs_added/${elem}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(playlist),
-  })
-    .then((response) => {
-      if (response.ok) {
-        alert(
-          `Saved '${elem.name}' to playlist '${playlistName}' successfully!`
-        );
-      } else {
-        console.error("Failed to save the playlist.");
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-}
+//   fetch(`/playlist_info/songs_added/${elem}`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(playlist),
+//   })
+//     .then((response) => {
+//       if (response.ok) {
+//         alert(
+//           `Saved '${elem.name}' to playlist '${playlistName}' successfully!`
+//         );
+//       } else {
+//         console.error("Failed to save the playlist.");
+//       }
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//     });
+// }
 
-//genre check this one and see if works
-async function getPlaylistGenre(genre) {
-  try {
-    const response = await fetch(`/playlist_info/playlist_type/${genre}`, {
-      method: "GET",
-    });
-    const data = await response.json();
-    //handle the data????
-  } catch (error) {
-    console.error("Error:", error);
-  }
-}
+// //genre check this one and see if works
+// async function getPlaylistGenre(genre) {
+//   try {
+//     const response = await fetch(`/playlist_info/playlist_type/${genre}`, {
+//       method: "GET",
+//     });
+//     const data = await response.json();
+//     //handle the data????
+//   } catch (error) {
+//     console.error("Error:", error);
+//   }
+// }
 
-//create playlist
-async function createPlaylist(playlistType, songsAdded) {
-  try {
-    // Create playlist_info entry
-    const playlistInfoResponse = await fetch("/playlist_info", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ playlist_type: playlistType }),
-    });
-    const playlistInfoData = await playlistInfoResponse.json();
+// //create playlist
+// async function createPlaylist(playlistType, songsAdded) {
+//   try {
+//     // Create playlist_info entry
+//     const playlistInfoResponse = await fetch("/playlist_info", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({ playlist_type: playlistType }),
+//     });
+//     const playlistInfoData = await playlistInfoResponse.json();
 
-    const playlistId = playlistInfoData[0].playlist_id;
+//     const playlistId = playlistInfoData[0].playlist_id;
 
-    // Add songs to playlist_songs table
-    for (const songId of songIds) {
-      await fetch("/playlist_songs/songs_added", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          playlist_id: playlistId,
-          songs_added: songsAdded,
-        }),
-      });
-    }
+//     // Add songs to playlist_songs table
+//     for (const songId of songIds) {
+//       await fetch("/playlist_songs/songs_added", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({
+//           playlist_id: playlistId,
+//           songs_added: songsAdded,
+//         }),
+//       });
+//     }
 
-    console.log("Playlist created successfully!");
-  } catch (error) {
-    console.error(error);
-  }
-}
+//     console.log("Playlist created successfully!");
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }
 
-// //update playlist
-async function updatePlaylist(playlistId, playlistType) {
-  try {
-    await fetch(`/playlist_info/${playlistId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ playlist_type: playlistType }),
-    });
+// // //update playlist
+// async function updatePlaylist(playlistId, playlistType) {
+//   try {
+//     await fetch(`/playlist_info/${playlistId}`, {
+//       method: "PUT",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({ playlist_type: playlistType }),
+//     });
 
-    console.log("Playlist updated successfully!");
-  } catch (error) {
-    console.error("Error:", error);
-  }
-}
+//     console.log("Playlist updated successfully!");
+//   } catch (error) {
+//     console.error("Error:", error);
+//   }
+// }
 
-//delete playlist
-async function deletePlaylist(playlistId) {
-  try {
-    // Delete playlist_songs entries
-    await fetch(`/playlist_songs/${playlistId}`, {
-      method: "DELETE",
-    });
+// //delete playlist
+// async function deletePlaylist(playlistId) {
+//   try {
+//     // Delete playlist_songs entries
+//     await fetch(`/playlist_songs/${playlistId}`, {
+//       method: "DELETE",
+//     });
 
-    // Delete playlist_info entry
-    await fetch(`/playlist_info/${playlistId}`, {
-      method: "DELETE",
-    });
+//     // Delete playlist_info entry
+//     await fetch(`/playlist_info/${playlistId}`, {
+//       method: "DELETE",
+//     });
 
-    console.log("Playlist deleted successfully!");
-  } catch (error) {
-    console.error("Error:", error);
-  }
-}
+//     console.log("Playlist deleted successfully!");
+//   } catch (error) {
+//     console.error("Error:", error);
+//   }
+// }
 
-//delete songs from playlist
-async function removeSongFromPlaylist(input) {
-  try {
-    await fetch(`/playlist_songs/${input}`, {
-      method: "DELETE",
-    });
+// //delete songs from playlist
+// async function removeSongFromPlaylist(input) {
+//   try {
+//     await fetch(`/playlist_songs/${input}`, {
+//       method: "DELETE",
+//     });
 
-    console.log("Song removed from playlist successfully!");
-  } catch (error) {
-    console.error("Error:", error);
-  }
-}
+//     console.log("Song removed from playlist successfully!");
+//   } catch (error) {
+//     console.error("Error:", error);
+//   }
+// }
