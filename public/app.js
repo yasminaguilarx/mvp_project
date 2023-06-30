@@ -56,6 +56,7 @@ function searchResults(data) {
         container.appendChild(newCard);
         return newCard;
       }
+      searchResults(elem);
     })
     .catch((error) => {
       console.error("Error:", error);
