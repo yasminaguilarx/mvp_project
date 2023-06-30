@@ -28,54 +28,56 @@ app.use(
 app.use(express.static("public"));
 app.use(cors());
 
-// app.get("/all_data", async (req, res) => {
-//   try {
-//     const result = await pool.query("SELECT * FROM all_data");
-//     res.status(200).send(result.rows);
-//   } catch (err) {
-//     console.err(err);
-//     res.status(500).send("Internal Server Error");
-//   }
-// });
-
-//get all data
 app.get("/all_data", async (req, res) => {
   try {
-    const playlistInfoResult = await pool.query(`SELECT * FROM playlist_genre`);
-    const playlistSongsResult = await pool.query(
-      `SELECT * FROM playlist_songs`
+    const result = await pool.query(
+      "SELECT (playlist_genre, music_search, playlist_songs) FROM all_data"
     );
-    const musicSearchResult = await pool.query(`SELECT * FROM music_search`);
-
-    const playlistInfo = playlistInfoResult.rows.map((item) => ({
-      ...item,
-      type: "genre",
-    }));
-
-    const playlistSongs = playlistSongsResult.rows.map((item) => ({
-      ...item,
-      type: "playlist",
-    }));
-
-    const musicSearch = musicSearchResult.rows.map((item) => ({
-      ...item,
-      type: "artist",
-    }));
-
-    const allData = {
-      playlistInfo,
-      playlistSongs,
-      musicSearch,
-    };
-
-    if (playlistInfo || playlistSongs || musicSearch) {
-      res.status(200).json(playlistInfo || playlistSongs || musicSearch);
-    }
+    res.status(200).send(result.rows);
   } catch (err) {
-    console.error(err);
+    console.err(err);
     res.status(500).send("Internal Server Error");
   }
 });
+
+//get all data
+// app.get("/all_data", async (req, res) => {
+//   try {
+//     const playlistInfoResult = await pool.query(`SELECT * FROM playlist_genre`);
+//     const playlistSongsResult = await pool.query(
+//       `SELECT * FROM playlist_songs`
+//     );
+//     const musicSearchResult = await pool.query(`SELECT * FROM music_search`);
+
+//     const playlistInfo = playlistInfoResult.rows.map((item) => ({
+//       ...item,
+//       type: "genre",
+//     }));
+
+//     const playlistSongs = playlistSongsResult.rows.map((item) => ({
+//       ...item,
+//       type: "playlist",
+//     }));
+
+//     const musicSearch = musicSearchResult.rows.map((item) => ({
+//       ...item,
+//       type: "artist",
+//     }));
+
+//     const allData = {
+//       playlistInfo,
+//       playlistSongs,
+//       musicSearch,
+//     };
+
+//     if (playlistInfo || playlistSongs || musicSearch) {
+//       res.status(200).json(playlistInfo || playlistSongs || musicSearch);
+//     }
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
 
 //get one
 //music search WORKS
