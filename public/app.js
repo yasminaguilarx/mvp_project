@@ -34,28 +34,28 @@ function searchResults(data) {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      // for (let i = 0; i < data.length; i++) {
-      //   const elem = data[i].rows;
+      for (let i = 0; i < data.length; i++) {
+        const elem = data[i].rows;
 
-      //   const container = document.querySelector("#cardsContainer");
-      //   const newCard = document.querySelector("#defaultCardContainer");
+        const container = document.querySelector("#cardsContainer");
+        const newCard = createCard(elem);
 
-      //   if (elem.type === "genre") {
-      //     newCard.innerHTML = elem.playlist_genre;
-      //   } else if (elem.type === "playlist") {
-      //     newCard.innerHTML = elem.playlist_songs;
-      //   } else if (elem.type === "artist") {
-      //     newCard.innerHTML = elem.music_search;
-      //   }
-      //   container.appendChild(newCard);
-      //   return newCard;
-      // }
+        if (elem.type === "genre") {
+          newCard.innerHTML = elem.playlist_genre;
+        } else if (elem.type === "playlist") {
+          newCard.innerHTML = elem.playlist_songs;
+        } else if (elem.type === "artist") {
+          newCard.innerHTML = elem.music_search;
+        }
+        container.appendChild(newCard);
+        // return newCard;
+      }
     })
     .catch((error) => {
       console.error("Error:", error);
     });
 }
-searchResults(console.log(data));
+
 // create cards
 function createCard(elem) {
   const cardCtn = document.querySelector("#defaultCardContainer");
