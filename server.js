@@ -68,8 +68,8 @@ app.get("/all_data", async (req, res) => {
       musicSearch,
     };
 
-    if (allData[0] || allData[1] || allData[2]) {
-      res.status(200).json(allData[0] || allData[1] || allData[2]);
+    if (playlistInfo || playlistSongs || musicSearch) {
+      res.status(200).json(playlistInfo || playlistSongs || musicSearch);
     }
   } catch (err) {
     console.error(err);
