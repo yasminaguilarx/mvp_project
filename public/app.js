@@ -16,10 +16,6 @@ async function search(input) {
   try {
     const response = await fetch(`/all_data?q=${input}`, {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(input),
     });
     const data = await response.json();
     searchResults(data);
@@ -37,17 +33,28 @@ function searchResults(data) {
     defaultCardContainer.textContent = "No result found";
     return;
   }
-  console.log(data);
-  data.results.map((elem) => {
-    createCard(elem);
-    let displayText = "";
-    if (elem.type === "genre") {
-      displayText += elem.playlist_type;
-    } else if (elem.type === "playlist") {
-      displayText += elem.playlist_songs;
-    }
-    defaultCardContainer.innerHTML = displayText;
-  });
+
+  fetch("/all_data")
+    .then((response) => response.json())
+    .then((data) => {
+      data.forEach((elem) => {
+        const musicDiv = createCard(elem);
+        defaultCardContainer.appendChild(musicDiv);
+      });
+      if (elem.type === "genre") {
+        const genre = elem.playlist_type;
+        defaultCardContainer.innerHTML = genre;
+      } else if (elem.type === "playlist") {
+        const playlist = elem.playlist_songs;
+        defaultCardContainer.innerHTML = playlist;
+      } else if (elem.type === "artist") {
+        const artist = elem.music_search;
+        defaultCardContainer.innerHTML = artist;
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 }
 
 // create cards
