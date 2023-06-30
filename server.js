@@ -28,69 +28,75 @@ app.use(
 app.use(express.static("public"));
 app.use(cors());
 
-app.get("/", (req, res) => {
-  res.send("Welcome");
+app.get("/all_data", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM all_data");
+    res.status(200).send("It finally works");
+  } catch (err) {
+    console.err(err);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 //get all data
-app.get("/all_data", async (req, res) => {
-  try {
-    const playlistInfoResult = await pool.query(`SELECT * FROM playlist_genre`);
-    const playlistSongsResult = await pool.query(
-      `SELECT * FROM playlist_songs`
-    );
-    const musicSearchResult = await pool.query(`SELECT * FROM music_search`);
+// app.get("/all_data", async (req, res) => {
+//   try {
+//     const playlistInfoResult = await pool.query(`SELECT * FROM playlist_genre`);
+//     const playlistSongsResult = await pool.query(
+//       `SELECT * FROM playlist_songs`
+//     );
+//     const musicSearchResult = await pool.query(`SELECT * FROM music_search`);
 
-    const playlistInfo = playlistInfoResult.rows.map((item) => ({
-      ...item,
-      type: "genre",
-    }));
+//     const playlistInfo = playlistInfoResult.rows.map((item) => ({
+//       ...item,
+//       type: "genre",
+//     }));
 
-    const playlistSongs = playlistSongsResult.rows.map((item) => ({
-      ...item,
-      type: "playlist",
-    }));
+//     const playlistSongs = playlistSongsResult.rows.map((item) => ({
+//       ...item,
+//       type: "playlist",
+//     }));
 
-    const musicSearch = musicSearchResult.rows.map((item) => ({
-      ...item,
-      type: "artist",
-    }));
+//     const musicSearch = musicSearchResult.rows.map((item) => ({
+//       ...item,
+//       type: "artist",
+//     }));
 
-    const allData = {
-      playlistInfo,
-      playlistSongs,
-      musicSearch,
-    };
+//     const allData = {
+//       playlistInfo,
+//       playlistSongs,
+//       musicSearch,
+//     };
 
-    if (playlistInfo || playlistSongs || musicSearch) {
-      res.status(200).json(playlistInfo || playlistSongs || musicSearch);
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Internal Server Error");
-  }
-});
+//     if (playlistInfo || playlistSongs || musicSearch) {
+//       res.status(200).json(playlistInfo || playlistSongs || musicSearch);
+//     }
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
 
 //get one
 //music search WORKS
-app.get("/all_data/:id", async (req, res) => {
-  const { id } = req.params;
+// app.get("/all_data/:id", async (req, res) => {
+//   const { id } = req.params;
 
-  try {
-    const result = await pool.query(
-      `SELECT * FROM all_data WHERE data_id = $1`,
-      [id]
-    );
-    if (result.rowCount === 0) {
-      res.status(404).send("Not Found");
-    } else {
-      res.status(201).json(result.rows[0]);
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Internal Server Error");
-  }
-});
+//   try {
+//     const result = await pool.query(
+//       `SELECT * FROM all_data WHERE data_id = $1`,
+//       [id]
+//     );
+//     if (result.rowCount === 0) {
+//       res.status(404).send("Not Found");
+//     } else {
+//       res.status(201).json(result.rows[0]);
+//     }
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
 
 //playlist info WORKS
 // app.get("/playlist_info/:id", async (req, res) => {
@@ -134,23 +140,23 @@ app.get("/all_data/:id", async (req, res) => {
 
 //create one
 //music search WORKS
-app.post("/all_data", async (req, res) => {
-  const { playlist_genre, playlist_songs, music_search } = req.body;
-  if (!playlist_genre || !playlist_songs || !music_search) {
-    return res.status(400).json({ error: "Missing Required Field" });
-  }
+// app.post("/all_data", async (req, res) => {
+//   const { playlist_genre, playlist_songs, music_search } = req.body;
+//   if (!playlist_genre || !playlist_songs || !music_search) {
+//     return res.status(400).json({ error: "Missing Required Field" });
+//   }
 
-  try {
-    const result = await pool.query(
-      `INSERT INTO all_data ('${playlist_genre}') || ('${playlist_songs}') || ('${music_search}') RETURNING *`,
-      [playlist_genre, playlist_songs, music_search]
-    );
-    res.status(200).json(result.rows[0]);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Internal Server Error");
-  }
-});
+//   try {
+//     const result = await pool.query(
+//       `INSERT INTO all_data ('${playlist_genre}') || ('${playlist_songs}') || ('${music_search}') RETURNING *`,
+//       [playlist_genre, playlist_songs, music_search]
+//     );
+//     res.status(200).json(result.rows[0]);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
 
 //playlist info WORKS
 // app.post("/playlist_info", async (req, res) => {
