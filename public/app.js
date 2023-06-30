@@ -95,7 +95,7 @@ function createCard(elem) {
 
   const cardsContainer = document.querySelector("#cardsContainer");
   cardsContainer.appendChild(card);
-
+  searchResults();
   return card;
 }
 
