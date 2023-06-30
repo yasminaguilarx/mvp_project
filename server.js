@@ -30,9 +30,7 @@ app.use(cors());
 
 app.get("/all_data", async (req, res) => {
   try {
-    const result = await pool.query(
-      "SELECT (playlist_genre, music_search, playlist_songs) FROM all_data"
-    );
+    const result = await pool.query("SELECT * FROM all_data");
     res.status(200).send(result.rows);
   } catch (err) {
     console.err(err);
