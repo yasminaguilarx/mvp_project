@@ -19,7 +19,7 @@ async function search(input) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(characterData),
+      body: JSON.stringify(input),
     });
     const data = await response.json();
     searchResults(data);
