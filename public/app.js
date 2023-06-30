@@ -25,25 +25,25 @@ async function search(input) {
 }
 
 function searchResults(data) {
-  // const defaultCardContainer = document.querySelector("#defaultCardContainer");
-  // while (defaultCardContainer.firstChild) {
-  //   defaultCardContainer.removeChild(defaultCardContainer.firstChild);
-  // }
-  // if (!data || data.length === 0) {
-  //   defaultCardContainer.textContent = "No result found";
-  //   return;
-  // }
-  // console.log(data);
-  // data.results.map((elem) => {
-  //   createCard(elem);
-  //   let displayText = "";
-  //   if (elem.type === "genre") {
-  //     displayText += elem.playlist_type;
-  //   } else if (elem.type === "playlist") {
-  //     displayText += elem.playlist_songs;
-  //   }
-  //   defaultCardContainer.innerHTML = displayText;
-  // });
+  const defaultCardContainer = document.querySelector("#defaultCardContainer");
+  while (defaultCardContainer.firstChild) {
+    defaultCardContainer.removeChild(defaultCardContainer.firstChild);
+  }
+  if (!data || data.length === 0) {
+    defaultCardContainer.textContent = "No result found";
+    return;
+  }
+  console.log(data);
+  data.results.map((elem) => {
+    createCard(elem);
+    let displayText = "";
+    if (elem.type === "genre") {
+      displayText += elem.playlist_type;
+    } else if (elem.type === "playlist") {
+      displayText += elem.playlist_songs;
+    }
+    defaultCardContainer.innerHTML = displayText;
+  });
 }
 
 // create cards
