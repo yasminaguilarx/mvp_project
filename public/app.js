@@ -67,7 +67,7 @@ function createCard(elem) {
   // Create the card image
   const cardImage = document.createElement("img");
   cardImage.src =
-    "./public/images/1871847_band_music_social media_songs_radio_icon.png";
+    "./images/1871847_band_music_social media_songs_radio_icon.png";
   cardImage.alt = elem.name;
   cardImage.classList.add("card-image");
   card.appendChild(cardImage);
