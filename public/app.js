@@ -40,20 +40,15 @@ function searchResults(data) {
         const newCard = document.querySelector("#defaultCardContainer");
 
         if (elem.type === "genre") {
-          const genre = elem.playlist_genre;
-          newCard.innerHTML = genre;
+          newCard.innerHTML = elem.playlist_genre;
         } else if (elem.type === "playlist") {
-          const playlist = elem.playlist_songs;
-          newCard.innerHTML = playlist;
+          newCard.innerHTML = elem.playlist_songs;
         } else if (elem.type === "artist") {
-          const artist = elem.music_search;
-          newCard.innerHTML = artist;
+          newCard.innerHTML = elem.music_search;
         }
         container.appendChild(newCard);
         return newCard;
       }
-      searchResults(elem);
-      console.log(elem, data);
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -97,12 +92,12 @@ function createCard(elem) {
   return card;
 }
 
-//async function fetchedData(obj) {
-//const response
-//const data
-//return data
-//then you'll call and await this function in your search results
-//}
+// async function fetchedData(obj) {
+// const response = await fetch(`${obj}/all_data`);
+// const data = await response.json();
+// return data;
+// //then you'll call and await this function in your search results
+// }
 
 // if (!data || data.length === 0) {
 //   defaultCardContainer.textContent = "No result found";
