@@ -28,15 +28,20 @@ async function searchResults(data, searchInput) {
   try {
     const response = await fetch("/all_data");
     data = await response.json();
-
+    const parsed = JSON.parse(data);
     const filteredCardData = [];
     const lowercaseInput = searchInput.toLowerCase();
-    for (const value of Object.values(data)) {
+    for (const value of Object.values(parsed)) {
       const lowercaseValue = value.toLowerCase();
       if (lowercaseValue.includes(lowercaseInput)) {
         filteredCardData.push(lowercaseValue);
       }
     }
+
+    // for(let [key, value] of data) {
+
+    //   //push it into empty array
+    // }
 
     const cardsContainer = document.querySelector("#cardsContainer");
     cardsContainer.innerHTML = "";
