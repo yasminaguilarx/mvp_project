@@ -50,6 +50,9 @@ async function searchResults(data, input) {
         "#defaultCardContainer"
       );
       defaultCardContainer.innerHTML = newCard;
+
+      const cardsContainer = document.querySelector("#cardsContainer");
+      cardsContainer.appendChild(defaultCardContainer);
     }
 
     // filteredCardData.forEach((elem) => {
@@ -81,7 +84,6 @@ async function searchResults(data, input) {
 
 // create cards
 function createCard(elem) {
-  const cardsContainer = document.querySelector("#cardsContainer");
   const cardCtn = document.querySelector("#defaultCardContainer");
   cardCtn.innerHTML = "";
 
@@ -109,10 +111,8 @@ function createCard(elem) {
     saveToPlaylist(e.target.value);
   });
   card.appendChild(cardButton);
-  cardCtn.appendChild(card);
-  cardsContainer.appendChild(cardCtn);
 
-  return cardsContainer;
+  return card;
 }
 
 // async function fetchedData(obj) {
