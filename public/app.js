@@ -25,10 +25,6 @@ async function search(input) {
 }
 
 async function searchResults(data) {
-  const defaultCardContainer = document.querySelector("#defaultCardContainer");
-  while (defaultCardContainer.firstChild) {
-    defaultCardContainer.removeChild(defaultCardContainer.firstChild);
-  }
   try {
     const response = await fetch("/all_data");
     data = await response.json();
@@ -57,7 +53,10 @@ async function searchResults(data) {
 // create cards
 function createCard(elem) {
   const cardCtn = document.querySelector("#defaultCardContainer");
-  cardCtn.innerHTML = "";
+  const cardsContainer = document.querySelector("#cardsContainer");
+  while (cardCtn.firstChild) {
+    cardCtn.removeChild(cardCtn.firstChild);
+  }
 
   const card = document.createElement("div");
   card.classList.add("card");
@@ -66,13 +65,12 @@ function createCard(elem) {
   const cardImage = document.createElement("img");
   cardImage.src =
     "./images/1871847_band_music_social media_songs_radio_icon.png";
-  cardImage.alt = elem.name;
   cardImage.classList.add("card-image");
   card.appendChild(cardImage);
 
   // Create the card title
   const cardTitle = document.createElement("h3");
-  cardTitle.textContent = elem.name;
+  cardTitle.textContent = `${elem}`;
   cardTitle.classList.add("card-title");
   card.appendChild(cardTitle);
 
@@ -80,15 +78,15 @@ function createCard(elem) {
   const cardButton = document.createElement("button");
   cardButton.textContent = "Save to Playlist";
   cardButton.classList.add("card-button");
-  cardButton.addEventListener("click", () => {
-    saveToPlaylist(elem);
+  cardButton.addEventListener("click", (e) => {
+    // saveToPlaylist(elem);
+    console.log(e.target.value);
   });
   card.appendChild(cardButton);
+  cardCtn.appendChild(card);
+  cardsContainer.appendChild(cardCtn);
 
-  const cardsContainer = document.querySelector("#cardsContainer");
-  cardsContainer.appendChild(card);
-
-  return card;
+  return cardsContainer;
 }
 
 // async function fetchedData(obj) {
