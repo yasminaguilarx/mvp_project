@@ -38,6 +38,26 @@ app.get("/all_data", async (req, res) => {
   }
 });
 
+app.get("/all_data/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await pool.query(
+      `SELECT * FROM all_data WHERE data_id = ${id}`
+    );
+    const { music_search, playlist_songs, playlist_genre } = result[0];
+    const allData = {
+      id: id,
+      music_search: music_search,
+      playlist_songs: playlist_songs,
+      playlist_genre: playlist_genre,
+    };
+    res.status(200).send(allData);
+  } catch (err) {
+    console.err(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 //get all data
 // app.get("/all_data", async (req, res) => {
 //   try {
