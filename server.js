@@ -38,7 +38,7 @@ app.get("/all_data", async (req, res) => {
   }
 });
 
-app.get("/all_data/:id", async (req, res) => {
+app.get("/all_data", async (req, res) => {
   const { id } = req.params;
   try {
     const result = await pool.query(
