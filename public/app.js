@@ -45,11 +45,11 @@ async function searchResults(data, input) {
     });
 
     for (let elem of filteredCardData) {
-      const newCard = createCard(elem);
+      const newCard = createCard(elem, searchInput);
       const defaultCardContainer = document.querySelector(
         "#defaultCardContainer"
       );
-      defaultCardContainer.innerHTML = newCard;
+      defaultCardContainer.appendChild(newCard);
 
       const cardsContainer = document.querySelector("#cardsContainer");
       cardsContainer.appendChild(defaultCardContainer);
@@ -83,7 +83,7 @@ async function searchResults(data, input) {
 }
 
 // create cards
-function createCard(elem) {
+function createCard(elem, searchInput) {
   const cardCtn = document.querySelector("#defaultCardContainer");
   cardCtn.innerHTML = "";
 
@@ -99,7 +99,7 @@ function createCard(elem) {
 
   // Create the card title
   const cardTitle = document.createElement("h3");
-  cardTitle.textContent = elem;
+  cardTitle.textContent = searchInput;
   cardTitle.classList.add("card-title");
   card.appendChild(cardTitle);
 
