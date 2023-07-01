@@ -26,13 +26,14 @@ async function search(input) {
 
 async function searchResults(data, searchInput) {
   try {
-    const response = await fetch("/all_data");
-    data = await response.json();
+    // const response = await fetch("/all_data");
+    // data = await response.json();
     const parsed = JSON.parse(data);
     const filteredCardData = [];
     const lowercaseInput = searchInput.toLowerCase();
     for (const value of Object.values(parsed)) {
       const lowercaseValue = value.toLowerCase();
+
       if (lowercaseValue.includes(lowercaseInput)) {
         filteredCardData.push(lowercaseValue);
       }
