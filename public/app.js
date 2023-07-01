@@ -44,13 +44,18 @@ async function searchResults(data, input) {
       }
     });
 
-    const cardsContainer = document.querySelector("#cardsContainer");
-    cardsContainer.innerHTML = "";
-
-    filteredCardData.forEach((elem) => {
+    for (let elem of filteredCardData) {
       const newCard = createCard(elem);
-      cardsContainer.innerHTML = newCard;
-    });
+      const defaultCardContainer = document.querySelector(
+        "#defaultCardContainer"
+      );
+      defaultCardContainer.innerHTML = newCard;
+    }
+
+    // filteredCardData.forEach((elem) => {
+    //   const newCard = createCard(elem);
+    //   cardsContainer.innerHTML = newCard;
+    // });
     // const lowercaseGenre = data.playlist_genre.toLowerCase();
     // const lowercaseSongs = data.playlist_songs.toLowerCase();
     // const lowercaseSearch = data.music_search.toLowerCase();
