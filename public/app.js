@@ -18,7 +18,7 @@ async function search(input) {
       method: "GET",
     });
     const data = await response.json();
-    searchResults(data);
+    await searchResults(data);
   } catch (err) {
     console.error("No result found", err);
   }
