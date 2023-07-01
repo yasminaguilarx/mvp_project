@@ -35,11 +35,11 @@ async function searchResults(data) {
       const container = document.querySelector("#cardsContainer");
       const newCard = createCard(elem);
 
-      if (input === "genre") {
+      if (data === "genre") {
         newCard.innerHTML = elem.playlist_genre;
-      } else if (input === "playlist") {
+      } else if (data === "playlist") {
         newCard.innerHTML = elem.playlist_songs;
-      } else if (input === "artist") {
+      } else if (data === "artist") {
         newCard.innerHTML = elem.music_search;
       }
       container.appendChild(newCard);
