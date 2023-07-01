@@ -45,12 +45,24 @@ app.get("/all_data/:id", async (req, res) => {
       `SELECT * FROM all_data WHERE data_id = ${id}`
     );
     const { music_search, playlist_songs, playlist_genre } = result[0];
+    const artist = music_search;
+    const genre = playlist_genre;
+    const playlist = playlist_songs;
+
     const allData = {
       id: id,
-      music_search: music_search,
-      playlist_songs: playlist_songs,
-      playlist_genre: playlist_genre,
     };
+
+    if (artist) {
+      allData.music_search = artist;
+    }
+    if (playlist) {
+      allData.playlist_songs = playlist;
+    }
+    if (genre) {
+      allData.playlist_genre = genre;
+    }
+
     res.status(200).send(allData);
   } catch (err) {
     console.err(err);

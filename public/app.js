@@ -24,35 +24,40 @@ async function search(input) {
   }
 }
 
-function searchResults(data) {
+async function fetchedData(data) {
+  const response = await fetch("/all_data");
+  const data = response.json();
+  return data;
+}
+
+function searchResults(input, data) {
   const defaultCardContainer = document.querySelector("#defaultCardContainer");
   while (defaultCardContainer.firstChild) {
     defaultCardContainer.removeChild(defaultCardContainer.firstChild);
   }
 
-  fetch("/all_data")
-    .then((response) => response.json())
-    .then((data) => {
-      for (let i = 0; i < data.length; i++) {
-        const elem = data[i].rows;
+  try {
+    const userInput = fetchedData(data);
 
-        const container = document.querySelector("#cardsContainer");
-        const newCard = createCard(elem);
+    for (let i = 0; i < userInput.length; i++) {
+      const elem = userInput[i].rows;
 
-        if (elem.type === "genre") {
-          newCard.innerHTML = elem.playlist_genre;
-        } else if (elem.type === "playlist") {
-          newCard.innerHTML = elem.playlist_songs;
-        } else if (elem.type === "artist") {
-          newCard.innerHTML = elem.music_search;
-        }
-        container.appendChild(newCard);
-        // return newCard;
+      const container = document.querySelector("#cardsContainer");
+      const newCard = createCard(elem);
+
+      if (input === "genre") {
+        newCard.innerHTML = elem.playlist_genre;
+      } else if (input === "playlist") {
+        newCard.innerHTML = elem.playlist_songs;
+      } else if (input === "artist") {
+        newCard.innerHTML = elem.music_search;
       }
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+      container.appendChild(newCard);
+      return newCard;
+    }
+  } catch (error) {
+    console.error("Error: Cannot Fetch Data", error);
+  }
 }
 
 // create cards
