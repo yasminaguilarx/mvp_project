@@ -29,24 +29,20 @@ async function searchResults(data, searchInput) {
     const response = await fetch("/all_data");
     data = await response.json();
 
-    const lowered = searchInput.toLowerCase();
-    const filteredData = data.filter((item) => {
-      if (item.playlist_genre) {
-        return item.playlist_genre.toLowerCase().includes(lowered);
-      } else if (item.playlist_songs) {
-        return item.playlist_songs.toLowerCase().includes(lowered);
-      } else if (item.music_search) {
-        return item.music_search.toLowerCase().includes(lowered);
-      } else {
-        return false;
+    const filteredCardData = [];
+    const lowercaseInput = searchInput.toLowerCase();
+    for (const value of Object.values(data)) {
+      const lowercaseValue = value.toLowerCase();
+      if (lowercaseValue.includes(lowercaseInput)) {
+        filteredCardData.push(lowercaseValue);
       }
-    });
+    }
 
     const cardsContainer = document.querySelector("#cardsContainer");
     cardsContainer.innerHTML = "";
 
-    for (let i = 0; i < filteredData.length; i++) {
-      const elem = filteredData[i];
+    for (let i = 0; i < filteredCardData.length; i++) {
+      const elem = filteredCardData[i];
       const newCard = createCard(elem);
       cardsContainer.appendChild(newCard);
     }
