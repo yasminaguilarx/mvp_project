@@ -47,8 +47,8 @@ async function searchResults(data, searchInput) {
 
     for (let i = 0; i < filteredData.length; i++) {
       const elem = filteredData[i];
-
-      cardsContainer.appendChild(createCard(elem));
+      const newCard = createCard(elem);
+      cardsContainer.appendChild(newCard);
     }
   } catch (err) {
     console.error(err);
