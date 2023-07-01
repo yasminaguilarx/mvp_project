@@ -48,7 +48,7 @@ async function searchResults(data) {
 }
 
 // create cards
-function createCard(elem) {
+function createCard(elem, search) {
   const cardCtn = document.querySelector("#defaultCardContainer");
   const cardsContainer = document.querySelector("#cardsContainer");
   while (cardCtn.firstChild) {
@@ -67,7 +67,7 @@ function createCard(elem) {
 
   // Create the card title
   const cardTitle = document.createElement("h3");
-  cardTitle.textContent = `${elem}`;
+  cardTitle.textContent = `${search(elem)}`;
   cardTitle.classList.add("card-title");
   card.appendChild(cardTitle);
 
@@ -76,8 +76,7 @@ function createCard(elem) {
   cardButton.textContent = "Save to Playlist";
   cardButton.classList.add("card-button");
   cardButton.addEventListener("click", (e) => {
-    // saveToPlaylist(elem);
-    console.log(e.target.value);
+    saveToPlaylist(e.target.value);
   });
   card.appendChild(cardButton);
   cardCtn.appendChild(card);
@@ -98,39 +97,39 @@ function createCard(elem) {
 //   return;
 // }
 
-// function saveToPlaylist(elem) {
-//   const playlistName = prompt("Enter playlist name:");
+function saveToPlaylist(elem) {
+  const playlistName = prompt("Enter playlist name:");
 
-//   if (!playlistName) {
-//     alert("Playlist name is required.");
-//     return;
-//   }
+  if (!playlistName) {
+    alert("Playlist name is required.");
+    return;
+  }
 
-//   const playlist = {
-//     name: playlistName,
-//     songs: [elem],
-//   };
+  const playlist = {
+    name: playlistName,
+    songs: [elem],
+  };
 
-//   fetch(`/playlist_info/songs_added/${elem}`, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(playlist),
-//   })
-//     .then((response) => {
-//       if (response.ok) {
-//         alert(
-//           `Saved '${elem.name}' to playlist '${playlistName}' successfully!`
-//         );
-//       } else {
-//         console.error("Failed to save the playlist.");
-//       }
-//     })
-//     .catch((error) => {
-//       console.error(error);
-//     });
-// }
+  fetch(`/playlist_info/songs_added/${elem}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(playlist),
+  })
+    .then((response) => {
+      if (response.ok) {
+        alert(
+          `Saved '${elem.name}' to playlist '${playlistName}' successfully!`
+        );
+      } else {
+        console.error("Failed to save the playlist.");
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
 
 // //create playlist
 // async function createPlaylist(playlistType, songsAdded) {
