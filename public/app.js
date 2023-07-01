@@ -24,36 +24,38 @@ async function search(input) {
   }
 }
 
-function searchResults(input, data) {
-  const defaultCardContainer = document.querySelector("#defaultCardContainer");
-  while (defaultCardContainer.firstChild) {
-    defaultCardContainer.removeChild(defaultCardContainer.firstChild);
-  }
+fetch("/all_data").then((response) => console.log(response));
 
-  fetch("/all_data")
-    .then((response) => console.lof(response))
-    // .then((data) => {
-    //   for (let i = 0; i < data.length; i++) {
-    //     const elem = data[i].rows;
+// function searchResults(input, data) {
+//   const defaultCardContainer = document.querySelector("#defaultCardContainer");
+//   while (defaultCardContainer.firstChild) {
+//     defaultCardContainer.removeChild(defaultCardContainer.firstChild);
+//   }
 
-    //     const container = document.querySelector("#cardsContainer");
-    //     const newCard = createCard(elem);
+//   fetch("/all_data")
+//     .then((response) => console.log(response))
+// .then((data) => {
+//   for (let i = 0; i < data.length; i++) {
+//     const elem = data[i].rows;
 
-    //     if (input === "genre") {
-    //       newCard.innerHTML = elem.playlist_genre;
-    //     } else if (input === "playlist") {
-    //       newCard.innerHTML = elem.playlist_songs;
-    //     } else if (input === "artist") {
-    //       newCard.innerHTML = elem.music_search;
-    //     }
-    //     container.appendChild(newCard);
-    //     return newCard;
-    //   }
-    // })
-    .catch((error) => {
-      console.error("Error: Cannot Fetch Data", error);
-    });
-}
+//     const container = document.querySelector("#cardsContainer");
+//     const newCard = createCard(elem);
+
+//     if (input === "genre") {
+//       newCard.innerHTML = elem.playlist_genre;
+//     } else if (input === "playlist") {
+//       newCard.innerHTML = elem.playlist_songs;
+//     } else if (input === "artist") {
+//       newCard.innerHTML = elem.music_search;
+//     }
+//     container.appendChild(newCard);
+//     return newCard;
+//   }
+// })
+//     .catch((error) => {
+//       console.error("Error: Cannot Fetch Data", error);
+//     });
+// }
 
 // create cards
 function createCard(elem) {
