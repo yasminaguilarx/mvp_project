@@ -31,22 +31,24 @@ async function searchResults(data, searchInput) {
 
     const lowered = searchInput.toLowerCase();
     const filteredData = data.filter((item) => {
-      if ("genre") {
-        item.playlist_genre.toLowerCase().includes(lowered);
-        //newCard.innerHTML = elem.playlist_genre;
-      } else if ("playlist") {
-        item.playlist_songs.toLowerCase().includes(lowered);
-        //newCard.innerHTML = elem.playlist_songs;
-      } else if (filteredData === "artist") {
-        item.music_search.toLowerCase().includes(lowered);
-        //newCard.innerHTML = elem.music_search;
+      if (item.type === "genre") {
+        return item.playlist_genre.toLowerCase().includes(lowered);
+      } else if (item.type === "playlist") {
+        return item.playlist_songs.toLowerCase().includes(lowered);
+      } else if (item.type === "artist") {
+        return item.music_search.toLowerCase().includes(lowered);
+      } else {
+        return false;
       }
     });
 
+    const cardsContainer = document.querySelector("#cardsContainer");
+    cardsContainer.innerHTML = "";
+
     for (let i = 0; i < filteredData.length; i++) {
       const elem = filteredData[i];
-      const newCard = createCard(elem);
-      return newCard;
+
+      cardsContainer.appendChild(createCard(elem));
     }
   } catch (err) {
     console.error(err);
@@ -73,7 +75,7 @@ function createCard(elem) {
 
   // Create the card title
   const cardTitle = document.createElement("h3");
-  cardTitle.textContent = `${elem}`;
+  cardTitle.textContent = elem;
   cardTitle.classList.add("card-title");
   card.appendChild(cardTitle);
 
