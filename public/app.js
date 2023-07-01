@@ -49,7 +49,7 @@ async function searchResults(data, input) {
 
     filteredCardData.forEach((elem) => {
       const newCard = createCard(elem);
-      cardsContainer.appendChild(newCard);
+      cardsContainer.innerHTML = newCard;
     });
     // const lowercaseGenre = data.playlist_genre.toLowerCase();
     // const lowercaseSongs = data.playlist_songs.toLowerCase();
