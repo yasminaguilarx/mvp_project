@@ -76,11 +76,9 @@ async function searchResults(data, input) {
 
 // create cards
 function createCard(elem) {
-  const cardCtn = document.querySelector("#defaultCardContainer");
   const cardsContainer = document.querySelector("#cardsContainer");
-  while (cardCtn.firstChild) {
-    cardCtn.removeChild(cardCtn.firstChild);
-  }
+  const cardCtn = document.querySelector("#defaultCardContainer");
+  cardCtn.innerHTML = "";
 
   const card = document.createElement("div");
   card.classList.add("card");
