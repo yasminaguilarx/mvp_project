@@ -31,11 +31,11 @@ async function searchResults(data, searchInput) {
 
     const lowered = searchInput.toLowerCase();
     const filteredData = data.filter((item) => {
-      if (item.playlist_genre === "genre") {
+      if (item.playlist_genre) {
         return item.playlist_genre.toLowerCase().includes(lowered);
-      } else if (item.playlist_songs === "playlist") {
+      } else if (item.playlist_songs) {
         return item.playlist_songs.toLowerCase().includes(lowered);
-      } else if (item.music_search === "artist") {
+      } else if (item.music_search) {
         return item.music_search.toLowerCase().includes(lowered);
       } else {
         return false;
