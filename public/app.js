@@ -31,8 +31,6 @@ async function searchResults(data) {
 
     for (let i = 0; i < data.length; i++) {
       const elem = data[i].rows;
-
-      const container = document.querySelector("#cardsContainer");
       const newCard = createCard(elem);
 
       if (data === "genre") {
@@ -42,7 +40,6 @@ async function searchResults(data) {
       } else if (data === "artist") {
         newCard.innerHTML = elem.music_search;
       }
-      container.appendChild(newCard);
       return newCard;
     }
   } catch (err) {
