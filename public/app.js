@@ -27,23 +27,48 @@ async function search(input) {
 async function searchResults(data, input) {
   try {
     // const response = await fetch("/all_data");
-    `${data}` = await search(`${input}`);
-
+    const searchInput = input.toLowerCase();
     const filteredCardData = [];
-    const lowercaseInput = `${data.toLowerCase()}`;
-    for (const value of Object.values(lowercaseInput)) {
-      if (value.includes(lowercaseInput)) {
-        filteredCardData.push(value);
+
+    data.forEach((item) => {
+      const lowercaseGenre = item.playlist_genre.toLowerCase();
+      const lowercaseSongs = item.playlist_songs.toLowerCase();
+      const lowercaseSearch = item.music_search.toLowerCase();
+
+      if (
+        lowercaseGenre.includes(searchInput) ||
+        lowercaseSongs.includes(searchInput) ||
+        lowercaseSearch.includes(searchInput)
+      ) {
+        filteredCardData.push(item);
       }
-    }
+    });
+
     const cardsContainer = document.querySelector("#cardsContainer");
     cardsContainer.innerHTML = "";
 
-    for (let i = 0; i < filteredCardData.length; i++) {
-      const elem = filteredCardData[i];
+    filteredCardData.forEach((elem) => {
       const newCard = createCard(elem);
       cardsContainer.appendChild(newCard);
-    }
+    });
+    // const lowercaseGenre = data.playlist_genre.toLowerCase();
+    // const lowercaseSongs = data.playlist_songs.toLowerCase();
+    // const lowercaseSearch = data.music_search.toLowerCase();
+
+    // for (const value of Object.values(
+    //   lowercaseGenre || lowercaseSongs || lowercaseSearch
+    // )) {
+    //   filteredCardData.push(value);
+    // }
+
+    // const cardsContainer = document.querySelector("#cardsContainer");
+    // cardsContainer.innerHTML = "";
+
+    // for (let i = 0; i < filteredCardData.length; i++) {
+    //   const elem = filteredCardData[i];
+    //   const newCard = createCard(elem);
+    //   cardsContainer.appendChild(newCard);
+    // }
   } catch (err) {
     console.error(err);
   }
