@@ -29,40 +29,31 @@ async function searchResults(data) {
   while (defaultCardContainer.firstChild) {
     defaultCardContainer.removeChild(defaultCardContainer.firstChild);
   }
-try {
-  const response = await fetch('/all_data');
-  const data = await response.json();
+  try {
+    const response = await fetch("/all_data");
+    const data = await response.json();
 
-  for (let i = 0; i < data.length; i++) {
-    const elem = data[i].rows;
+    for (let i = 0; i < data.length; i++) {
+      const elem = data[i].rows;
 
-    const container = document.querySelector("#cardsContainer");
-    const newCard = createCard(elem);
+      const container = document.querySelector("#cardsContainer");
+      const newCard = createCard(elem);
 
-    if (input === "genre") {
-      newCard.innerHTML = elem.playlist_genre;
-    } else if (input === "playlist") {
-      newCard.innerHTML = elem.playlist_songs;
-    } else if (input === "artist") {
-      newCard.innerHTML = elem.music_search;
+      if (input === "genre") {
+        newCard.innerHTML = elem.playlist_genre;
+      } else if (input === "playlist") {
+        newCard.innerHTML = elem.playlist_songs;
+      } else if (input === "artist") {
+        newCard.innerHTML = elem.music_search;
+      }
+      container.appendChild(newCard);
+      return newCard;
     }
-    container.appendChild(newCard);
-    return newCard;
-  } 
-} catch (err) {
-  console.error(err);
+  } catch (err) {
+    console.error(err);
+  }
 }
-};
 
-
-
-
-
-  
-    .catch((error) => {
-      console.error("Error: Cannot Fetch Data", error);
-    });
-}
 console.log(searchResults(data));
 // create cards
 function createCard(elem) {
