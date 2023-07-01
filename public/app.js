@@ -31,7 +31,7 @@ async function searchResults(data) {
   }
   try {
     const response = await fetch("/all_data");
-    const data = await response.json();
+    data = await response.json();
 
     for (let i = 0; i < data.length; i++) {
       const elem = data[i].rows;
@@ -54,7 +54,6 @@ async function searchResults(data) {
   }
 }
 
-console.log(searchResults(data));
 // create cards
 function createCard(elem) {
   const cardCtn = document.querySelector("#defaultCardContainer");
