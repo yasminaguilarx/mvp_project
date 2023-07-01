@@ -18,16 +18,10 @@ async function search(input) {
       method: "GET",
     });
     const data = await response.json();
-    await searchResults(data, `${input}`);
+    searchResults(data);
   } catch (err) {
     console.error("No result found", err);
   }
-}
-
-async function fetchedData(data) {
-  const response = await fetch("/all_data");
-  const data = response.json();
-  return data;
 }
 
 function searchResults(input, data) {
@@ -36,28 +30,29 @@ function searchResults(input, data) {
     defaultCardContainer.removeChild(defaultCardContainer.firstChild);
   }
 
-  try {
-    const userInput = fetchedData(data);
+  fetch("/all_data")
+    .then((response) => console.lof(response))
+    // .then((data) => {
+    //   for (let i = 0; i < data.length; i++) {
+    //     const elem = data[i].rows;
 
-    for (let i = 0; i < userInput.length; i++) {
-      const elem = userInput[i].rows;
+    //     const container = document.querySelector("#cardsContainer");
+    //     const newCard = createCard(elem);
 
-      const container = document.querySelector("#cardsContainer");
-      const newCard = createCard(elem);
-
-      if (input === "genre") {
-        newCard.innerHTML = elem.playlist_genre;
-      } else if (input === "playlist") {
-        newCard.innerHTML = elem.playlist_songs;
-      } else if (input === "artist") {
-        newCard.innerHTML = elem.music_search;
-      }
-      container.appendChild(newCard);
-      return newCard;
-    }
-  } catch (error) {
-    console.error("Error: Cannot Fetch Data", error);
-  }
+    //     if (input === "genre") {
+    //       newCard.innerHTML = elem.playlist_genre;
+    //     } else if (input === "playlist") {
+    //       newCard.innerHTML = elem.playlist_songs;
+    //     } else if (input === "artist") {
+    //       newCard.innerHTML = elem.music_search;
+    //     }
+    //     container.appendChild(newCard);
+    //     return newCard;
+    //   }
+    // })
+    .catch((error) => {
+      console.error("Error: Cannot Fetch Data", error);
+    });
 }
 
 // create cards
