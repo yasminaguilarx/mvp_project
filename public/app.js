@@ -67,7 +67,7 @@ function createCard(elem, search) {
 
   // Create the card title
   const cardTitle = document.createElement("h3");
-  cardTitle.textContent = `${search(elem)}`;
+  cardTitle.textContent = `${search}`;
   cardTitle.classList.add("card-title");
   card.appendChild(cardTitle);
 
