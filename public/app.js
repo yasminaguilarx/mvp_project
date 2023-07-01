@@ -24,26 +24,18 @@ async function search(input) {
   }
 }
 
-async function searchResults(data, searchInput) {
+async function searchResults(data, input) {
   try {
     // const response = await fetch("/all_data");
-    // data = await response.json();
-    const parsed = JSON.parse(data);
-    const filteredCardData = [];
-    const lowercaseInput = searchInput.toLowerCase();
-    for (const value of Object.values(parsed)) {
-      const lowercaseValue = value.toLowerCase();
+    `${data}` = await search(`${input}`);
 
-      if (lowercaseValue.includes(lowercaseInput)) {
-        filteredCardData.push(lowercaseValue);
+    const filteredCardData = [];
+    const lowercaseInput = `${data.toLowerCase()}`;
+    for (const value of Object.values(lowercaseInput)) {
+      if (value.includes(lowercaseInput)) {
+        filteredCardData.push(value);
       }
     }
-
-    // for(let [key, value] of data) {
-
-    //   //push it into empty array
-    // }
-
     const cardsContainer = document.querySelector("#cardsContainer");
     cardsContainer.innerHTML = "";
 
