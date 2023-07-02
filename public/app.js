@@ -26,7 +26,7 @@ async function search(input) {
     const data = await response.json();
     searchResults(data, input);
   } catch (err) {
-    console.error("No result found", err);
+    console.error("No Result Found", err);
   }
 }
 
@@ -60,31 +60,8 @@ async function searchResults(data, input) {
       const cardsContainer = document.querySelector("#cardsContainer");
       cardsContainer.appendChild(defaultCardContainer);
     }
-
-    // filteredCardData.forEach((elem) => {
-    //   const newCard = createCard(elem);
-    //   cardsContainer.innerHTML = newCard;
-    // });
-    // const lowercaseGenre = data.playlist_genre.toLowerCase();
-    // const lowercaseSongs = data.playlist_songs.toLowerCase();
-    // const lowercaseSearch = data.music_search.toLowerCase();
-
-    // for (const value of Object.values(
-    //   lowercaseGenre || lowercaseSongs || lowercaseSearch
-    // )) {
-    //   filteredCardData.push(value);
-    // }
-
-    // const cardsContainer = document.querySelector("#cardsContainer");
-    // cardsContainer.innerHTML = "";
-
-    // for (let i = 0; i < filteredCardData.length; i++) {
-    //   const elem = filteredCardData[i];
-    //   const newCard = createCard(elem);
-    //   cardsContainer.appendChild(newCard);
-    // }
   } catch (err) {
-    console.error(err);
+    console.error("Unable To Populate Search Results", err);
   }
 }
 
@@ -122,18 +99,6 @@ function createCard(elem, searchInput) {
   return card;
 }
 
-// async function fetchedData(obj) {
-// const response = await fetch(`${obj}/all_data`);
-// const data = await response.json();
-// return data;
-// //then you'll call and await this function in your search results
-// }
-
-// if (!data || data.length === 0) {
-//   defaultCardContainer.textContent = "No result found";
-//   return;
-// }
-
 function saveToPlaylist(value) {
   const playlistName = prompt("Enter playlist name:");
 
@@ -147,7 +112,7 @@ function saveToPlaylist(value) {
     values: [value],
   };
 
-  fetch(`/playlist_info/songs_added/${value}`, {
+  fetch(`/all_data/playlist_songs/${value}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -157,10 +122,10 @@ function saveToPlaylist(value) {
     .then((response) => {
       if (response.ok) {
         alert(
-          `Saved '${values.name}' to playlist '${playlistName}' successfully!`
+          `Saved '${playlist.values.name}' to playlist '${playlist.name.playlistName}' successfully!`
         );
       } else {
-        console.error("Failed to save the playlist.");
+        console.error("Failed To Save The Playlist.");
       }
     })
     .catch((error) => {

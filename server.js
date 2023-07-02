@@ -39,12 +39,14 @@ app.get("/all_data", async (req, res) => {
 });
 
 app.get("/all_data", async (req, res) => {
-  const { id } = req.params;
   try {
-    const result = await pool.query(
-      `SELECT * FROM all_data WHERE data_id = ${id}`
-    );
     const { music_search, playlist_songs, playlist_genre } = result[0];
+    const result = await pool.query(
+      `SELECT music_search FROM all_data` ||
+        `SELECT playlist_songs FROM all_data` ||
+        `SELECT playlist_genre FROM all_data`
+    );
+
     const artist = music_search;
     const genre = playlist_genre;
     const playlist = playlist_songs;
