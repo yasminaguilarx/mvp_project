@@ -47,7 +47,7 @@ app.get("/all_data", async (req, res) => {
 
     if (music_search) {
       const result = await pool.query(`SELECT ${music_search} FROM all_data`);
-      allData.push(...result.rows);
+      allData.push(...result);
     }
     // if (playlist_songs) {
     //   const result = await pool.query(`SELECT ${playlist_songs} FROM all_data`);
