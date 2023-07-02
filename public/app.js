@@ -9,6 +9,12 @@ window.addEventListener("DOMContentLoaded", () => {
       await search(inputSearch);
     }
   });
+
+  // const homeButton = document.getElementById("#homebtn");
+  // homeButton.addEventListener("click", async (e) => {
+  //   const backToHomePage = e.target;
+
+  // });
 });
 
 // //search functionality 'get'
@@ -128,7 +134,7 @@ function createCard(elem, searchInput) {
 //   return;
 // }
 
-function saveToPlaylist(elem) {
+function saveToPlaylist(value) {
   const playlistName = prompt("Enter playlist name:");
 
   if (!playlistName) {
@@ -138,10 +144,10 @@ function saveToPlaylist(elem) {
 
   const playlist = {
     name: playlistName,
-    songs: [elem],
+    values: [value],
   };
 
-  fetch(`/playlist_info/songs_added/${elem}`, {
+  fetch(`/playlist_info/songs_added/${value}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -151,7 +157,7 @@ function saveToPlaylist(elem) {
     .then((response) => {
       if (response.ok) {
         alert(
-          `Saved '${elem.name}' to playlist '${playlistName}' successfully!`
+          `Saved '${values.name}' to playlist '${playlistName}' successfully!`
         );
       } else {
         console.error("Failed to save the playlist.");

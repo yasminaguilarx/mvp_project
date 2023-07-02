@@ -166,8 +166,100 @@
   z-index: 2;
 }
 
+#playBtn {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+#playBtn:hover {
+  transform: scale(1.2);
+}
+
+#playBtn img {
+  width: 24px;
+  height: 24px;
+  transition: opacity 0.3s ease;
+  margin-right: 10px;
+}
+
+#playBtn:hover img {
+  opacity: 0.7;
+}
+
+#rewindBtn {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+#rewindBtn:hover {
+  transform: scale(1.2);
+}
+
+#rewindBtn img {
+  width: 24px;
+  height: 24px;
+  transition: opacity 0.3s ease;
+  margin-right: 10px;
+}
+
+#rewindBtn:hover img {
+  opacity: 0.7;
+}
+
+#fastForwardBtn {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+#fastForwardBtn:hover {
+  transform: scale(1.2);
+}
+
+#fastForwardBtn img {
+  width: 24px;
+  height: 24px;
+  transition: opacity 0.3s ease;
+  margin-right: 10px;
+}
+
+#fastForwardBtn:hover img {
+  opacity: 0.7;
+}
+
+#shuffleBtn {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+#shuffleBtn:hover {
+  transform: scale(1.2);
+}
+
+#shuffleBtn img {
+  width: 24px;
+  height: 24px;
+  transition: opacity 0.3s ease;
+  margin-right: 10px;
+}
+
+#shuffleBtn:hover img {
+  opacity: 0.7;
+}
+
 .card {
-  background-color: #f2f2f2;
+  background-color: #121212;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -181,7 +273,7 @@
   border: 3px solid red;
   font-family: Arial, sans-serif;
   font-size: 16px;
-  color: #333;
+  color: #f2f2f2;
 }
 
 .card-image {
@@ -190,8 +282,8 @@
   border-radius: 50%;
   object-fit: cover;
   margin-right: 16px; */
-  width: 70px;
-  height: 70px;
+  width: 100px;
+  height: 100px;
   margin-bottom: 10px;
 }
 
@@ -205,7 +297,7 @@
 .default-card {
   width: 200px;
   height: 200px;
-  background-color: #f2f2f2;
+  background-color: #121212;
   border-radius: 8px;
   margin-bottom: 20px;
   display: flex;
@@ -214,7 +306,7 @@
   flex-direction: column;
   font-family: Arial, sans-serif;
   font-size: 16px;
-  color: #333;
+  color: #f2f2f2;
   /* padding: 20px;
   text-align: center; */
 }
@@ -229,9 +321,15 @@
   /* font-size: 10px;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: lighter; */
-  color: red;
   width: 24px;
   height: 24px;
+}
+
+.card-button img {
+  width: 20px;
+  height: 20px;
+  transition: opacity 0.3s ease;
+  margin-right: 10px;
 }
 
 .card-button:hover {
