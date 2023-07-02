@@ -270,7 +270,7 @@
   margin-bottom: 20px;
   width: 200px;
   height: 270px;
-  font-family: Arial, sans-serif;
+  font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
   color: #f2f2f2;
 }
@@ -303,7 +303,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  font-family: Arial, sans-serif;
+  font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
   color: #f2f2f2;
   /* padding: 20px;
@@ -329,9 +329,6 @@
 }
 
 .card-button img {
-  /* font-size: 10px;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-weight: lighter; */
   width: 24px;
   height: 24px;
 }
@@ -342,8 +339,9 @@
 
 #libraryHeader {
   color: #f2f2f2;
-  font-family: Arial, sans-serif;
-  font-size: 16px;
+  font-size: 20px;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-weight: lighter;
 }
 
 .saveBtnImg img {
