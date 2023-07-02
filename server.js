@@ -40,30 +40,27 @@ app.use(cors());
 
 app.get("/all_data", async (req, res) => {
   try {
-    const { music_search, playlist_songs, playlist_genre } = result[0];
-    const result = await pool.query(
-      `SELECT music_search FROM all_data` ||
-        `SELECT playlist_songs FROM all_data` ||
-        `SELECT playlist_genre FROM all_data`
-    );
+    const { music_search, playlist_songs, playlist_genre } = req.body;
+    //result[0];
 
     const artist = music_search;
     const genre = playlist_genre;
     const playlist = playlist_songs;
 
-    const allData = {
-      id: id,
-    };
-
     if (artist) {
       allData.music_search = artist;
+      const result = await pool.query(`SELECT ${artist} FROM all_data`);
     }
     if (playlist) {
       allData.playlist_songs = playlist;
+      const result = await pool.query(`SELECT ${playlist} FROM all_data`);
     }
     if (genre) {
       allData.playlist_genre = genre;
+      const result = await pool.query(`SELECT ${genre} FROM all_data`);
     }
+
+    const allData = result.rows;
 
     res.status(200).send(allData);
   } catch (err) {

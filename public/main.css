@@ -342,6 +342,8 @@
 
 #libraryHeader {
   color: #f2f2f2;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
 }
 
 .saveBtnImg img {
