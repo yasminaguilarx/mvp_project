@@ -105,7 +105,8 @@ function createCard(elem, searchInput) {
 
   //create save button
   const cardButton = document.createElement("button");
-  cardButton.textContent = "Save to Playlist";
+  //cardButton.textContent = "Save to Playlist";
+  cardButton.src = "./images/8666749_plus_add_icon.png";
   cardButton.classList.add("card-button");
   cardButton.addEventListener("click", (e) => {
     saveToPlaylist(e.target.value);

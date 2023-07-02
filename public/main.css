@@ -190,8 +190,8 @@
   border-radius: 50%;
   object-fit: cover;
   margin-right: 16px; */
-  max-width: 100px;
-  max-height: 100px;
+  width: 70px;
+  height: 70px;
   margin-bottom: 10px;
 }
 
@@ -226,10 +226,10 @@
 }
 
 .card-button {
-  font-size: 10px;
+  /* font-size: 10px;
   font-family: "Helvetica Neue", Arial, sans-serif;
-  font-weight: lighter;
-  color: black;
+  font-weight: lighter; */
+  color: red;
   width: 24px;
   height: 24px;
 }
