@@ -90,7 +90,7 @@ function createCard(elem, searchInput) {
   const cardButton = document.createElement("button");
   const saveBtn = document.createElement("img");
   saveBtn.classList.add("saveBtnImg");
-  saveBtn.src = "./images/8666749_plus_add_icon.png";
+  saveBtn.src = "images/2044286_add_plus_icon.png";
   cardButton.appendChild(saveBtn);
   cardButton.classList.add("card-button");
   cardButton.addEventListener("click", (e) => {
@@ -114,7 +114,7 @@ function saveToPlaylist(value) {
     values: [value],
   };
 
-  fetch(`/all_data/playlist_songs/${value}`, {
+  fetch("/all_data/playlist_songs", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
