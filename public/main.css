@@ -320,6 +320,14 @@
   margin-bottom: 51px;
 }
 
+.card-button {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
 .card-button img {
   /* font-size: 10px;
   font-family: "Helvetica Neue", Arial, sans-serif;
@@ -330,6 +338,10 @@
 
 .card-button:hover img {
   transform: scale(1.2);
+}
+
+#libraryHeader {
+  color: #f2f2f2;
 }
 
 .saveBtnImg img {
@@ -360,7 +372,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   min-height: calc(100vh - 200px);
-  max-width: 800px;
+  max-width: 1072px;
   /* border: 1px solid blue; */
 }
 
