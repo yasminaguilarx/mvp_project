@@ -49,14 +49,14 @@ app.get("/all_data", async (req, res) => {
       const result = await pool.query(`SELECT ${music_search} FROM all_data`);
       allData.push(...result.rows);
     }
-    if (playlist_songs) {
-      const result = await pool.query(`SELECT ${playlist_songs} FROM all_data`);
-      allData.push(...result.rows);
-    }
-    if (playlist_genre) {
-      const result = await pool.query(`SELECT ${playlist_genre} FROM all_data`);
-      allData.push(...result.rows);
-    }
+    // if (playlist_songs) {
+    //   const result = await pool.query(`SELECT ${playlist_songs} FROM all_data`);
+    //   allData.push(...result.rows);
+    // }
+    // if (playlist_genre) {
+    //   const result = await pool.query(`SELECT ${playlist_genre} FROM all_data`);
+    //   allData.push(...result.rows);
+    // }
 
     res.status(200).send(allData);
   } catch (err) {
