@@ -40,7 +40,7 @@ app.use(cors());
 
 app.get("/all_data", async (req, res) => {
   try {
-    const { music_search, playlist_songs, playlist_genre } = req.body;
+    const { music_search, playlist_songs, playlist_genre } = req.query;
     //result[0];
 
     const allData = [];
@@ -50,16 +50,19 @@ app.get("/all_data", async (req, res) => {
         `SELECT * FROM all_data WHERE music_search = $1`,
         [music_search]
       );
+      res.set("Content-Type", "application/json");
       allData.push(...result.rows);
     }
-    // if (playlist_songs) {
-    //   const result = await pool.query(`SELECT ${playlist_songs} FROM all_data`);
-    //   allData.push(...result.rows);
-    // }
-    // if (playlist_genre) {
-    //   const result = await pool.query(`SELECT ${playlist_genre} FROM all_data`);
-    //   allData.push(...result.rows);
-    // }
+    if (playlist_songs) {
+      const result = await pool.query(`SELECT ${playlist_songs} FROM all_data`);
+      res.set("Content-Type", "application/json");
+      allData.push(...result.rows);
+    }
+    if (playlist_genre) {
+      const result = await pool.query(`SELECT ${playlist_genre} FROM all_data`);
+      res.set("Content-Type", "application/json");
+      allData.push(...result.rows);
+    }
 
     res.status(200).send(allData);
   } catch (err) {

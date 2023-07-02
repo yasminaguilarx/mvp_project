@@ -9,21 +9,7 @@ window.addEventListener("DOMContentLoaded", () => {
       await search(inputSearch);
     }
   });
-
-  // const homeButton = document.getElementById("#homebtn");
-  // homeButton.addEventListener("click", async (e) => {
-  //   const backToHomePage = e.target;
-
-  // });
 });
-
-//notes for myself for tomorrow
-//figure out how to connect home btn to default container to bring it back when clicked, maybe when i create
-//more playlists i can add the listener to that and then call the defaultcontainer to re render
-
-//make the plus sign bigger
-//change font of your library
-//work on  create and post on server side then connect from client side
 
 // //search functionality 'get'
 async function search(input) {
@@ -40,7 +26,6 @@ async function search(input) {
 
 async function searchResults(data, input) {
   try {
-    // const response = await fetch("/all_data");
     const searchInput = input.toLowerCase();
     const filteredCardData = [];
 
@@ -224,3 +209,17 @@ async function removeSongFromPlaylist(input) {
     console.error("Error:", error);
   }
 }
+
+// const homeButton = document.getElementById("#homebtn");
+// homeButton.addEventListener("click", async (e) => {
+//   const backToHomePage = e.target;
+
+// });
+
+//notes for myself for tomorrow
+//figure out how to connect home btn to default container to bring it back when clicked, maybe when i create
+//more playlists i can add the listener to that and then call the defaultcontainer to re render
+
+//make the plus sign bigger
+//change font of your library
+//work on  create and post on server side then connect from client side
