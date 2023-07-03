@@ -47,22 +47,22 @@ app.get("/all_data", async (req, res) => {
 
     if (music_search) {
       const result = await pool.query(
-        `SELECT * FROM all_data WHERE music_search = $1`,
-        [music_search]
+        `SELECT * FROM all_data WHERE LOWER(music_search) LIKE LOWER($1)`,
+        [`%${music_search.toLowerCase()}%`]
       );
       res.set("Content-Type", "application/json");
       allData.push(...result.rows);
     }
-    if (playlist_songs) {
-      const result = await pool.query(`SELECT ${playlist_songs} FROM all_data`);
-      res.set("Content-Type", "application/json");
-      allData.push(...result.rows);
-    }
-    if (playlist_genre) {
-      const result = await pool.query(`SELECT ${playlist_genre} FROM all_data`);
-      res.set("Content-Type", "application/json");
-      allData.push(...result.rows);
-    }
+    // if (playlist_songs) {
+    //   const result = await pool.query(`SELECT ${playlist_songs} FROM all_data`);
+    //   res.set("Content-Type", "application/json");
+    //   allData.push(...result.rows);
+    // }
+    // if (playlist_genre) {
+    //   const result = await pool.query(`SELECT ${playlist_genre} FROM all_data`);
+    //   res.set("Content-Type", "application/json");
+    //   allData.push(...result.rows);
+    // }
 
     res.status(200).send(allData);
   } catch (err) {
