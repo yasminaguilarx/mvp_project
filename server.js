@@ -58,7 +58,7 @@ app.get("/all_data", async (req, res) => {
       allData.push(result.rows);
     }
 
-    res.status(200).send(allData);
+    res.status(200).json(allData);
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error, Request Denied");
