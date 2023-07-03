@@ -40,21 +40,16 @@ app.get("/all_data", async (req, res) => {
       const result = await pool.query(`SELECT music_search FROM all_data`, [
         music_search,
       ]);
-      res.set("Content-Type", "application/json");
       allData.push(result.rows);
-    }
-    if (data === playlist_songs) {
+    } else if (data === playlist_songs) {
       const result = await pool.query(`SELECT playlist_songs FROM all_data`, [
         playlist_songs,
       ]);
-      res.set("Content-Type", "application/json");
       allData.push(result.rows);
-    }
-    if (data === playlist_genre) {
+    } else {
       const result = await pool.query(`SELECT playlist_genre FROM all_data`, [
         playlist_genre,
       ]);
-      res.set("Content-Type", "application/json");
       allData.push(result.rows);
     }
 
