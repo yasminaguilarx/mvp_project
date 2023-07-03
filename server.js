@@ -6,8 +6,6 @@ dotenv.config();
 
 const { Pool } = require("pg");
 
-const bodyParser = require("body-parser");
-
 const cors = require("cors");
 
 const dbstring = process.env.DATABASE_URL;
@@ -19,14 +17,8 @@ const pool = new Pool({
 });
 
 app.use(express.json());
-app.use(bodyParser.json());
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-);
 app.use(express.static("public"));
-app.use(cors());
+app.use(cors({ origin: "*" }));
 
 // app.get("/all_data", async (req, res) => {
 //   try {
@@ -52,17 +44,24 @@ app.get("/all_data", async (req, res) => {
       );
       res.set("Content-Type", "application/json");
       allData.push(...result.rows);
+      console.log(result.rows);
     }
-    // if (playlist_songs) {
-    //   const result = await pool.query(`SELECT ${playlist_songs} FROM all_data`);
-    //   res.set("Content-Type", "application/json");
-    //   allData.push(...result.rows);
-    // }
-    // if (playlist_genre) {
-    //   const result = await pool.query(`SELECT ${playlist_genre} FROM all_data`);
-    //   res.set("Content-Type", "application/json");
-    //   allData.push(...result.rows);
-    // }
+    if (playlist_songs) {
+      const result = await pool.query(
+        `SELECT * FROM all_data WHERE LOWER(playlist_songs) LIKE LOWER($1)`,
+        [`%${playlist_songs.toLowerCase()}%`]
+      );
+      res.set("Content-Type", "application/json");
+      allData.push(...result.rows);
+    }
+    if (playlist_genre) {
+      const result = await pool.query(
+        `SELECT * FROM all_data WHERE LOWER(playlist_genre) LIKE LOWER($1)`,
+        [`%${playlist_genre.toLowerCase()}%`]
+      );
+      res.set("Content-Type", "application/json");
+      allData.push(...result.rows);
+    }
 
     res.status(200).send(allData);
   } catch (err) {
