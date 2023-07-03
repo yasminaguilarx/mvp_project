@@ -20,15 +20,15 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use(cors({ origin: "*" }));
 
-app.get("/all_data", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT * FROM all_data");
-    res.status(200).send(result.rows);
-  } catch (err) {
-    console.err(err);
-    res.status(500).send("Internal Server Error");
-  }
-});
+// app.get("/all_data", async (req, res) => {
+//   try {
+//     const result = await pool.query("SELECT * FROM all_data");
+//     res.status(200).send(result.rows);
+//   } catch (err) {
+//     console.err(err);
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
 
 app.get("/all_data", async (req, res) => {
   try {
