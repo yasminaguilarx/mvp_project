@@ -30,43 +30,40 @@ app.get("/all_data", async (req, res) => {
   }
 });
 
-// app.get("/all_data", async (req, res) => {
-//   try {
-//     const { music_search, playlist_songs, playlist_genre } = req.query;
-//     const { id } = req.params;
-//     //result[0];
+app.get("/all_data", async (req, res) => {
+  try {
+    const data = [music_search, playlist_songs, playlist_genre];
 
-//     const allData = [];
+    const allData = [];
 
-//     if (music_search) {
-//       const result = await pool.query(
-//         `SELECT * FROM all_data WHERE ${id} = ${music_search}`
-//       );
-//       res.set("Content-Type", "application/json");
-//       allData.push(...result.rows);
-//       console.log(result.rows);
-//     }
-//     if (playlist_songs) {
-//       const result = await pool.query(
-//         `SELECT * FROM all_data WHERE ${id} = ${playlist_songs}`
-//       );
-//       res.set("Content-Type", "application/json");
-//       allData.push(...result.rows);
-//     }
-//     if (playlist_genre) {
-//       const result = await pool.query(
-//         `SELECT * FROM all_data WHERE ${id} = ${playlist_genre}`
-//       );
-//       res.set("Content-Type", "application/json");
-//       allData.push(...result.rows);
-//     }
+    if (data === music_search) {
+      const result = await pool.query(`SELECT music_search FROM all_data`, [
+        music_search,
+      ]);
+      res.set("Content-Type", "application/json");
+      allData.push(result.rows);
+    }
+    if (data === playlist_songs) {
+      const result = await pool.query(`SELECT playlist_songs FROM all_data`, [
+        playlist_songs,
+      ]);
+      res.set("Content-Type", "application/json");
+      allData.push(result.rows);
+    }
+    if (data === playlist_genre) {
+      const result = await pool.query(`SELECT playlist_genre FROM all_data`, [
+        playlist_genre,
+      ]);
+      res.set("Content-Type", "application/json");
+      allData.push(result.rows);
+    }
 
-//     res.status(200).send(allData);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send("Internal Server Error, Request Denied");
-//   }
-// });
+    res.status(200).send(allData);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error, Request Denied");
+  }
+});
 
 //get all data
 // app.get("/all_data", async (req, res) => {
