@@ -34,29 +34,30 @@ app.get("/all_data", async (req, res) => {
   try {
     const data = [music_search, playlist_songs, playlist_genre];
 
-    const allData = [];
+    // const allData = [];
 
     if (data === music_search) {
       const result = await pool.query(`SELECT music_search FROM all_data`, [
         music_search,
       ]);
-      allData.push(result.rows);
+      res.status(200).json(result.rows);
+      // allData.push(result.rows);
     } else if (data === playlist_songs) {
       const result = await pool.query(`SELECT playlist_songs FROM all_data`, [
         playlist_songs,
       ]);
-      allData.push(result.rows);
+      // allData.push(result.rows);
+      res.status(200).json(result.rows);
     } else {
       const result = await pool.query(`SELECT playlist_genre FROM all_data`, [
         playlist_genre,
       ]);
-      allData.push(result.rows);
+      // allData.push(result.rows);
+      res.status(200).json(result.rows);
     }
-
-    res.status(200).json(allData);
   } catch (err) {
     console.error(err);
-    res.status(500).send("Internal Server Error, Request Denied");
+    res.status(500).json("Internal Server Error, Request Denied");
   }
 });
 
