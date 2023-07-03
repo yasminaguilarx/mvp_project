@@ -32,17 +32,17 @@ app.use(cors({ origin: "*" }));
 
 app.get("/all_data", async (req, res) => {
   try {
-    const data = [music_search, playlist_songs, playlist_genre];
-
+    // const data = [music_search, playlist_songs, playlist_genre];
+    const keys = Object.keys("all_data");
     // const allData = [];
 
-    if (data === music_search) {
+    if (keys === music_search) {
       const result = await pool.query(`SELECT music_search FROM all_data`, [
         music_search,
       ]);
       res.status(200).json(result.rows);
       // allData.push(result.rows);
-    } else if (data === playlist_songs) {
+    } else if (keys === playlist_songs) {
       const result = await pool.query(`SELECT playlist_songs FROM all_data`, [
         playlist_songs,
       ]);
