@@ -20,53 +20,53 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use(cors({ origin: "*" }));
 
-// app.get("/all_data", async (req, res) => {
-//   try {
-//     const result = await pool.query("SELECT * FROM all_data");
-//     res.status(200).send(result.rows);
-//   } catch (err) {
-//     console.err(err);
-//     res.status(500).send("Internal Server Error");
-//   }
-// });
-
 app.get("/all_data", async (req, res) => {
   try {
-    const { music_search, playlist_songs, playlist_genre } = req.query;
-    const { id } = req.params;
-    //result[0];
-
-    const allData = [];
-
-    if (music_search) {
-      const result = await pool.query(
-        `SELECT * FROM all_data WHERE ${id} = ${music_search}`
-      );
-      res.set("Content-Type", "application/json");
-      allData.push(...result.rows);
-      console.log(result.rows);
-    }
-    if (playlist_songs) {
-      const result = await pool.query(
-        `SELECT * FROM all_data WHERE ${id} = ${playlist_songs}`
-      );
-      res.set("Content-Type", "application/json");
-      allData.push(...result.rows);
-    }
-    if (playlist_genre) {
-      const result = await pool.query(
-        `SELECT * FROM all_data WHERE ${id} = ${playlist_genre}`
-      );
-      res.set("Content-Type", "application/json");
-      allData.push(...result.rows);
-    }
-
-    res.status(200).send(allData);
+    const result = await pool.query("SELECT * FROM all_data");
+    res.status(200).send(result.rows);
   } catch (err) {
-    console.error(err);
-    res.status(500).send("Internal Server Error, Request Denied");
+    console.err(err);
+    res.status(500).send("Internal Server Error");
   }
 });
+
+// app.get("/all_data", async (req, res) => {
+//   try {
+//     const { music_search, playlist_songs, playlist_genre } = req.query;
+//     const { id } = req.params;
+//     //result[0];
+
+//     const allData = [];
+
+//     if (music_search) {
+//       const result = await pool.query(
+//         `SELECT * FROM all_data WHERE ${id} = ${music_search}`
+//       );
+//       res.set("Content-Type", "application/json");
+//       allData.push(...result.rows);
+//       console.log(result.rows);
+//     }
+//     if (playlist_songs) {
+//       const result = await pool.query(
+//         `SELECT * FROM all_data WHERE ${id} = ${playlist_songs}`
+//       );
+//       res.set("Content-Type", "application/json");
+//       allData.push(...result.rows);
+//     }
+//     if (playlist_genre) {
+//       const result = await pool.query(
+//         `SELECT * FROM all_data WHERE ${id} = ${playlist_genre}`
+//       );
+//       res.set("Content-Type", "application/json");
+//       allData.push(...result.rows);
+//     }
+
+//     res.status(200).send(allData);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send("Internal Server Error, Request Denied");
+//   }
+// });
 
 //get all data
 // app.get("/all_data", async (req, res) => {
