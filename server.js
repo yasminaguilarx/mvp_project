@@ -30,24 +30,54 @@ app.use(cors({ origin: "*" }));
 //   }
 // });
 
+// app.get("/all_data", async (req, res) => {
+//   try {
+//     // const data = [music_search, playlist_songs, playlist_genre];
+//     //const keys = Object.keys("all_data");
+//     // const allData = [];
+
+//     if (Object.keys("all_data") === music_search) {
+//       const result = await pool.query(`SELECT music_search FROM all_data;`);
+//       res.status(200).json(result.rows);
+//       // allData.push(result.rows);
+//     } else if (Object.keys("all_data") === playlist_songs) {
+//       const result = await pool.query(`SELECT playlist_songs FROM all_data;`);
+//       // allData.push(result.rows);
+//       res.status(200).json(result.rows);
+//     } else {
+//       const result = await pool.query(`SELECT playlist_genre FROM all_data;`);
+//       // allData.push(result.rows);
+//       res.status(200).json(result.rows);
+//     }
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json("Internal Server Error, Request Denied");
+//   }
+// });
 app.get("/all_data", async (req, res) => {
   try {
-    // const data = [music_search, playlist_songs, playlist_genre];
-    //const keys = Object.keys("all_data");
-    // const allData = [];
+    const { music_search, playlist_songs, playlist_genre } = req.query;
 
-    if (Object.keys("all_data") === music_search) {
-      const result = await pool.query(`SELECT music_search FROM all_data;`);
+    if (music_search) {
+      const result = await pool.query(
+        `SELECT * FROM all_data WHERE music_search = $1`,
+        [music_search]
+      );
       res.status(200).json(result.rows);
-      // allData.push(result.rows);
-    } else if (Object.keys("all_data") === playlist_songs) {
-      const result = await pool.query(`SELECT playlist_songs FROM all_data;`);
-      // allData.push(result.rows);
+    } else if (playlist_songs) {
+      const result = await pool.query(
+        `SELECT * FROM all_data WHERE playlist_songs = $1`,
+        [playlist_songs]
+      );
+      res.status(200).json(result.rows);
+    } else if (playlist_genre) {
+      const result = await pool.query(
+        `SELECT * FROM all_data WHERE playlist_genre = $1`,
+        [playlist_genre]
+      );
       res.status(200).json(result.rows);
     } else {
-      const result = await pool.query(`SELECT playlist_genre FROM all_data;`);
-      // allData.push(result.rows);
-      res.status(200).json(result.rows);
+      res.status(400).json("No search criteria provided");
     }
   } catch (err) {
     console.error(err);
