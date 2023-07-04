@@ -56,21 +56,20 @@ app.use(cors({ origin: "*" }));
 // });
 app.get("/all_data", async (req, res) => {
   try {
-    const { music_search, playlist_songs, playlist_genre } = req.query;
-
-    if (music_search) {
+    const data = [music_search, playlist_songs, playlist_genre];
+    if (data[music_search]) {
       const result = await pool.query(
         `SELECT * FROM all_data WHERE music_search = $1`,
         [music_search]
       );
       res.status(200).json(result.rows);
-    } else if (playlist_songs) {
+    } else if (data[playlist_songs]) {
       const result = await pool.query(
         `SELECT * FROM all_data WHERE playlist_songs = $1`,
         [playlist_songs]
       );
       res.status(200).json(result.rows);
-    } else if (playlist_genre) {
+    } else if (data[playlist_genre]) {
       const result = await pool.query(
         `SELECT * FROM all_data WHERE playlist_genre = $1`,
         [playlist_genre]
