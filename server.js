@@ -59,20 +59,17 @@ app.get("/all_data", async (req, res) => {
     const data = [music_search, playlist_songs, playlist_genre];
     if (data[music_search]) {
       const result = await pool.query(
-        `SELECT * FROM all_data WHERE music_search = $1`,
-        [music_search]
+        `SELECT music_search FROM all_data WHERE`
       );
       res.status(200).json(result.rows);
     } else if (data[playlist_songs]) {
       const result = await pool.query(
-        `SELECT * FROM all_data WHERE playlist_songs = $1`,
-        [playlist_songs]
+        `SELECT playlist_songs FROM all_data WHERE`
       );
       res.status(200).json(result.rows);
     } else if (data[playlist_genre]) {
       const result = await pool.query(
-        `SELECT * FROM all_data WHERE playlist_genre = $1`,
-        [playlist_genre]
+        `SELECT playlist_genre FROM all_data WHERE`
       );
       res.status(200).json(result.rows);
     } else {
